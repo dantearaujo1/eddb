@@ -15,7 +15,12 @@ mas caso haja tempo, pode-se gerar uma GUI (Graphical User Interface).
 
 | Requisito | Arquivo |  COD | Status |
 | --------  | ------- |  --- | ------ |
-| Adicionar Livro |   | REQ03 | Análise |
-| Remover Livro |   | REQ05 | Análise |
-| Buscar Livro por Título |   | REQ07 | Análise |
-| Buscar Livro por Author |   | REQ08 | Análise |
+| Adicionar Livro |   | REQ01 | Análise |
+| Remover Livro |   | REQ02 | Análise |
+| Adicionar Usuário |   | REQ03 | Análise |
+| Remover Usuário |   | REQ04 | Análise |
+| Realizar Empréstimo |   | REQ05 | Análise |
+| Realizar Devolução |   | REQ06 | Análise |
+| Pesquisa Livro por Título |   | REQ07 | Análise |
+| Pesquisa Livro por Author |   | REQ08 | Análise |
+| Gerar Relatório do Usuário |   | REQ09 | Análise |
