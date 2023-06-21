@@ -11,6 +11,8 @@ utilizando python. O sistema deve ser todo em CLI (Command Line Interface)
 mas caso haja tempo, pode-se gerar uma GUI (Graphical User Interface).
 
 
+ALTEREII AQUI
+
 ## Requisitos Funcionais
 
 | Requisito | Arquivo |  COD | Status |
