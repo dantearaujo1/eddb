@@ -14,11 +14,7 @@ utilizando python. O sistema deve ser todo em CLI (Command Line Interface)
 mas caso haja tempo, pode-se gerar uma GUI (Graphical User Interface).
 
 
-<<<<<<< Updated upstream
 ALTEREII AQUI
-=======
-
->>>>>>> Stashed changes
 
 ## Requisitos Funcionais
 
@@ -26,7 +22,7 @@ ALTEREII AQUI
 | Requisito | Arquivo | COD | Status |
 | -------- | ------- | --- | ------ |
 | Adicionar Livro | | REQ01 | Desenvolvimento |
-| Alterar Informações do Livro | REQ02 | Desenvolvimento |
+| Alterar Informações do Livro | | REQ02 | Desenvolvimento |
 | Remover Livro | | REQ03 | Desenvolvimento |
 | Adicionar Usuário | | REQ04 | Desenvolvimento |
 | Alterar Informações do Usuário | | REQ05 | Desenvolvimento |
