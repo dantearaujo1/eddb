@@ -10,8 +10,9 @@ mas caso haja tempo, pode-se gerar uma GUI (Graphical User Interface).
 
 ## Requisitos Funcionais
 
-| Requisito                       |   Arquivo   |  COD  |
-| Adicionar Livro                 |             | REQ03 |
-| Remover Livro                 |   Arquivo   | REQ05 |
-| Buscar Livro por Título  |   Arquivo   | REQ07 |
-| Buscar Livro por Author  |   Arquivo   | REQ08 |
+| Requisito | Arquivo |  COD |
+| --------  | ------- |  --- |
+| Adicionar Livro |             | REQ03 |
+| Remover Livro |   Arquivo   | REQ05 |
+| Buscar Livro por Título | Arquivo | REQ07 |
+| Buscar Livro por Author | Arquivo | REQ08 |
