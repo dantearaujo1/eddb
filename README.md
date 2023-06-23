@@ -14,8 +14,6 @@ utilizando python. O sistema deve ser todo em CLI (Command Line Interface)
 mas caso haja tempo, pode-se gerar uma GUI (Graphical User Interface).
 
 
-ALTEREII AQUI
-
 ## Requisitos Funcionais
 
 
@@ -32,3 +30,4 @@ ALTEREII AQUI
 | Pesquisa Livro por Título | | REQ09 | Análise |
 | Pesquisa Livro por Author | | REQ10 | Análise |
 | Gerar Relatório do Usuário | | REQ11 | Análise |
+
