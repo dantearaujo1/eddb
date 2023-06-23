@@ -31,3 +31,28 @@ mas caso haja tempo, pode-se gerar uma GUI (Graphical User Interface).
 | Pesquisa Livro por Author | | REQ10 | Análise |
 | Gerar Relatório do Usuário | | REQ11 | Análise |
 
+## Instruções de Uso
+
+Entre no diretório raiz
+
+Certifique-se de ter instalado o [ Poetry ]( https://python-poetry.org/docs/ ) para fazer o gerenciamento de pacotes da
+aplicação.
+
+```
+python -m pip install poetry
+```
+
+Após a instalação do poetry, podemos instalar os pacotes necessários para a
+utilização da aplicação com:
+
+```
+poetry install
+```
+
+Em seguida pode rodar a aplicação com o commando:
+
+```
+poetry run python eddb/main.py
+```
+
+
