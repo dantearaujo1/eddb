@@ -9,11 +9,16 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 textual = {extras = ["dev"], version = "^0.28.1"}
+colorama = "^0.4.6"
 
 
 [tool.poetry.group.dev.dependencies]
 taskipy = "^1.11.0"
+pytest = "^7.3.2"
+black = "^23.3.0"
 
+[tool.pylint.format]
+max-line-length = "81"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
