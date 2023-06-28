@@ -1,51 +1,39 @@
 from repository.irepository import IRepository
 from model.livro import Livro
-from util.util import open_json
-
-from fuzzywuzzy import fuzz,process
+from util.util import open_json,write_data, get_root
+from fuzzywuzzy import process
 
 
 class LivrosRepositoryJSON(IRepository):
     def __init__(self,file=None):
         self.livros = {}
+        self.file = file
         if file:
             dados = open_json(file)
-            for dado_livro in dados:
+            for dado_livro in dados["livros"]:
                 dados_do_livro = dado_livro
-                livro = Livro(nome=dados_do_livro["título"],autor=dados_do_livro["autor"])
+                livro = Livro(id=dados_do_livro["id"],nome=dados_do_livro["titulo"],autor=dados_do_livro["autor"])
                 self.livros[livro.id] = livro
 
-    def get_byID(self, ID):
+    def get_by_id(self, ID):
         if self.livros[ID]:
             return self.livros[ID]
-        else:
-            raise Exception("Esse livro não existe")
-
-    def get_byName(self, name):
-        query = name
-        livros = self.get_all()
-
-        resultado = process.extract(query,livros)
-        return resultado
-
-        # for _,livro in self.livros.items():
-        #     if livro.nome == name:
-        #         return livro
-        #     return []
-        # raise Exception("Esse livro não existe")
-
-    def delete_byID(self, ID):
-        if self.livros[ID]:
-            self.livros.pop(ID)
-        else:
-            raise Exception("Esse livro não existe")
-
-    def delete_byName(self, name):
-        for _,livro in self.livros.items():
-            if livro.nome == name:
-                livro_info = livro["nome"]
-                livro.pop(livro_info["id"])
         raise Exception("Esse livro não existe")
+
+
+    def get_by_name(self, name):
+        for _, livro in self.livros.items():
+            if livro.nome == name:
+                return livro
+
+        # Isso aqui mostra as matches n queria por aqui
+        # query = name
+        # livros = self.get_all()
+        #
+        # resultado = process.extract(query,livros)
+        # return resultado
+
+        # raise Exception("Esse livro não existe")
 
     def get_all(self):
         lista = []
@@ -53,47 +41,49 @@ class LivrosRepositoryJSON(IRepository):
             lista.append(livro)
         return lista
 
-
-    def delete_all(self):
-        raise NotImplementedError
-
-    def add(self, item):
-        raise NotImplementedError
-
-    def add_all(self, items):
-        raise NotImplementedError
-
-class LivrosRepositoryMemória(IRepository):
-    def __init__(self,livros=None):
-        if not livros:
-            self.livros = {}
-        else:
-            self.livros = livros
-
-    def get_byID(self, ID):
+    def delete_by_id(self, ID):
         if self.livros[ID]:
-            return self.livros[ID]
+            self.livros.pop(ID)
         else:
             raise Exception("Esse livro não existe")
 
-    def get_byName(self, name):
-        raise NotImplementedError
-
-    def delete_byID(self, ID):
-        raise NotImplementedError
-
-    def delete_byName(self, name):
-        raise NotImplementedError
-
-    def get_all(self):
-        return self.livros
+    def delete_by_name(self, name):
+        for _,livro in self.livros.items():
+            if livro.nome == name:
+                livro_info = livro["nome"]
+                livro.pop(livro_info["id"])
+        raise Exception("Esse livro não existe")
 
     def delete_all(self):
-        raise NotImplementedError
+        self.livros.clear()
 
     def add(self, item):
-        if not self.livros[item["uuid"]]:
-            self.livros[item["uuid"]] = item
+        if not self.livros.get(item.id):
+            self.livros[item.id] = item
+            self.save()
+            return
+        raise Exception("Ja tem esse livro")
 
     def add_all(self, items):
-        raise NotImplementedError
+        for i in items:
+            self.add(i)
+
+    def update_by_name(self,name,data):
+        livro = self.get_by_name(name)
+        livro = data
+    def update_by_id(self,ID,data):
+        livro = self.get_by_id(ID)
+        livro = data
+    def update_all(self,data):
+        pass
+
+    def save(self):
+        if self.file:
+            dados = open_json(self.file)
+            lista = []
+            for _,l in self.livros.items():
+                lista.append(vars(l)())
+            dados["livros"] = lista
+            write_data(self.file,dados)
+
+
