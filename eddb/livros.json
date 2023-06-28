@@ -1,27 +1,53 @@
-[
-  {
-    "título":"Hello World",
-    "autor":"Dante",
-    "data":"2023"
-  },
-  {
-    "título":"Hello EDDB !",
-    "autor":"Debora",
-    "data":"2023"
-  },
-  {
-    "título":"GoodbyeWorld",
-    "autor":"Dante",
-    "data":"2020"
-  },
-  {
-    "título":"Goodbye EDDB",
-    "autor":"Debora",
-    "data":"2023"
-  },
-  {
-    "título":"O teste",
-    "autor":"Debora",
-    "data":"2021"
-  }
-]
+{
+  "livros": [
+    {
+      "id": "0",
+      "titulo": "Hello World!",
+      "autor": "Dante"
+    },
+    {
+      "id": "571d9355-29a0-43fc-9e42-a4e68bc2838f",
+      "titulo": "ZZZZ",
+      "autor": "Debora"
+    },
+    {
+      "id": "055a874a-fb02-4b8e-a993-3c09379398df",
+      "titulo": "ABC",
+      "autor": "POO"
+    },
+    {
+      "id": "031ea591-f518-4dfa-a175-54e646c2b360",
+      "titulo": "EDDB teste",
+      "autor": "Dante"
+    },
+    {
+      "id": "cc811c6f-8ef8-426d-bd48-c813aa1d8f3d",
+      "titulo": "Estrutura de Dados em Python",
+      "autor": "Debora Sameque"
+    },
+    {
+      "id": "f3648608-1e07-4a1a-a892-fe24ecbc1556",
+      "titulo": "Estruturas",
+      "autor": "Debora"
+    },
+    {
+      "id": "20b574d6-94e0-49e5-ba88-52cd14874312",
+      "titulo": "Análise e Projeto de Sistemas - 3 edição",
+      "autor": "Ticianna"
+    },
+    {
+      "id": "a6fb7eaa-c5fa-4e9c-80a0-994dd092e671",
+      "titulo": "UML para baixinhos",
+      "autor": "Debora"
+    }
+  ],
+  "usuários": [
+    {
+      "id": "0",
+      "nome": "Dante",
+      "sobrenome": "Araújo",
+      "matrícula": 509015
+    }
+  ],
+  "empréstimos": []
+}
