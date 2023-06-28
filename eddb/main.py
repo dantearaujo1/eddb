@@ -1,30 +1,23 @@
-# from textual.app import App, ComposeResult
-# from textual.widgets import Header, Footer
-import time
-from view.console import Console
+from view.menu_view import MenuView
 from controller.biblioteca_controller import BibliotecaController
 from repository.livros_repository import LivrosRepositoryJSON
+from repository.usuarios_repository import UsuarioRepositoryJson
 
-# class Console(App):
-#
-#     BINDINGS = [ ("Ctrl-C", "exit", "Sair") ]
-#
-#     def compose(self):
-#         yield Header(name="Biblioteca")
-#         yield Footer()
+from gerenciado_de_biblioteca import GerenciadorBibliotecario
 
+from util.util import get_root
 
 def main():
     cadastro_opt = []
     livros_opt = []
     emprestimos_opt = []
+    inicio_opt = []
 
-    inicio_opt = [
-        {"entry": "Menu Livros", "out_opt": livros_opt, "próximo": 4},
-        {"entry": "Menu Empréstimos", "out_opt": emprestimos_opt, "próximo": 5},
-        {"entry": "Menu Cadastro", "out_opt": cadastro_opt, "próximo": 2},
-        {"entry": "Sair", "out_opt": -1, "próximo": -1},
-    ]
+    inicio_opt.append({"entry": "Menu Livros", "próximo": 4})
+    inicio_opt.append({"entry": "Menu Empréstimos", "próximo": 5})
+    inicio_opt.append({"entry": "Menu Cadastro", "próximo": 2})
+    inicio_opt.append({"entry": "Sair", "out_opt": -1, "próximo": -1})
+
     cadastro_opt.append({"entry": "Cadastrar Aluno", "próximo": 6})
     cadastro_opt.append({"entry": "Editar Aluno", "próximo": 7})
     cadastro_opt.append({"entry": "Apagar Aluno", "próximo": 8})
@@ -34,7 +27,7 @@ def main():
     cadastro_opt.append({"entry": "Voltar", "próximo": 0})
     cadastro_opt.append({"entry": "Sair", "próximo": -1})
 
-    livros_opt.append({"entry": "Procurar Livro", "próximo": 12})
+    livros_opt.append({"entry": "Pesquisar Livro", "próximo": 12})
     livros_opt.append({"entry": "Ver Livros", "próximo": 13})
     livros_opt.append({"entry": "Voltar", "próximo": 0})
     livros_opt.append({"entry": "Sair", "próximo": -1})
@@ -53,20 +46,26 @@ def main():
         {"titulo": "Empréstimo", "opções": emprestimos_opt},
     ]
 
-    repositorio_de_livros = LivrosRepositoryJSON("eddb/livros.json")
-    view = Console()
-    biblioteca = BibliotecaController(view, repositorio_de_livros, menus)
+    db_path = get_root(__file__) + "/livros.json"
+    repo = LivrosRepositoryJSON(db_path)
+    urepo = UsuarioRepositoryJson(db_path)
+    view = MenuView()
+    controller = BibliotecaController(view, repo, menus)
+    app = GerenciadorBibliotecario(view,controller,repo)
 
-    livros_opt[1]["próximo"] = biblioteca.ver_livros
-    livros_opt[0]["próximo"] = biblioteca.procurar_livros
-    biblioteca.iniciar()
+    livros_opt[1]["próximo"] = controller.ver_livros
+    livros_opt[0]["próximo"] = controller.procurar_livros
+    cadastro_opt[3]["próximo"] = controller.adicionar_livro
+    app.mostrar()
 
-
-def cadastrar():
-    print("Cadastrei!")
-    time.sleep(2)
-    return inicio_opt
-
+    # TESTES
+    # print(urepo.usuarios)
+    # print(urepo.usuarios['0'])
+    # print(urepo.get_by_name("Dante"))
+    # print(urepo.get_all())
+    # controller.adicionar_livro()
+    # l = LivroMenuView()
+    # l.run()
 
 if __name__ == "__main__":
     main()
