@@ -1,8 +1,12 @@
 import inspect
-from util.util import clear_screen,move_cursor
-from readchar import readkey, key
 import time
-from colorama import Back,Fore
+from util.util import clear_screen,move_cursor,get_terminal_size
+from readchar import readkey, key
+from colorama import Back,Fore,Style,init,Cursor
+from controller.icontroller import IController
+from model.livro import Livro
+
+init(autoreset=True)
 
 class BibliotecaController():
     def __init__(self,view,gerenciador_de_dados,menus):
@@ -77,8 +81,34 @@ class BibliotecaController():
             self.view.mostrar_mensagem(f"Autor: {livros[escolha].autor}")
             input()
 
+    def adicionar_livro(self):
+        resposta = ''
+        sair = False
+        opcoes = ["nome", "autor"]
+        dados = []
+        selection = 0
+        while not sair:
+
+            titulo = f"Digite o {opcoes[selection]} do Livro: " + resposta
+            clear_screen()
+            print(titulo,end='')
+            k = readkey()
+            if k == key.BACKSPACE:
+                resposta = resposta[0:-1]
+            elif k == key.ENTER:
+                selection = selection + 1
+                dados.append(resposta)
+                resposta = ""
+                if selection >= len(opcoes):
+                    sair = True
+            else:
+                resposta = resposta + k
+        clear_screen()
+        livro = Livro(nome=dados[0],autor=dados[1])
+        self.gerenciador.add(livro)
+        print("Livro adicionado")
+
     def procurar_livros(self):
-        # escolha = self.view.get_input_usuario("Digite um livro: ")
         resposta = ''
         sair = False
         livros = []
@@ -87,34 +117,56 @@ class BibliotecaController():
 
             titulo = "Digite um livro: " + resposta
             tam_titulo = len(titulo)
+            p = 0
             clear_screen()
-            self.view.mostrar_mensagem(titulo)
+            print(titulo,end='')
             for i in range(len(livros)):
+                move_cursor(0,get_terminal_size()[1]-(i+1))
                 if i == selection:
-                    print(f"{Back.WHITE}{Fore.BLACK}{i+1}. {livros[i][0].nome}")
+                    print(f"{Back.WHITE}{Fore.BLACK}{i+1}. {livros[i][0].nome}{Style.RESET_ALL}",end='')
                 else:
-                    print(f"{i+1}. {livros[i][0].nome}")
-            move_cursor(tam_titulo+1,0)
+                    print(f"{i+1}. {livros[i][0].nome}",end='')
+            move_cursor(tam_titulo + 1,get_terminal_size()[1])
+            print(titulo,end='')
+            # BUG: Era pra ficar na primeira linha no local de digitar o nome do
+            # livro
             k = readkey()
             if k == key.BACKSPACE:
                 resposta = resposta[0:-1]
             elif k == key.ENTER:
                 sair = True
             # TODO: Configurar keybinds
-            elif k == key.CTRL_J or k == key.CTRL_N:
-                # TODO: VIM?
+            elif k in (key.CTRL_J, key.CTRL_N):
                 selection = (selection + 1) % len(livros)
-            elif k == key.CTRL_K or k == key.CTRL_P:
-                # TODO: VIM?
+                p = p - 1
+            elif k in (key.CTRL_K, key.CTRL_P):
                 selection = (selection - 1) % len(livros)
+                p = p + 1
             else:
                 resposta = resposta + k
-            livros = self.gerenciador.get_byName(resposta)
+            livros = self.gerenciador.get_by_name(resposta)
             if len(resposta) == 0:
                 livros = []
-            # input()
-        # self.view.mostrar_mensagem(f"Nome: {livros[selection][0].nome}")
-        # self.view.mostrar_mensagem(f"Autor: {livros[selection][0].autor}")
         clear_screen()
         self.view.mostrar_detalhes_livros(livros[selection][0])
         time.sleep(10)
+
+class LivrosController(IController):
+
+    def __init__(self,view,repositorio):
+        IController.__init__(self,view,repositorio)
+
+    def run(self):
+        while True:
+            self.view.display()
+    def get(self):
+        pass
+
+    def add(self):
+        pass
+
+    def delete(self):
+        pass
+
+    def update(self):
+        pass
