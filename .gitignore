@@ -1,4 +1,5 @@
 .DS_Store
 .tasks
 .vscode/
+.idea/
 __pycache__/
