@@ -4,13 +4,19 @@ from abc import ABC,abstractmethod
 class IView(ABC):
 
     @abstractmethod
-    def show(self,menu):
+    def show(self,menu) -> None:
         pass
 
     @abstractmethod
-    def mostrar_mensagem(self,msg):
+    def get_input(self) -> str:
         pass
 
     @abstractmethod
-    def sair(self):
+    def sair(self) -> int:
         pass
+
+    def run(self) -> None:
+        while(True):
+            self.show()
+            self.get_input()
+        self.sair()

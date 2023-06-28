@@ -1,11 +1,11 @@
 import time
-from colorama import init,Back, Fore
+from colorama import Style, Back, Fore
 from view.iview import IView
 from util.util import clear_screen
 
-init(autoreset=True)
 
-class Console(IView):
+
+class MenuView(IView):
 
     def show(self,menu):
         self.printMenu("Sistema de Biblioteca", menu)
@@ -20,17 +20,13 @@ class Console(IView):
     def get_input_usuario(self,texto):
         return input(texto)
 
+    def get_input(self):
+        return 's'
+
     def printMenu(self,title,menu):
-        # print(Style.BRIGHT + Back.BLUE + Fore.WHITE + "=" * (len(title)+6))
-        # print(Style.BRIGHT + Back.BLUE + Fore.WHITE + "|| {} ||".format(title))
-        # print(Style.BRIGHT + Back.BLUE + Fore.WHITE + "=" * (len(title)+6))
         print("=" * (len(title)+6))
         print("|| {} ||".format(title))
         print("=" * (len(title)+6))
-        # Alinhado na direita
-        # print("=" * (len(title)+6 - (len(menu["titulo"]))), end='')
-        # TODO: Ajeitar o tamanho de forma genérica
-        # para que o texto fique centralizado
         print("=" * (len(menu["titulo"])+2), end='')
         print(f" {menu['titulo']} ", end='')
         print("=" * (len(menu["titulo"])+5))
@@ -39,7 +35,6 @@ class Console(IView):
     def printOptions(self,op):
         for i in range(len(op)):
             print("{}. {}".format(i+1,op[i]["entry"]))
-            # print(Back.YELLOW + Fore.BLACK + "{}. {}".format(i+1,op[i]["entry"]))
 
     def mostrar_mensagem(self,msg):
         print(msg)
@@ -60,4 +55,7 @@ class Console(IView):
         print("=" * (len(title)+6))
         print(f"Nome: {item.nome}")
         print(f"Autor: {item.autor}")
+
+class MenuInicialView(IView):
+    pass
 
