@@ -25,11 +25,22 @@ def load_data(file):
 
 def write_data(file,data):
     with open(file, 'w') as f:
-        # pass
-        # d = json.dumps(data)
         json.dump(data,f,indent=2,ensure_ascii=False)
-    #     print()
 
 def get_root(file):
     path = os.path.dirname(os.path.abspath(file))
     return path
+
+# Isso vai ser nossa anotation para gerar rotas
+# nas views
+routes = {}
+def route(action):
+    def decorator(func):
+        routes[action] = func
+        return func
+    return decorator
+
+def handle_request(request_action,*parametros):
+    for action, handler in routes.items():
+        if action == request_action:
+            return handler(*parametros)
