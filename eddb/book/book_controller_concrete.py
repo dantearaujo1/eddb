@@ -1,5 +1,5 @@
-from book_interface.book_controller import BookController
-from book_interface.book_repository import BookRepository
+from eddb.book.book_interface.book_controller import BookController
+from eddb.book.book_interface.book_repository import BookRepository
 class BookControllerConcrete(BookController):
     def __init__(self, repository: BookRepository):
         self.repository = repository

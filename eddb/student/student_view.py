@@ -1,5 +1,5 @@
-from student_interface.student_controller import StudentController
-from student_interface.feedback_student_view import FeedbackStudentView
+from eddb.student.student_interface.student_controller import StudentController
+from eddb.student.student_interface.feedback_student_view import FeedbackStudentView
 class StudentView(FeedbackStudentView):
     def __init__(self, controller: StudentController):
         self.controller = controller

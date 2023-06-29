@@ -1,5 +1,5 @@
-from book_interface.book_controller import BookController
-from book_interface.feedback_book_view import FeedbackBookView
+from eddb.book.book_interface.book_controller import BookController
+from eddb.book.book_interface.feedback_book_view import FeedbackBookView
 class BookView(FeedbackBookView):
     def __init__(self, controller: BookController):
         self.controller = controller

@@ -1,5 +1,6 @@
-from loan_interface.loan_controller import LoanController
-from loan_interface.loan_repository import LoanRepository
+from eddb.loan.loan_interface.loan_controller import LoanController
+from eddb.loan.loan_interface.loan_repository import LoanRepository
+
 class LoanControllerConcrete(LoanController):
     def __init__(self, repository: LoanRepository):
         self.repository = repository

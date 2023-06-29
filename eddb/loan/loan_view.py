@@ -1,5 +1,5 @@
-from loan_interface.loan_controller import LoanController
-from loan_interface.feedback_loan_view import FeedbackLoanView
+from eddb.loan.loan_interface.loan_controller import LoanController
+from eddb.loan.loan_interface.feedback_loan_view import FeedbackLoanView
 class LoanView(FeedbackLoanView):
     def __init__(self, controller: LoanController):
         self.controller = controller

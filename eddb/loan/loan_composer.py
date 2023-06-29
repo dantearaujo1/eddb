@@ -1,6 +1,6 @@
-from loan_view import LoanView
-from loan_controller_concrete import LoanControllerConcrete
-from loan_repository_concrete import LoanRepositoryConcrete
+from eddb.loan.loan_view import LoanView
+from eddb.loan.loan_controller_concrete import LoanControllerConcrete
+from eddb.loan.loan_repository_concrete import LoanRepositoryConcrete
 class LoanComposer:
     @staticmethod
     def create() -> LoanView:

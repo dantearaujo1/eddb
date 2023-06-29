@@ -1,6 +1,6 @@
-from student_view import StudentView
-from student_controller_concrete import StudentControllerConcrete
-from student_repository_concrete import StudentRepositoryConcrete
+from eddb.student.student_view import StudentView
+from eddb.student.student_controller_concrete import StudentControllerConcrete
+from eddb.student.student_repository_concrete import StudentRepositoryConcrete
 
 class StudentComposer:
 
