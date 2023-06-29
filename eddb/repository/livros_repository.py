@@ -3,6 +3,8 @@ from model.livro import Livro
 from util.util import open_json,write_data, get_root
 from fuzzywuzzy import process
 
+n = Livro()
+
 
 class LivrosRepositoryJSON(IRepository):
     def __init__(self,file=None):
@@ -22,18 +24,18 @@ class LivrosRepositoryJSON(IRepository):
 
 
     def get_by_name(self, name):
-        for _, livro in self.livros.items():
-            if livro.nome == name:
-                return livro
+        # for _, livro in self.livros.items():
+        #     if livro.nome == name:
+        #         return livro
 
         # Isso aqui mostra as matches n queria por aqui
-        # query = name
-        # livros = self.get_all()
-        #
-        # resultado = process.extract(query,livros)
-        # return resultado
+        query = name
+        livros = self.get_all()
 
-        # raise Exception("Esse livro não existe")
+        resultado = process.extract(query,livros)
+        return resultado
+
+        raise Exception("Esse livro não existe")
 
     def get_all(self):
         lista = []
