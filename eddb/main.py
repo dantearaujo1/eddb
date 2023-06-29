@@ -50,8 +50,10 @@ def main():
     repo = LivrosRepositoryJSON(db_path)
     urepo = UsuarioRepositoryJson(db_path)
     view = MenuView()
+
     controller = BibliotecaController(view, repo, menus)
     app = GerenciadorBibliotecario(view,controller,repo)
+
 
     livros_opt[1]["próximo"] = controller.ver_livros
     livros_opt[0]["próximo"] = controller.procurar_livros
@@ -59,6 +61,13 @@ def main():
     app.mostrar()
 
     # TESTES
+    # from view.livro_menu_view import ConsoleView
+    # from controller.concrete_controller import ConcreteController
+    # view2 = ConsoleView("Início",["Menu Livros","Menu Empréstimo", "Menu Usuarios"])
+    #
+    # c = ConcreteController(view2,repo)
+
+
     # print(urepo.usuarios)
     # print(urepo.usuarios['0'])
     # print(urepo.get_by_name("Dante"))
