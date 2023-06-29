@@ -1,5 +1,5 @@
 {
-  "livros": [
+  "books": [
     {
       "id": "0",
       "titulo": "Hello World!",
@@ -41,7 +41,7 @@
       "autor": "Debora"
     }
   ],
-  "usuários": [
+  "students": [
     {
       "id": "0",
       "nome": "Dante",
@@ -49,5 +49,5 @@
       "matrícula": 509015
     }
   ],
-  "empréstimos": []
+  "loans": []
 }
