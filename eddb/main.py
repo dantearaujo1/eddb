@@ -3,6 +3,7 @@ from controller.biblioteca_controller import BibliotecaController
 from repository.livros_repository import LivrosRepositoryJSON
 from repository.usuarios_repository import UsuarioRepositoryJson
 
+
 from gerenciado_de_biblioteca import GerenciadorBibliotecario
 
 from util.util import get_root
@@ -46,26 +47,33 @@ def main():
         {"titulo": "Empréstimo", "opções": emprestimos_opt},
     ]
 
-    db_path = get_root(__file__) + "/livros.json"
-    repo = LivrosRepositoryJSON(db_path)
-    urepo = UsuarioRepositoryJson(db_path)
-    view = MenuView()
-
-    controller = BibliotecaController(view, repo, menus)
-    app = GerenciadorBibliotecario(view,controller,repo)
-
-
-    livros_opt[1]["próximo"] = controller.ver_livros
-    livros_opt[0]["próximo"] = controller.procurar_livros
-    cadastro_opt[3]["próximo"] = controller.adicionar_livro
-    app.mostrar()
+    # db_path = get_root(__file__) + "/livros.json"
+    # repo = LivrosRepositoryJSON(db_path)
+    # urepo = UsuarioRepositoryJson(db_path)
+    # view = MenuView()
+    #
+    # controller = BibliotecaController(view, repo, menus)
+    # app = GerenciadorBibliotecario(view,controller,repo)
+    #
+    #
+    # livros_opt[1]["próximo"] = controller.ver_livros
+    # livros_opt[0]["próximo"] = controller.procurar_livros
+    # cadastro_opt[3]["próximo"] = controller.adicionar_livro
+    # app.mostrar()
 
     # TESTES
     # from view.livro_menu_view import ConsoleView
     # from controller.concrete_controller import ConcreteController
+    from book.book_composer import BookComposer
+    from student.student_composer import StudentComposer
+    from loan.loan_composer import LoanComposer
+    from book.book_repository_concrete import BookRepositoryConcrete
     # view2 = ConsoleView("Início",["Menu Livros","Menu Empréstimo", "Menu Usuarios"])
     #
     # c = ConcreteController(view2,repo)
+    print(BookRepositoryConcrete("eddb/livros.json").get_all())
+    print(BookComposer.create())
+
 
 
     # print(urepo.usuarios)
