@@ -44,3 +44,5 @@ def handle_request(request_action,*parametros):
     for action, handler in routes.items():
         if action == request_action:
             return handler(*parametros)
+
+        # self.options = ["Menu Livros","Menu Empréstimo","Menu Cadastro","Sair"]
