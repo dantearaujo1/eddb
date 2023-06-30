@@ -4,7 +4,6 @@
 '''
 from eddb.util.util import open_json,write_data
 from eddb.book.book_interface.book_repository import BookRepository
-from eddb.model.livro import Livro
 
 class BookRepositoryConcrete(BookRepository):
     def __init__(self,file):
@@ -33,3 +32,7 @@ class BookRepositoryConcrete(BookRepository):
         return []
             # for livro in dados["livros"]:
             #     livro_obj = Livro(id=livro["id"],nome=livro["titulo"],autor=livro["autor"])
+
+    def add_item(self,item):
+        return True
+
