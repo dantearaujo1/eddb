@@ -1,6 +1,6 @@
 import uuid
 from dataclasses import dataclass, field
-from util.util import str_uuid4
+from eddb.util.util import str_uuid4
 
 
 @dataclass
