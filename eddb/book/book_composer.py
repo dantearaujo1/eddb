@@ -4,7 +4,7 @@ from eddb.book.book_repository_concrete import BookRepositoryConcrete
 class BookComposer:
     @staticmethod
     def create() -> BookView:
-        repository = BookRepositoryConcrete("eddb/livros.json")
+        repository = BookRepositoryConcrete("eddb/db_teste.json")
         controller = BookControllerConcrete(repository)
         view = BookView(controller)
         controller.set_view(view)
