@@ -4,17 +4,11 @@
 '''
 from eddb.util.util import open_json,write_data
 from eddb.book.book_interface.book_repository import BookRepository
+from eddb.book.book_model import Book
 
 class BookRepositoryConcrete(BookRepository):
     def __init__(self,file):
         self.file = file
-        # self.books = {}
-        # if file:
-        #     dados = open_json(file)
-        #     for dado_livro in dados["livros"]:
-        #         dados_do_livro = dado_livro
-        #         livro = Livro(id=dados_do_livro["id"],nome=dados_do_livro["titulo"],autor=dados_do_livro["autor"])
-        #         self.livros[livro.id] = livro
 
     def __open(self):
         json_data = None
@@ -22,17 +16,60 @@ class BookRepositoryConcrete(BookRepository):
             json_data = open_json(self.file)
         return json_data
 
+    def __book_to_JSON(self,book):
+        return vars(book)()
+
+    def __JSON_to_book(self,json):
+        return Book(id=json["id"],title=json["title"],author=json["author"])
+
     def get_all(self):
         '''
         Return a list of dictionary objects that with data
         '''
         json_data = self.__open()
         if json_data:
-            return json_data["books"]
+            books = json_data["books"]
+            books = list(map(lambda b: self.__JSON_to_book(b),books))
+            return books
         return []
-            # for livro in dados["livros"]:
-            #     livro_obj = Livro(id=livro["id"],nome=livro["titulo"],autor=livro["autor"])
 
     def add_item(self,item):
-        return True
+        '''
+        Add a book item into our JSON database
+        '''
+        json_data = self.__open()
+        incoming_book = self.__book_to_JSON(item)
+        items = []
+        if json_data:
+            items = json_data["books"]
+            for book in items:
+                if book["title"] == incoming_book["title"] or book["id"] == incoming_book["id"]:
+                    return False
+            items.append(incoming_book)
+            json_data["books"] = items
+            write_data(self.file,json_data)
+            return True
+        return False
+
+    def update_item(self,edited):
+        '''
+        Update a book item into our JSON database
+        '''
+        # TODO: talvez a nesse caso a ideia do dicionário seria boa
+        # ja que conhecemos de antemão o id do livro
+        json_data = self.__open()
+        incoming_book = self.__book_to_JSON(edited)
+        items = []
+        if json_data:
+            items = json_data["books"]
+            for book in items:
+                if book["id"] == incoming_book["id"]:
+                    book = incoming_book
+            json_data["books"] = items
+            write_data(self.file,json_data)
+            return True
+        return False
+
+
+
 
