@@ -4,7 +4,7 @@ from eddb.loan.loan_repository_concrete import LoanRepositoryConcrete
 class LoanComposer:
     @staticmethod
     def create() -> LoanView:
-        repository = LoanRepositoryConcrete("eddb/livros.json")
+        repository = LoanRepositoryConcrete("eddb/db_teste.json")
         controller = LoanControllerConcrete(repository)
         view = LoanView(controller)
         controller.set_view(view)
