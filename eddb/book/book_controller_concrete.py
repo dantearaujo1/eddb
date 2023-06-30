@@ -16,9 +16,16 @@ class BookControllerConcrete(BookController):
         books = self.repository.get_all()
         query = name
         result = process.extract(query,books)
-        result = list(map(lambda x: Book(id=x[0]["id"],title=x[0]["title"],author=x[0]["author"]),result))
+        result = list(map(lambda x: x[0],result))
         return result
 
     def add_book(self,title,author):
         b = Book(title=title,author=author)
         return self.repository.add_item(b),[b]
+
+    def edit_book(self,book,title,author):
+        edited = Book(id=book.id,title=title,author=author)
+        return self.repository.edit_item(edited)
+
+    def delete_book(self,book):
+        pass
