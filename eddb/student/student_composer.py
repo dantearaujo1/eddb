@@ -6,7 +6,7 @@ class StudentComposer:
 
     @staticmethod
     def create() -> StudentView:
-        repository = StudentRepositoryConcrete()
+        repository = StudentRepositoryConcrete("eddb/livros.json")
         controller = StudentControllerConcrete(repository)
         view = StudentView(controller)
         controller.set_view(view)
