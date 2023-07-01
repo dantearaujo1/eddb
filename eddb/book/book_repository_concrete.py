@@ -1,5 +1,5 @@
 '''
-    Class that will handle our data management using JSON as the stored
+    Class that will handle our book management using JSON as the stored
     File
 '''
 from eddb.util.util import open_json,write_data
@@ -64,12 +64,28 @@ class BookRepositoryConcrete(BookRepository):
             items = json_data["books"]
             for book in items:
                 if book["id"] == incoming_book["id"]:
-                    book = incoming_book
+                    book["title"] = incoming_book["title"]
+                    book["author"] = incoming_book["author"]
             json_data["books"] = items
             write_data(self.file,json_data)
             return True
         return False
 
-
+    def delete_item(self,book):
+        '''
+        Delete book from JSON
+        '''
+        json_data = self.__open()
+        ongoing_book = self.__book_to_JSON(book)
+        items = []
+        if json_data:
+            items = json_data["books"]
+            for book in items:
+                if book["id"] == ongoing_book["id"]:
+                    items.remove(book)
+            json_data["books"] = items
+            write_data(self.file,json_data)
+            return True
+        return False
 
 
