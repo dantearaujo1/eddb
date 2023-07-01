@@ -1,31 +1,6 @@
 {
   "books": [
     {
-      "id": "0",
-      "title": "Hello World!",
-      "author": "Dante"
-    },
-    {
-      "id": "571d9355-29a0-43fc-9e42-a4e68bc2838f",
-      "title": "ZZZZ",
-      "author": "Debora"
-    },
-    {
-      "id": "055a874a-fb02-4b8e-a993-3c09379398df",
-      "title": "ABC",
-      "author": "POO"
-    },
-    {
-      "id": "031ea591-f518-4dfa-a175-54e646c2b360",
-      "title": "EDDB teste",
-      "author": "Dante"
-    },
-    {
-      "id": "cc811c6f-8ef8-426d-bd48-c813aa1d8f3d",
-      "title": "Estrutura de Dados em Python",
-      "author": "Debora Sameque"
-    },
-    {
       "id": "f3648608-1e07-4a1a-a892-fe24ecbc1556",
       "title": "Estruturas",
       "author": "Debora"
@@ -37,21 +12,40 @@
     },
     {
       "id": "a6fb7eaa-c5fa-4e9c-80a0-994dd092e671",
-      "title": "UML para baixinhos",
-      "author": "Debora"
+      "title": "UML para estudantes de SMD",
+      "author": "Ticianna"
     },
     {
       "id": "90a625d2-498d-471a-b525-8a2a340c65b9",
       "title": "How to Use Python Lambda Functions",
       "author": "Andre Burgaud"
+    },
+    {
+      "id": "7358840b-1d4b-4e5c-93c7-43ad3975e38f",
+      "title": "Absolut vs Relative import Python",
+      "author": "Mbithe Nzomo"
+    },
+    {
+      "id": "76b3ffe2-6571-4c6b-b07e-ee80a895ddf7",
+      "title": "Estrutura de Dados com Python no SMD",
+      "author": "Ernesto"
+    },
+    {
+      "id": "b7994ec7-589a-4868-9722-987db46453f6",
+      "title": "Hidráulica Básica",
+      "author": "Rodrigo de Melo Porto"
+    },
+    {
+      "id": "ee7f7cad-fe3a-4217-a84f-b946532863db",
+      "title": "O Sangue",
+      "author": "Mary Del Priore"
     }
   ],
   "students": [
     {
       "id": "0",
       "name": "Dante",
-      "surname": "Araújo",
-      "registration": 509015
+      "surname": "Araújo"
     }
   ],
   "loans": []

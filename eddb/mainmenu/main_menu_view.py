@@ -39,9 +39,9 @@ class MainMenuView():
         if self.option == 0:
             return BookComposer.create()
         if self.option == 1:
-            return StudentComposer.create()
-        if self.option == 2:
             return LoanComposer.create()
+        if self.option == 2:
+            return StudentComposer.create()
         if self.option == 3:
             if self.last:
                 return self.last
