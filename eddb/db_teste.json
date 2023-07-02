@@ -43,10 +43,20 @@
   ],
   "students": [
     {
-      "id": "0",
+      "id": 509015,
       "name": "Dante",
-      "surname": "Araújo"
+      "surname": "Araújo",
+      "email":"danteeng@hotmail.com"
     }
   ],
-  "loans": []
+  "loans": [
+    {
+      "id": "0",
+      "id_book": "7358840b-1d4b-4e5c-93c7-43ad3975e38f",
+      "id_student": "0",
+      "loan_date": "",
+      "payday": "",
+      "status": "active"
+    }
+  ]
 }
