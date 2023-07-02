@@ -36,19 +36,13 @@ class BookView(FeedbackBookView):
             else:
                 print(f"{self.options[i]}")
 
-
     def get_input(self):
         # Lidando com  CTRL_C Exit Key
         exit_key = readchar()
-        if exit_key in (key.CTRL_C):
-            clear_screen()
-            print(f"ADIOS")
-            time.sleep(10)
-            sys.exit()
         k = readkey()
         if k  == key.ENTER:
             return True
-        elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
+        if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
             self.option += 1
         elif k in (key.CTRL_P,key.CTRL_K,key.UP):
             self.option -= 1
