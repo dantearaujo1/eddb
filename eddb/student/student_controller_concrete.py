@@ -27,13 +27,13 @@ class StudentControllerConcrete(StudentController):
     def get_all(self):
         return self.repository.get_all()
 
-    def add_student(self,name: str,surname: str):
-        s = Student(name=name,surname=surname)
+    def add_student(self,id: int, name: str,surname: str, email: str):
+        s = Student(id=int (id), name=name,surname=surname, email=email)
         return self.repository.add_item(s),[s]
 
-    def edit_student(self,old_id: str ,new_name: str,new_surname: str):
-        edited = Student(id=old_id,name=new_name,surname=new_surname)
-        return self.repository.update_item(edited),[edited]
+    def edit_student(self,old_id: str, new_id: str ,new_name: str,new_surname: str, new_email: str):
+        edited = Student(id=new_id,name=new_name,surname=new_surname, email=new_email)
+        return self.repository.update_item(edited, old_id),[edited]
 
     def delete_student(self,student : Student):
         return self.repository.delete_item(student),[student]

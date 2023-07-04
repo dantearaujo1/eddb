@@ -1,3 +1,4 @@
+from random import random
 from dataclasses import dataclass, field
 from eddb.util.util import str_uuid4
 
@@ -5,7 +6,7 @@ from eddb.util.util import str_uuid4
 class Student:
     """Student dataclass that has only 4 attributes"""
 
-    id: int = 0
+    id: int = int(random()*100000)
     name: str = "unknown"
     surname: str = "unknown"
     email: str = ""
