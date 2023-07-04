@@ -46,7 +46,25 @@
       "id": 509015,
       "name": "Dante",
       "surname": "Araújo",
-      "email":"danteeng@hotmail.com"
+      "email": "danteeng@hotmail.com"
+    },
+    {
+      "id": "511714",
+      "name": "Debora",
+      "surname": "Santiago",
+      "email": "debisameque@gmail.com"
+    },
+    {
+      "id": "49505",
+      "name": "Carol",
+      "surname": "Leite",
+      "email": ""
+    },
+    {
+      "id": "508078",
+      "name": "Lais",
+      "surname": "Bota",
+      "email": "lais@gmail.com"
     }
   ],
   "loans": [
