@@ -43,10 +43,9 @@
   ],
   "students": [
     {
-      "id": "0",
+      "id": "100",
       "name": "Dante",
-      "surname": "Araújo",
-      "registration": 509015
+      "surname": "Araújo"
     }
   ],
   "loans": []

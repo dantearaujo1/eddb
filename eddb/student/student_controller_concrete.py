@@ -1,11 +1,39 @@
+from fuzzywuzzy import process
+
+from eddb.student.student_interface.feedback_student_view import FeedbackStudentView
 from eddb.student.student_interface.student_controller import StudentController
 from eddb.student.student_interface.student_repository import StudentRepository
+from eddb.student.student_model import Student
+
+
 class StudentControllerConcrete(StudentController):
     def __init__(self, repository: StudentRepository):
         self.repository = repository
         self.view = None
-    def set_view(self, view):
+
+    def set_view(self, view: FeedbackStudentView):
         self.view = view
 
-    def search_by_name(self, name):
-        pass
+    def search_by_name(self, name: str, limit: int = 5):
+        students = self.repository.get_all()
+        query = name
+        if limit:
+            result = process.extract(query,students,limit=limit)
+        else:
+            result = process.extract(query,students)
+        result = list(map(lambda x: x[0],result))
+        return result
+    
+    def get_all(self):
+        return self.repository.get_all()
+
+    def add_student(self,name: str,surname: str):
+        s = Student(name=name,surname=surname)
+        return self.repository.add_item(s),[s]
+
+    def edit_student(self,old_id: str ,new_name: str,new_surname: str):
+        edited = Student(id=old_id,name=new_name,surname=new_surname)
+        return self.repository.update_item(edited),[edited]
+
+    def delete_student(self,student : Student):
+        return self.repository.delete_item(student),[student]

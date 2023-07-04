@@ -3,7 +3,7 @@ from eddb.util.util import str_uuid4
 
 @dataclass
 class Student:
-    """docstring"""
+    """Student dataclass that has only 4 attributes"""
 
     id: int = 0
     name: str = "unknown"
