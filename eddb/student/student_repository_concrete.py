@@ -1,3 +1,8 @@
+'''
+    Class that will handle our data management using JSON as the stored
+    File
+'''
+
 from eddb.student.student_interface.student_repository import StudentRepository
 from eddb.util.util import open_json,write_data
 from eddb.model.usuario import Usuario

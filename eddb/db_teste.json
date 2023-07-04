@@ -44,14 +44,18 @@
       "id": "90a625d2-498d-471a-b525-8a2a340c65b9",
       "title": "How to Use Python Lambda Functions",
       "author": "Andre Burgaud"
+    },
+    {
+      "id": "b01b2433-4bb7-46ca-8a1d-495d6af3839e",
+      "title": "Pirulito",
+      "author": "Eu"
     }
   ],
   "students": [
     {
       "id": "0",
       "name": "Dante",
-      "surname": "Araújo",
-      "registration": 509015
+      "surname": "Araújo"
     }
   ],
   "loans": []

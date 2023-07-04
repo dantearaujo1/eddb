@@ -131,7 +131,7 @@ class BookView(FeedbackBookView):
             self.show_menu()
             self.end = self.get_input()
         sub_menu = self.create_submenu()
-        print(sub_menu)
+        #print(sub_menu)
         if sub_menu:
             sub_menu()
         #É para aparecer o menu com todas as opcoes do menu livro
