@@ -3,7 +3,6 @@ from eddb.student.student_controller_concrete import StudentControllerConcrete
 from eddb.student.student_repository_concrete import StudentRepositoryConcrete
 
 class StudentComposer:
-
     @staticmethod
     def create() -> StudentView:
         repository = StudentRepositoryConcrete("eddb/db_teste.json")

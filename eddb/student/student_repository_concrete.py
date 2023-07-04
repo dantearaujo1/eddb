@@ -30,6 +30,60 @@ class StudentRepositoryConcrete(StudentRepository):
         json_data = self.__open()
         if json_data:
             students = json_data["students"]
-            students = list(map(lambda student: self.__JSON_to_student(student),students))
+            students = list(map(lambda s: self.__JSON_to_student(s),students))
             return students
         return []
+    
+    def add_item(self,item):
+        '''
+        Add a student item into our JSON database
+        '''
+        json_data = self.__open()
+        incoming_student = self.__student_to_JSON(item)
+        items = []
+        if json_data:
+            items = json_data["students"]
+            for student in items:
+                if student["name"] == incoming_student["name"] or student["id"] == incoming_student["id"]:
+                    return False
+            items.append(incoming_student)
+            json_data["students"] = items
+            write_data(self.file,json_data)
+            return True
+        return False
+    
+    def update_item(self, edited):
+        '''
+        Update a student item into our JSON database
+        '''
+        json_data = self.__open()
+        incoming_student = self.__student_to_JSON(edited)
+        items = []
+        if json_data:
+            items = json_data["students"]
+            for student in items:
+                if student["id"] == incoming_student["id"]:
+                    student["name"] = incoming_student["name"]
+                    student["surname"] = incoming_student["surname"]
+                    student["email"] = incoming_student["email"]
+            json_data["students"] = items
+            write_data(self.file,json_data)
+            return True
+        return False
+    
+    def delete_item(self,student):
+        '''
+        Delete student item from JSON
+        '''
+        json_data = self.__open()
+        ongoing_student = self.__student_to_JSON(student)
+        items = []
+        if json_data:
+            items = json_data["students"]
+            for student in items:
+                if student["id"] == ongoing_student["id"]:
+                    items.remove(student)
+            json_data["students"] = items
+            write_data(self.file,json_data)
+            return True
+        return False
