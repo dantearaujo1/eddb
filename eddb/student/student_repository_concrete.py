@@ -28,3 +28,13 @@ class StudentRepositoryConcrete(StudentRepository):
             students = list(map(lambda student: self.__JSON_to_student(student),students))
             return students
         return []
+
+    def get_by_id(self,ID):
+        json_data = self.__open()
+        if json_data:
+            students = json_data["students"]
+            result = []
+            for student in students:
+                if student["id"] == int(ID):
+                    result.append(self.__JSON_to_student(student))
+        return result

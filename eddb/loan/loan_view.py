@@ -1,6 +1,6 @@
 import time, re
 from collections.abc import Iterable
-from colorama import Back,Fore
+from colorama import Back,Fore,Style
 from readchar import readkey,readchar,key
 
 from eddb.util.util import clear_screen,get_terminal_size, move_cursor
@@ -48,22 +48,53 @@ class LoanView(FeedbackLoanView):
         anwser = ''
         all_items = self.controller.get_all()
         items = all_items
-        option = 0
+        selected = 0
+        terminal_size = get_terminal_size()
         search = False
         question = "Digite a matricula do aluno: "
+        # Window variables ==================
+        window = terminal_size[1] - 3
+        fake_selection = 0
+        ini_item = 0
+        end_item = window
+        # ===================================
         while end is not True:
+            terminal_size = get_terminal_size()
             clear_screen()
             move_cursor(0,get_terminal_size()[1]-2-len(items))
-            print("=====================================")
-            for idx,item in enumerate(items):
-                move_cursor(0,get_terminal_size()[1]-2-idx)
-                if option == idx:
-                    print(f"{Back.WHITE}{Fore.BLACK}{item.id}")
+            total = len(items)
+            if total < window:
+                window = total
+            if end_item < total:
+                print(f"{Back.BLUE}^{Style.RESET_ALL}=====================TerminalSize:{terminal_size[1]}")
+            else:
+                print(f"{Back.BLACK}^{Style.RESET_ALL}======================TerminalSize:{terminal_size[1]}")
+            # for idx,item in enumerate(items):
+            #     student = self.controller.get_student_by_id(item.student_id)[0]
+            #     if ini_item <= idx < end_item:
+            #         book = self.controller.get_book_by_id(item.book_id)[0]
+            #         move_cursor(0,terminal_size[1]-2-idx)
+            #         if selected == idx:
+            #             print(f"{Back.WHITE}{Fore.BLACK}{item.student_id} - {student.name} - {book.title}")
+            #         else:
+            #             print(f"{item.student_id} - {student.name} - {book.title}")
+            for i in range(window):
+                item = items[ini_item + i]
+                student = self.controller.get_student_by_id(item.student_id)[0]
+                book = self.controller.get_book_by_id(item.book_id)[0]
+                move_cursor(0,terminal_size[1]-2-i)
+                if fake_selection == i:
+                    print(f"{Back.WHITE}{Fore.BLACK}{item.student_id} - {student.name} - {book.title}")
                 else:
-                    print(f"{item.id}")
-            move_cursor(0,get_terminal_size()[1]-1)
-            print("=====================================")
-            move_cursor(0,get_terminal_size()[1]-1)
+                    print(f"{item.student_id} - {student.name} - {book.title}")
+
+            move_cursor(0,terminal_size[1]-1)
+            if ini_item > 0:
+                print(f"{Back.BLUE}v{Style.RESET_ALL}=====================TerminalSize:{terminal_size[1]}")
+            else:
+                print(f"{Back.BLACK}v{Style.RESET_ALL}======================TerminalSize:{terminal_size[1]}")
+            move_cursor(0,terminal_size[1]-1)
+
             print(question + anwser,end='')
             search = False
             k = readkey()
@@ -71,9 +102,21 @@ class LoanView(FeedbackLoanView):
                 end = True
                 continue
             if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
-                option -= 1
+                selected -= 1
+                if fake_selection > 0:
+                    fake_selection -=1
+                else:
+                    if selected > 1:
+                        ini_item -= 1
+                        end_item -= 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
-                option += 1
+                selected += 1
+                if fake_selection < window:
+                    fake_selection +=1
+                else:
+                    if selected < total - 1:
+                        ini_item += 1
+                        end_item += 1
             elif k in (key.BACKSPACE):
                 anwser = anwser[0:-1]
                 search = True
@@ -82,22 +125,32 @@ class LoanView(FeedbackLoanView):
                 search = True
             if search:
                 if len(anwser) > 0:
-                    items = self.controller.search_by_name(anwser,5)
+                    items = self.controller.search_by_student_id(anwser,5)
                 else:
                     items = all_items
-            option %= len(items)
+
+            if len(items) > 0:
+                selected %= len(items)
+                # end_item %= len(items) + window
+                # ini_item %= len(items)
+            else:
+                selected = 0
             end = False
-        self.show_loan(items[option])
-        self.__select_option(["Editar","Excluir"],[self.edit_loan,self.delete_loan],items[option])
+
+        self.show_loan(items[selected])
+        self.__select_selected(["Editar","Excluir"],[self.edit_loan,self.delete_loan],items[selected])
         self.input_method = self.__back
 
     def __select_option(self,options,options_callback,*args):
         text = "Escolha o que deseja fazer: "
         print(text)
         for i,option in enumerate(options):
-            print(f"{i}. {option} |",end="")
+            if i < len(options) - 1:
+                print(f"| {i}. {option} ",end="")
+            else:
+                print(f"| {i}. {option} |",end="")
         print("")
-        k = readchar()
+        k = readkey()
         for i,option in enumerate(options):
             if k == str(i):
                 options_callback[i](*args)
@@ -122,19 +175,20 @@ class LoanView(FeedbackLoanView):
         while end is not True:
             clear_screen()
             move_cursor(0,get_terminal_size()[1]-2-len(options[option]))
-            print("=====================================")
+            print(f"======================TerminalSize:{get_terminal_size()[1]}")
             for idx,item in enumerate(options[option]):
                 move_cursor(0,get_terminal_size()[1]-2-idx)
-                if selected == idx:
-                    if hasattr(item,'name'):
-                        print(f"{Back.WHITE}{Fore.BLACK}{item.name}")
+                if ini_item <= idx < end_item:
+                    if selected == idx:
+                        if hasattr(item,'name'):
+                            print(f"{Back.WHITE}{Fore.BLACK}{item.name}")
+                        else:
+                            print(f"{Back.WHITE}{Fore.BLACK}{item.title}")
                     else:
-                        print(f"{Back.WHITE}{Fore.BLACK}{item.title}")
-                else:
-                    if hasattr(item,'name'):
-                        print(f"{item.name}")
-                    else:
-                        print(f"{item.title}")
+                        if hasattr(item,'name'):
+                            print(f"{item.name}")
+                        else:
+                            print(f"{item.title}")
             move_cursor(0,get_terminal_size()[1]-1)
             print("=====================================")
             if len(data) > 0:
@@ -211,7 +265,14 @@ class LoanView(FeedbackLoanView):
         print(f"ID_STUDENT: {loan.student_id}")
         print(f"Loan Day: {loan.loan_date}")
         print(f"Payday: {loan.payday}")
-        print(f"Status: {loan.status}")
+        colors = []
+        if loan.status == "active":
+            colors = [Back.BLUE,Fore.WHITE]
+        elif loan.status == "inactive":
+            colors = [Back.LIGHTBLACK_EX,Fore.WHITE]
+        elif loan.status == "overdue":
+            colors = [Back.RED,Fore.WHITE]
+        print(f"Status: {colors[0]}{colors[1]}{loan.status}")
 
     def show(self):
         clear_screen()

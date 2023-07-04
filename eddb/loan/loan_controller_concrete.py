@@ -1,3 +1,6 @@
+import time
+from eddb.util.util import clear_screen
+from fuzzywuzzy import process
 from eddb.loan.loan_interface.loan_controller import LoanController
 from eddb.loan.loan_interface.loan_repository import LoanRepository
 from eddb.book.book_interface.book_repository import BookRepository
@@ -19,6 +22,42 @@ class LoanControllerConcrete(LoanController):
     def search_by_name(self, name, limit=5):
         return self.get_all()
 
+    def search_by_book_name(self,name,limit=5):
+        pass
+    def search_by_student_name(self,name,limit=5):
+        pass
+    def search_by_student_id(self,ID,limit=5):
+        loans = self.repository.get_all()
+        students_ids = list(map(lambda l: str(l.student_id),loans))
+        query = str(ID)
+        result = []
+        if limit:
+            result = process.extract(query,students_ids,limit=limit)
+        else:
+            result = process.extract(query,students_ids)
+        result = list(filter(lambda x: x[1] > 60,result))
+        clear_screen()
+        result = set(map(lambda x: x[0],result))
+        matches = []
+        for loan in loans:
+            for match in result:
+                if loan.student_id == int(match):
+                    matches.append(loan)
+        print(matches)
+        return matches
+
+    def search_by_book_id(self,ID,limit=5):
+        loans = self.repository.get_all()
+        books_ids = list(map(lambda l: str(l.books_id),loans))
+        query = str(ID)
+        result = []
+        if limit:
+            result = process.extract(query,books_ids,limit=limit)
+        else:
+            result = process.extract(query,books_ids)
+        result = list(map(lambda x: x[0],result))
+        return result
+
     def search_by_filter(self, query, filter, limit=5):
         if isinstance(filter,Book):
             return self.book_repository.get_all()
@@ -35,10 +74,16 @@ class LoanControllerConcrete(LoanController):
 
     def get_book_by_id(self,ID):
         book = self.book_repository.get_by_id(ID)
-        return book
+        if book[0] is not None:
+            return book
+        else:
+            return []
     def get_student_by_id(self,ID):
         student = self.student_repository.get_by_id(ID)
-        return student
+        if student[0] is not None:
+            return student
+        else:
+            return []
 
     def update_item(self,item,data):
         item.id_book = data["id_book"]

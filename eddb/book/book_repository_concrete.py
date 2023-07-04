@@ -33,6 +33,26 @@ class BookRepositoryConcrete(BookRepository):
             return books
         return []
 
+    def get_by_id(self,ID):
+        json_data = self.__open()
+        items = []
+        if json_data:
+            items = json_data["books"]
+            for book in items:
+                if book["id"] == ID:
+                    return [self.__JSON_to_book(book)]
+        return []
+
+    def get_by_title(self,title):
+        json_data = self.__open()
+        items = []
+        if json_data:
+            items = json_data["books"]
+            for book in items:
+                if book["title"] == title:
+                    return self.__JSON_to_book(book)
+        return []
+
     def add_item(self,item):
         '''
         Add a book item into our JSON database

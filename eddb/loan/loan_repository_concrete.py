@@ -24,7 +24,7 @@ class LoanRepositoryConcrete(LoanRepository):
 
     def get_all(self):
         """
-        Return a list of dictionary objects that with data
+        Return a list of loan objects or empty if not found
         """
         json_data = self.__open()
         if json_data:
@@ -32,6 +32,44 @@ class LoanRepositoryConcrete(LoanRepository):
             loans = list(map(lambda loan: self.__JSON_to_loan(loan),loans))
             return loans
         return []
+
+    def get_by_ID(self,ID):
+        """
+        Return a list with loan objects or empty if not found
+        """
+        json_data = self.__open()
+        if json_data:
+            loans = json_data["loans"]
+            for loan in loans:
+                if loan["ID"] == ID:
+                    return [self.__JSON_to_loan(loan)]
+        return []
+
+    def get_all_by_book_id(self,ID):
+        """
+        Return a list with loan objects or empty if not found
+        """
+        json_data = self.__open()
+        list_of_loans = []
+        if json_data:
+            loans = json_data["loans"]
+            for loan in loans:
+                if loan["book_id"] == ID:
+                    list_of_loans.append(self.__JSON_to_loan(loan))
+        return list_of_loans
+
+    def get_all_by_student_id(self,ID):
+        """
+        Return a list with loan objects or empty if not found
+        """
+        json_data = self.__open()
+        list_of_loans = []
+        if json_data:
+            loans = json_data["loans"]
+            for loan in loans:
+                if loan["student_id"] == ID:
+                    list_of_loans.append(self.__JSON_to_loan(loan))
+        return list_of_loans
 
     def add_item(self,item):
         '''
