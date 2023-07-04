@@ -1,19 +1,21 @@
 import uuid
 from dataclasses import dataclass, field
-from util.util import str_uuid4
-
+from eddb.util.util import str_uuid4
 
 @dataclass
 class Student:
-    """DocString"""
+    """docstring"""
 
     id: int = 0
-    name: str = "User"
-    surname: str = ""
-    
+    name: str = "unknown"
+    surname: str = "unknown"
+    email: str = ""
+
     def __dict__(self):
         return {
             "id":f"{self.id}",
             "name":f"{self.name}",
-            "surname":f"{self.surname}"
+            "surname":f"{self.surname}",
+            "email":f"{self.email}",
         }
+

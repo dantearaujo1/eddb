@@ -6,16 +6,15 @@ from colorama import Back,Fore
 from eddb.loan.loan_composer import LoanComposer
 from eddb.student.student_composer import StudentComposer
 from eddb.book.book_composer import BookComposer
+from eddb.endview.end_view import EndView
 from eddb.util.util import clear_screen
 
 
 class MainMenuView():
     def __init__(self):
-        # self.controller = controller
         self.options = ["Menu Livro","Menu Empréstimos","Menu Usuário","Sair"]
         self.option = 0
         self.end = False
-        self.last = None
 
     def show_menu(self):
         for i in range(len(self.options)):
@@ -39,15 +38,17 @@ class MainMenuView():
         if self.option == 0:
             return BookComposer.create()
         if self.option == 1:
-            return StudentComposer.create()
+            view = LoanComposer.create()
+            view.set_parent(self)
+            return view
         if self.option == 2:
-            return LoanComposer.create()
-        if self.option == 3:
-            if self.last:
-                return self.last
+            return StudentComposer.create()
+        if self.option == len(self.options)-1:
+            return EndView().start()
+
 
     def start(self):
-        while self.end != True:
+        while self.end is not True:
             clear_screen()
             self.show_menu()
             self.end = self.get_input()
