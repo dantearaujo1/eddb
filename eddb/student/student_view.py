@@ -23,12 +23,12 @@ class StudentView(FeedbackStudentView):
 
     def show_student(self, student):
         clear_screen()
-        print(f"id: {student.id}")
-        print(f"name: {student.name}")
-        print(f"surname: {student.surname}")
-        print(f"email: {student.email}")
-        input(f"{Back.LIGHTBLACK_EX}{Fore.WHITE}Aperte qualquer tecla para voltar")
-        #time.sleep(3)
+        print(f"Matrícula: {student.id}")
+        print(f"Nome: {student.name}")
+        print(f"Sobrenome: {student.surname}")
+        print(f"Email: {student.email}")
+        #input(f"{Back.LIGHTBLACK_EX}{Fore.WHITE}Aperte qualquer tecla para voltar")
+        time.sleep(5)
         self.end = False
         self.start()
 
@@ -116,10 +116,10 @@ class StudentView(FeedbackStudentView):
         students = []
         option = 0
         search = False
-        question = "Busca Rápida: "
+        question = "Digite o nome ou matrícula do aluno: "
         while end is not True:
             clear_screen()
-            for i in range(len(students)-1,0,-1):
+            for i in range(len(students)-1,-1,-1):
                 student = students[i]
                 if option == i:
                     print(f"{Back.WHITE}{Fore.BLACK}{student.name}")
@@ -205,16 +205,16 @@ class StudentView(FeedbackStudentView):
         questions = ["Nova matrícula","Novo nome","Novo sobrenome", "Novo email"]
         option = 0
         search = False
-        question = "Busca Rápida: "
+        question = "Digite o nome ou matrícula do aluno: "
         while end is not True:
             clear_screen()
-            for i in range(len(students)-1,0,-1):
+            for i in range(len(students)-1,-1,-1):
                 student = students[i]
                 if option == i:
                     print(f"{Back.WHITE}{Fore.BLACK}{student.name}")
                 else:
                     print(f"{student.name}")
-            move_cursor(0,get_terminal_size()[1]-1)
+            #move_cursor(0,get_terminal_size()[1]-2)
             print(question + anwser,end='')
             search = False
             k = readkey()
@@ -226,7 +226,8 @@ class StudentView(FeedbackStudentView):
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
                 option += 1
             elif k in (key.BACKSPACE):
-                anwser = anwser[0:-1]
+                if len(anwser) > 0:
+                    anwser = anwser[0:-1]
                 search = True
             else:
                 anwser += k
@@ -256,13 +257,13 @@ class StudentView(FeedbackStudentView):
         clear_screen()
         if result[0] is True:
             SuccessFeedbackStudentView(f"Parabéns você editou o estudante:").show_students(result[1])
-            input()
-            #time.sleep(3)
+            #input()
+            time.sleep(4)
             self.end = False
             self.start()
         else:
             FailureFeedbackStudentView("Não foi possível editar este estudante").show_students(result[1])
-            time.sleep(3)
+            time.sleep(4)
             self.end = False
             self.start()
 
