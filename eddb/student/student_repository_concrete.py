@@ -54,7 +54,7 @@ class StudentRepositoryConcrete(StudentRepository):
         if json_data:
             items = json_data["students"]
             for student in items:
-                if student["name"] == incoming_student["name"] or student["id"] == incoming_student["id"]:
+                if student["id"] == incoming_student["id"]:
                     return False
             items.append(incoming_student)
             json_data["students"] = items
@@ -62,7 +62,7 @@ class StudentRepositoryConcrete(StudentRepository):
             return True
         return False
 
-    def update_item(self, edited):
+    def update_item(self, edited, old_id):
         '''
         Update a student item into our JSON database
         '''
@@ -72,7 +72,8 @@ class StudentRepositoryConcrete(StudentRepository):
         if json_data:
             items = json_data["students"]
             for student in items:
-                if student["id"] == incoming_student["id"]:
+                if student["id"] == old_id:
+                    student["id"] = incoming_student["id"]
                     student["name"] = incoming_student["name"]
                     student["surname"] = incoming_student["surname"]
                     student["email"] = incoming_student["email"]

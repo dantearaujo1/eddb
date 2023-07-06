@@ -26,7 +26,9 @@ class StudentView(FeedbackStudentView):
         print(f"id: {student.id}")
         print(f"name: {student.name}")
         print(f"surname: {student.surname}")
-        time.sleep(3)
+        print(f"email: {student.email}")
+        input(f"{Back.LIGHTBLACK_EX}{Fore.WHITE}Aperte qualquer tecla para voltar")
+        #time.sleep(3)
         self.end = False
         self.start()
 
@@ -39,7 +41,6 @@ class StudentView(FeedbackStudentView):
 
     def get_input(self):
         # Lidando com  CTRL_C Exit Key
-        exit_key = readchar()
         a = readkey()
         if a  == key.ENTER:
             return True
@@ -105,17 +106,68 @@ class StudentView(FeedbackStudentView):
         elif self.option == 1:
             return self.add_student
         elif self.option == 2:
-            return None
+            return self.edit_student
+        elif self.option == 3:
+            return self.delete_student
+
+    def delete_student(self):
+        end = False
+        anwser = ''
+        students = []
+        option = 0
+        search = False
+        question = "Busca Rápida: "
+        while end is not True:
+            clear_screen()
+            for i in range(len(students)-1,0,-1):
+                student = students[i]
+                if option == i:
+                    print(f"{Back.WHITE}{Fore.BLACK}{student.name}")
+                else:
+                    print(f"{student.name}")
+            move_cursor(0,get_terminal_size()[1]-1)
+            print(question + anwser,end='')
+            search = False
+            k = readkey()
+            if k  == key.ENTER:
+                end = True
+                continue
+            if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
+                option -= 1
+            elif k in (key.CTRL_P,key.CTRL_K,key.UP):
+                option += 1
+            elif k in (key.BACKSPACE):
+                anwser = anwser[0:-1]
+                search = True
+            else:
+                anwser += k
+                search = True
+            if search:
+                students = self.controller.search_by_name(anwser,100)
+            option %= len(students)
+            end = False
+        result = self.controller.delete_student(students[option])
+        clear_screen()
+        if result[0] is True:
+            SuccessFeedbackStudentView("Estudante deletado:").show_students(result[1])
+            time.sleep(3)
+            self.end = False
+            self.start()
+        else:
+            FailureFeedbackStudentView("Erro ao deletar o estudante!").show_students(result[1])
+            time.sleep(3)
+            self.end = False
+            self.start()
 
     def add_student(self):
         end = False
         text_input = ''
         anwser = []
-        questions = ["name","surname"]
+        questions = ["a matrícula","o nome","o sobrenome", "o email"]
         option = 0
-        question = f"Digite o {questions[option]} do estudante: "
+        question = f"Digite {questions[option]} do estudante: "
         while end is not True:
-            question = f"Digite o {questions[option]} do estudante: "
+            question = f"Digite {questions[option]} do estudante: "
             clear_screen()
             move_cursor(0,get_terminal_size()[1]-1)
             print(question + text_input,end='')
@@ -131,9 +183,9 @@ class StudentView(FeedbackStudentView):
                 text_input = text_input[0:-1]
             else:
                 text_input += k
-            option %= len(questions)
+            #option %= len(questions)
             end = False
-        result = self.controller.add_student(anwser[0],anwser[1])
+        result = self.controller.add_student(anwser[0],anwser[1],anwser[2], anwser[3])
         clear_screen()
         if result[0] is True:
             SuccessFeedbackStudentView("Parabéns você adicionou um estudante!").show_students(result[1])
@@ -142,6 +194,74 @@ class StudentView(FeedbackStudentView):
             self.start()
         else:
             FailureFeedbackStudentView("Não foi possível adicionar este estudante").show_students(result[1])
+            time.sleep(3)
+            self.end = False
+            self.start()
+
+    def edit_student(self):
+        end = False
+        anwser = ''
+        students = []
+        questions = ["Nova matrícula","Novo nome","Novo sobrenome", "Novo email"]
+        option = 0
+        search = False
+        question = "Busca Rápida: "
+        while end is not True:
+            clear_screen()
+            for i in range(len(students)-1,0,-1):
+                student = students[i]
+                if option == i:
+                    print(f"{Back.WHITE}{Fore.BLACK}{student.name}")
+                else:
+                    print(f"{student.name}")
+            move_cursor(0,get_terminal_size()[1]-1)
+            print(question + anwser,end='')
+            search = False
+            k = readkey()
+            if k  == key.ENTER:
+                end = True
+                continue
+            if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
+                option -= 1
+            elif k in (key.CTRL_P,key.CTRL_K,key.UP):
+                option += 1
+            elif k in (key.BACKSPACE):
+                anwser = anwser[0:-1]
+                search = True
+            else:
+                anwser += k
+                search = True
+            if search:
+                students = self.controller.search_by_name(anwser,100)
+            option %= len(students)
+            end = False
+        to_edit = students[option]
+        old_id = to_edit.id
+        questions_anwsers = [ to_edit.id, to_edit.name, to_edit.surname, to_edit.email ]
+        question_option = 0
+        while question_option < len(questions):
+            clear_screen()
+            move_cursor(0,get_terminal_size()[1]-1)
+            print(questions[question_option] + ": " + questions_anwsers[question_option],end='')
+            k = readkey()
+            if k  == key.ENTER:
+                question_option += 1
+                continue
+            if k in (key.BACKSPACE):
+                questions_anwsers[question_option] = questions_anwsers[question_option][0:-1]
+            else:
+                questions_anwsers[question_option] = questions_anwsers[question_option] + k
+        result = self.controller.edit_student(old_id, questions_anwsers[0],questions_anwsers[1],questions_anwsers[2],questions_anwsers[3])
+        #result[1].append(to_edit)
+        clear_screen()
+        if result[0] is True:
+            SuccessFeedbackStudentView(f"Parabéns você editou o estudante:").show_students(result[1])
+            input()
+            #time.sleep(3)
+            self.end = False
+            self.start()
+        else:
+            FailureFeedbackStudentView("Não foi possível editar este estudante").show_students(result[1])
             time.sleep(3)
             self.end = False
             self.start()
@@ -167,14 +287,17 @@ class SuccessFeedbackStudentView(FeedbackStudentView):
             print(f" ID: {students[1].id}")
             print(f" Nome: {students[1].name}")
             print(f" Sobrenome: {students[1].surname}")
+            print(f" Email: {students[1].email}")
             print("Depois:")
             print(f" ID: {students[0].id}")
             print(f" Nome: {students[0].name}")
             print(f" Sobrenome: {students[0].surname}")
+            print(f" Email: {students[0].email}")
         else:
             print(f"ID: {students[0].id}")
             print(f"Nome: {students[0].name}")
             print(f"Sobrenome: {students[0].surname}")
+            print(f"Email: {students[0].email}")
         time.sleep(3)
 
 class FailureFeedbackStudentView(FeedbackStudentView):
