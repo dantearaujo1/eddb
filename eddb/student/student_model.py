@@ -13,9 +13,9 @@ class Student:
 
     def __dict__(self):
         return {
-            "id":f"{self.id}",
-            "name":f"{self.name}",
-            "surname":f"{self.surname}",
-            "email":f"{self.email}",
+            "id":self.id,
+            "name":self.name,
+            "surname":self.surname,
+            "email":self.email
         }
 

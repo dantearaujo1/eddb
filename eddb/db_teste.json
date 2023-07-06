@@ -48,7 +48,7 @@
   ],
   "students": [
     {
-      "id": "509015",
+      "id": 509015,
       "name": "Dante",
       "surname": "Araújo",
       "email": "danteeng@hotmail.com"
@@ -72,19 +72,19 @@
       "email": ""
     },
     {
-      "id": "511714",
+      "id": 511714,
       "name": "Debora",
       "surname": "Sameque",
       "email": "debisameque@gmail.com"
     },
     {
-      "id": "495051",
+      "id": 495051,
       "name": "Carol",
       "surname": "Leite",
       "email": "carolzinhah@hotmail.com"
     },
     {
-      "id": "508078",
+      "id": 508078,
       "name": "Lais",
       "surname": "Bota",
       "email": "lais@gmail.com"
