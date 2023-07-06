@@ -43,12 +43,11 @@ class LoanControllerConcrete(LoanController):
             for match in result:
                 if loan.student_id == int(match):
                     matches.append(loan)
-        print(matches)
         return matches
 
     def search_by_book_id(self,ID,limit=5):
         loans = self.repository.get_all()
-        books_ids = list(map(lambda l: str(l.books_id),loans))
+        books_ids = list(map(lambda l: str(l.book_id),loans))
         query = str(ID)
         result = []
         if limit:
@@ -58,13 +57,27 @@ class LoanControllerConcrete(LoanController):
         result = list(map(lambda x: x[0],result))
         return result
 
-    def search_by_filter(self, query, filter, limit=5):
-        if isinstance(filter,Book):
-            return self.book_repository.get_all()
-        if isinstance(filter,Loan):
-            return self.get_all()
-        if isinstance(filter,Student):
-            return self.student_repository.get_all()
+    def search_book_by_id(self,ID,limit=5):
+        books = self.book_repository.get_all()
+        query = ID
+        result = []
+        if limit:
+            result = process.extract(query,books,limit=limit)
+        else:
+            result = process.extract(query,books)
+        result = list(map(lambda x: x[0],result))
+        return result
+
+    def search_student_by_id(self,ID,limit=5):
+        students = self.student_repository.get_all()
+        query = ID
+        result = []
+        if limit:
+            result = process.extract(query,students,limit=limit)
+        else:
+            result = process.extract(query,students)
+        result = list(map(lambda x: x[0],result))
+        return result
 
     def get_all(self):
         return self.repository.get_all()
@@ -78,6 +91,11 @@ class LoanControllerConcrete(LoanController):
             return book
         else:
             return []
+    def get_students(self):
+        return self.student_repository.get_all()
+    def get_books(self):
+        return self.book_repository.get_all()
+
     def get_student_by_id(self,ID):
         student = self.student_repository.get_by_id(ID)
         if student[0] is not None:
@@ -96,3 +114,17 @@ class LoanControllerConcrete(LoanController):
     def delete_item(self,item):
         return self.repository.delete_item(item),[item]
 
+    def get_loan_by_book_id(self,ID):
+        loans = self.repository.get_all()
+        result = []
+        for loan in loans:
+            if loan.book_id == ID:
+                result.append(loan)
+        return result
+
+    def book_status_is_active(self,book):
+        loans = self.get_loan_by_book_id(book.id)
+        for loan in loans:
+            if loan.status == "active" or loan.status == "overdue":
+                return True
+        return False
