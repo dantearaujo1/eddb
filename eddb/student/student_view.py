@@ -7,6 +7,7 @@ from colorama import Back,Fore
 from eddb.student.student_interface.student_controller import StudentController
 from eddb.student.student_model import Student
 from eddb.student.student_interface.feedback_student_view import FeedbackStudentView
+from eddb.endview.end_composer import EndComposer
 from eddb.util.util import clear_screen,move_cursor,get_terminal_size
 
 class StudentView(FeedbackStudentView):
@@ -109,6 +110,9 @@ class StudentView(FeedbackStudentView):
             return self.edit_student
         elif self.option == 3:
             return self.delete_student
+        elif self.option == 4:
+            EndComposer.create().start()
+
 
     def delete_student(self):
         end = False
