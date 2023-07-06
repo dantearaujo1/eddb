@@ -5,11 +5,11 @@ from eddb.util.themes import get_theme
 
 theme = get_theme("debora")
 
-def draw_scrollable_menu(items,fake,ini_item):
+def draw_scrollable_menu(items,fake,ini_item,reverse=False,other_lines=1):
     window_vertical_size = get_terminal_size()[1]
     window_horizontal_size = get_terminal_size()[0]
     fake_selected = fake
-    end_item_position = window_vertical_size - 3 # 3 = Available Space
+    end_item_position = window_vertical_size - 2 - other_lines# 3 = Available Space
     menu_vertical_size = end_item_position
     total_items = len(items)
     padding = 1
@@ -21,21 +21,34 @@ def draw_scrollable_menu(items,fake,ini_item):
     else:
         print(f"{theme['scrollable_up_arrow_off']}^{Style.RESET_ALL}{(window_horizontal_size-4)*borders['up']}")
 
-    for i in range(menu_vertical_size):
-        if total_items > 0:
-            if i // total_items > 0:
-                break
-            item = items[ini_item + i]
-            move_cursor(0,window_vertical_size-i-2)
-            if fake_selected == i:
-                print(f"{padding*borders['left']}{theme['bselected']}{theme['fselected']}{item}")
-            else:
-                print(f"{padding*borders['left']}{item}")
+    if reverse:
+        fake_selected = len(items)-fake-1
+        for i in range(len(items)):
+            if total_items > 0:
+                if i // total_items > 0:
+                    break
+                item = items[len(items)-i-1]
+                move_cursor(0,menu_vertical_size-i+1)
+                if fake_selected == i:
+                    print(f"{padding*borders['left']}{theme['bselected']}{theme['fselected']}{item}")
+                else:
+                    print(f"{padding*borders['left']}{item}")
+    else:
+        for i in range(menu_vertical_size):
+            if total_items > 0:
+                if i // total_items > 0:
+                    break
+                item = items[ini_item + i]
+                move_cursor(0,window_vertical_size-i-2)
+                if fake_selected == i:
+                    print(f"{padding*borders['left']}{theme['bselected']}{theme['fselected']}{item}")
+                else:
+                    print(f"{padding*borders['left']}{item}")
     move_cursor(0,window_vertical_size-1)
     if ini_item > 0:
         print(f"{theme['scrollable_up_arrow_on']}v{Style.RESET_ALL}{(window_horizontal_size-4)*borders['down']}")
     else:
-        print(f"{theme['scrollable_up_arrow_off']}v{Style.RESET_ALL}{(window_horizontal_size-4)*borders['down']}")
+        print(f"{theme['scrollable_up_arrow_off']}v{Style.RESET_ALL}{(window_horizontal_size-4)*borders['down']}",end="")
 
 
 
