@@ -13,7 +13,7 @@ class Student:
 
     def __dict__(self):
         return {
-            "id":f"{self.id}",
+            "id":self.id,
             "name":f"{self.name}",
             "surname":f"{self.surname}",
             "email":f"{self.email}",
