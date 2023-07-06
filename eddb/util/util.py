@@ -1,9 +1,12 @@
+from datetime import datetime,timezone
 import uuid
 import os
 import json
 
 def str_uuid4():
     return str(uuid.uuid4())
+def time_utc():
+    return datetime.now(timezone.utc)
 
 def clear_screen():
     print("\033c", end='')

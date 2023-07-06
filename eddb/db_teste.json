@@ -39,6 +39,11 @@
       "id": "ee7f7cad-fe3a-4217-a84f-b946532863db",
       "title": "O Sangue",
       "author": "Mary Del Priore"
+    },
+    {
+      "id": "09bfad9d-4299-44d7-9cdd-2397d94e0be2",
+      "title": "Como fazer uma monografia",
+      "author": "Délcio Vieira Salomon"
     }
   ],
   "students": [
@@ -48,6 +53,24 @@
       "surname": "Araújo",
       "email": "danteeng@hotmail.com"
     },
+    {
+      "id": 509014,
+      "name": "Débora",
+      "surname": "Sameque",
+      "email": "debisameque@hotmail.com"
+    },
+    {
+      "id": 514568,
+      "name": "Drielle",
+      "surname": "Furtado",
+      "email": "driL@hotmail.com"
+    },
+    {
+      "id": 1,
+      "name": "Mateus",
+      "surname": "Sales",
+      "email": ""
+    }
     {
       "id": "511714",
       "name": "Debora",
@@ -65,13 +88,78 @@
       "name": "Lais",
       "surname": "Bota",
       "email": "lais@gmail.com"
+
     }
   ],
   "loans": [
     {
       "id": "0",
+      "id_book": "09bfad9d-4299-44d7-9cdd-2397d94e0be2",
+      "id_student": 509015,
+      "loan_date": "",
+      "payday": "",
+      "status": "inactive"
+    },
+    {
+      "id": "1",
       "id_book": "7358840b-1d4b-4e5c-93c7-43ad3975e38f",
-      "id_student": "0",
+      "id_student": 509014,
+      "loan_date": "",
+      "payday": "",
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "id_book": "b7994ec7-589a-4868-9722-987db46453f6",
+      "id_student": 509015,
+      "loan_date": "",
+      "payday": "",
+      "status": "active"
+    },
+    {
+      "id": "3",
+      "id_book": "90a625d2-498d-471a-b525-8a2a340c65b9",
+      "id_student": 509015,
+      "loan_date": "",
+      "payday": "",
+      "status": "active"
+    },
+    {
+      "id": "4",
+      "id_book": "ee7f7cad-fe3a-4217-a84f-b946532863db",
+      "id_student": 509015,
+      "loan_date": "",
+      "payday": "",
+      "status": "active"
+    },
+    {
+      "id": "5",
+      "id_book": "ee7f7cad-fe3a-4217-a84f-b946532863db",
+      "id_student": 509015,
+      "loan_date": "",
+      "payday": "",
+      "status": "active"
+    },
+    {
+      "id": "6",
+      "id_book": "a6fb7eaa-c5fa-4e9c-80a0-994dd092e671",
+      "id_student": 509015,
+      "loan_date": "",
+      "payday": "",
+      "status": "active"
+    },
+    {
+      "id": "7",
+      "id_book": "f3648608-1e07-4a1a-a892-fe24ecbc1556",
+      "id_student": 509015,
+      "loan_date": "",
+      "payday": "",
+      "status": "active"
+    },
+    {
+      "id": "8",
+      "id_book": "20b574d6-94e0-49e5-ba88-52cd14874312",
+      "id_student": 509015,
       "loan_date": "",
       "payday": "",
       "status": "active"
