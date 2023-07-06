@@ -16,7 +16,7 @@ class StudentView(FeedbackStudentView):
         self.option = 0
         self.end = False
         self.menu = None
-        
+
     def show_students(self, students):
         for student in students:
             print(students.name)
@@ -50,7 +50,7 @@ class StudentView(FeedbackStudentView):
             self.option -= 1
         self.option %= len(self.options)
         return False
-    
+
     def get_students(self):
         """
         Retorna todos os estudantes do banco e permite filtrar por nomes
@@ -95,7 +95,7 @@ class StudentView(FeedbackStudentView):
                 if len(anwser) > 0:
                     students = self.controller.search_by_name(anwser,5)
                 else:
-                    students = all
+                    students = all_students
             option %= len(students)
             end = False
         self.show_student(students[option])

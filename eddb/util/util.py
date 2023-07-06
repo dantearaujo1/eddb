@@ -12,7 +12,7 @@ def clear_screen():
     print("\033c", end='')
 
 def move_cursor(x,y):
-    print(f"\033[{y};{x}H")
+    print(f"\033[{y};{x}H",end='', flush=True)
 
 def get_terminal_size():
     return os.get_terminal_size()
@@ -48,4 +48,3 @@ def handle_request(request_action,*parametros):
         if action == request_action:
             return handler(*parametros)
 
-        # self.options = ["Menu Livros","Menu Empréstimo","Menu Cadastro","Sair"]

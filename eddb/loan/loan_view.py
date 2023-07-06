@@ -47,12 +47,12 @@ class LoanView(FeedbackLoanView):
         anwser = ''
         all_items = self.controller.get_all()
         items = all_items
-        selected = 0
-        terminal_size = get_terminal_size()
         search = False
         question = "Digite a matricula do aluno: "
 
         # Window variables ==================
+        selected = 0
+        terminal_size = get_terminal_size()
         window = terminal_size[1] - 3
         fake_selection = 0
         ini_item = 0
