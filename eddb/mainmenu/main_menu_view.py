@@ -8,20 +8,23 @@ from eddb.student.student_composer import StudentComposer
 from eddb.book.book_composer import BookComposer
 from eddb.endview.end_view import EndView
 from eddb.util.util import clear_screen
+from eddb.util.menus import draw_scrollable_menu
 
 
 class MainMenuView():
     def __init__(self):
-        self.options = ["Menu Livro","Menu Empréstimos","Menu Estudante","Sair"]
+        self.options = ["Menu Livro","Menu Empréstimos","Menu Estudantes","Sair"]
         self.option = 0
         self.end = False
 
     def show_menu(self):
-        for i in range(len(self.options)):
-            if i == self.option:
-                print(f"{Back.WHITE}{Fore.BLACK}{self.options[i]}")
-            else:
-                print(f"{self.options[i]}")
+        # for i in range(len(self.options)):
+        #     if i == self.option:
+        #         print(f"{Back.WHITE}{Fore.BLACK}{self.options[i]}")
+        #     else:
+        #         print(f"{self.options[i]}")
+        draw_scrollable_menu(self.options,self.option,0)
+
 
     def get_input(self):
         k = readkey()

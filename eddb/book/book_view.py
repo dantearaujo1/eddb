@@ -1,4 +1,4 @@
-import time,sys
+import time,re
 from collections.abc import Iterable
 
 from readchar import readchar,readkey, key
@@ -6,8 +6,9 @@ from colorama import Back,Fore
 
 from eddb.book.book_interface.book_controller import BookController
 from eddb.book.book_model import Book
-from eddb.util.util import clear_screen,move_cursor,get_terminal_size
 from eddb.book.book_interface.feedback_book_view import FeedbackBookView
+from eddb.util.util import clear_screen,move_cursor,get_terminal_size
+from eddb.util.menus import draw_scrollable_menu
 
 class BookView(FeedbackBookView):
     def __init__(self, controller: BookController):
@@ -15,7 +16,9 @@ class BookView(FeedbackBookView):
         self.options = ["Procurar","Cadastrar","Editar","Excluir","Sair"]
         self.option = 0
         self.end = False
-        self.menu = None
+        self.menu = [self.show]
+        self.input_method = self.get_input
+        self.books = self.controller.get_all()
 
     def show_books(self, books):
         for book in books:
@@ -29,7 +32,7 @@ class BookView(FeedbackBookView):
         self.end = False
         self.start()
 
-    def show_menu(self):
+    def show(self):
         for i in range(len(self.options)):
             if i == self.option:
                 print(f"{Back.WHITE}{Fore.BLACK}{self.options[i]}")
@@ -39,7 +42,7 @@ class BookView(FeedbackBookView):
     def get_input(self):
         k = readkey()
         if k  == key.ENTER:
-            return True
+            self.create_submenu()
         if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
             self.option += 1
         elif k in (key.CTRL_P,key.CTRL_K,key.UP):
@@ -55,77 +58,114 @@ class BookView(FeedbackBookView):
         # mas estamos filtrando puxando do "banco de dados" os livros novamente
         end = False
         anwser = ''
-        all_books = self.controller.get_all()
-        books = all_books
-        option = 0
+        books = self.books
         search = False
         question = "Digite o nome de um livro: "
+
+        # Window variables ==================
+        selected = 0
+        terminal_size = get_terminal_size()
+        window = terminal_size[1] - 3
+        fake_selection = 0
+        ini_item = 0
+        end_item = window
+        # ===================================
+        pos_na_string = 0
         while end is not True:
-            clear_screen()
-            move_cursor(0,get_terminal_size()[1]-2-len(books))
-            print("=====================================")
-            for idx,book in enumerate(books):
-                move_cursor(0,get_terminal_size()[1]-2-idx)
-                if option == idx:
-                    print(f"{Back.WHITE}{Fore.BLACK}{book.title}")
-                else:
-                    print(f"{book.title}")
-            move_cursor(0,get_terminal_size()[1]-1)
-            print("=====================================")
-            move_cursor(0,get_terminal_size()[1]-1)
+            showed_items = list(map(lambda x: x.title,books))
+            total= len(showed_items)
+
+            draw_scrollable_menu(showed_items,fake_selection,ini_item)
             print(question + anwser,end='')
+            move_cursor( len(question) + pos_na_string ,get_terminal_size()[1])
             search = False
             k = readkey()
             if k  == key.ENTER:
                 end = True
                 continue
-            if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
-                option -= 1
+            if k == key.LEFT:
+                if pos_na_string > 1:
+                    pos_na_string -= 1
+            elif k == key.RIGHT:
+                pos_na_string += 1
+            elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
+                selected -= 1
+                if fake_selection > 0:
+                    fake_selection -=1
+                else:
+                    if end_item > window:
+                        ini_item -= 1
+                        end_item -= 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
-                option += 1
+                selected += 1
+                if fake_selection < window - 1:
+                    fake_selection +=1
+                else:
+                    if ini_item < total - window - 1:
+                        ini_item += 1
+                        end_item += 1
             elif k in (key.BACKSPACE):
                 anwser = anwser[0:-1]
                 search = True
+                end_item = window
+                ini_item = 0
+                fake_selection = 0
+                pos_na_string -= 1
             else:
-                anwser += k
+                if len(anwser) == 0:
+                    anwser += k
+                else:
+                    anwser[pos_na_string] = k
+                pos_na_string += 1
                 search = True
+                ini_item = 0
+                end_item = window
+                fake_selection = 0
             if search:
                 if len(anwser) > 0:
-                    books = self.controller.search_by_name(anwser,5)
+                    books = self.controller.search_by_name(anwser,10)
                 else:
-                    books = all
-            option %= len(books)
+                    books = self.books
+            selected %= len(books)
             end = False
-        self.show_book(books[option])
+        self.show_book(books[selected])
 
     def create_submenu(self):
         if self.option == 0:
-            return self.get_books
-        elif self.option == 1:
-            return self.add_book
-        elif self.option == 2:
-            return self.edit_book
-        elif self.option == 3:
-            return self.delete_book
-        else:
-            return
+            self.menu.append(self.get_books)
+            self.option = 0
+        if self.option == 1:
+            self.menu.append(self.add_book)
+            self.option = 0
+        if self.option == 2:
+            self.menu.append(self.edit_book)
+            self.option = 0
+        if self.option == 3:
+            self.menu.append(self.delete_book)
+            self.option = 0
+        return self.__back
+
+    def __back(self):
+        pass
 
     def delete_book(self):
         end = False
         anwser = ''
-        books = []
-        option = 0
+        books = self.books
         search = False
-        question = "Busca Rápida: "
+        question = "Digite o nome de um livro: "
+
+        # Window variables ==================
+        selected = 0
+        terminal_size = get_terminal_size()
+        window = terminal_size[1] - 3
+        fake_selection = 0
+        ini_item = 0
+        end_item = window
         while end is not True:
-            clear_screen()
-            for i in range(len(books)-1,0,-1):
-                book = books[i]
-                if option == i:
-                    print(f"{Back.WHITE}{Fore.BLACK}{book.title}")
-                else:
-                    print(f"{book.title}")
-            move_cursor(0,get_terminal_size()[1]-1)
+            showed_items = list(map(lambda x: x.title,books))
+            total = len(showed_items)
+            draw_scrollable_menu(showed_items,fake_selection,ini_item)
             print(question + anwser,end='')
             search = False
             k = readkey()
@@ -133,20 +173,44 @@ class BookView(FeedbackBookView):
                 end = True
                 continue
             if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
-                option += 1
+                selected -= 1
+                if fake_selection > 0:
+                    fake_selection -=1
+                else:
+                    if end_item > window:
+                        ini_item -= 1
+                        end_item -= 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
-                option -= 1
+                selected += 1
+                if fake_selection < window - 1:
+                    fake_selection +=1
+                else:
+                    if ini_item < total - window - 1:
+                        ini_item += 1
+                        end_item += 1
             elif k in (key.BACKSPACE):
                 anwser = anwser[0:-1]
                 search = True
+                end_item = window
+                ini_item = 0
+                fake_selection = 0
             else:
                 anwser += k
                 search = True
+                end_item = window
+                ini_item = 0
+                fake_selection = 0
             if search:
                 books = self.controller.search_by_name(anwser,100)
-            option %= len(books)
             end = False
-        result = self.controller.delete_book(books[option])
+        clear_screen()
+        certeza = input("Tem certeza que deseja excluir? ")
+        result = []
+        if re.match(r'^si?m?$',certeza.lower()):
+            result = self.controller.delete_book(books[selected])
+        else:
+            result.append(False)
+            result.append([])
         clear_screen()
         if result[0] is True:
             SuccessFeedbackBookView("Livro Deletado:").show_books(result[1])
@@ -201,20 +265,21 @@ class BookView(FeedbackBookView):
     def edit_book(self):
         end = False
         anwser = ''
-        books = []
-        questions = ["título","autor"]
-        option = 0
+        books = self.books
         search = False
-        question = "Busca Rápida: "
+        question = "Digite o nome de um livro: "
+
+        # Window variables ==================
+        selected = 0
+        terminal_size = get_terminal_size()
+        window = terminal_size[1] - 3
+        fake_selection = 0
+        ini_item = 0
+        end_item = window
         while end is not True:
-            clear_screen()
-            for i in range(len(books)-1,0,-1):
-                book = books[i]
-                if option == i:
-                    print(f"{Back.WHITE}{Fore.BLACK}{book.title}")
-                else:
-                    print(f"{book.title}")
-            move_cursor(0,get_terminal_size()[1]-1)
+            showed_items = list(map(lambda x: x.title,books))
+            total = len(showed_items)
+            draw_scrollable_menu(showed_items,fake_selection,ini_item)
             print(question + anwser,end='')
             search = False
             k = readkey()
@@ -222,20 +287,39 @@ class BookView(FeedbackBookView):
                 end = True
                 continue
             if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
-                option += 1
+                selected -= 1
+                if fake_selection > 0:
+                    fake_selection -=1
+                else:
+                    if end_item > window:
+                        ini_item -= 1
+                        end_item -= 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
-                option -= 1
+                selected += 1
+                if fake_selection < window - 1:
+                    fake_selection +=1
+                else:
+                    if ini_item < total - window - 1:
+                        ini_item += 1
+                        end_item += 1
             elif k in (key.BACKSPACE):
                 anwser = anwser[0:-1]
                 search = True
+                end_item = window
+                ini_item = 0
+                fake_selection = 0
             else:
                 anwser += k
                 search = True
+                end_item = window
+                ini_item = 0
+                fake_selection = 0
             if search:
                 books = self.controller.search_by_name(anwser,100)
-            option %= len(books)
+            selected %= len(books)
             end = False
-        to_edit = books[option]
+        to_edit = books[selected]
+        questions = ["título","autor"]
         questions_anwsers = [ to_edit.title, to_edit.author ]
         question_option = 0
         while question_option < len(questions):
@@ -267,13 +351,10 @@ class BookView(FeedbackBookView):
 
 
     def start(self):
-        while self.end != True:
+        while self.end is not True:
             clear_screen()
-            self.show_menu()
-            self.end = self.get_input()
-        sub_menu = self.create_submenu()
-        if sub_menu:
-            sub_menu()
+            self.menu[-1]()
+            self.end = self.input_method()
 
 class SuccessFeedbackBookView(FeedbackBookView):
 
@@ -304,4 +385,3 @@ class FailureFeedbackBookView(FeedbackBookView):
     def show_books(self,books: Iterable[ Book ]):
         print(f"{Back.RED}{Fore.WHITE}{self.message}")
         time.sleep(3)
-

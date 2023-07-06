@@ -7,6 +7,7 @@ from colorama import Back,Fore
 from eddb.student.student_interface.student_controller import StudentController
 from eddb.student.student_model import Student
 from eddb.student.student_interface.feedback_student_view import FeedbackStudentView
+from eddb.endview.end_composer import EndComposer
 from eddb.util.util import clear_screen,move_cursor,get_terminal_size
 
 class StudentView(FeedbackStudentView):
@@ -16,7 +17,7 @@ class StudentView(FeedbackStudentView):
         self.option = 0
         self.end = False
         self.menu = None
-        
+
     def show_students(self, students):
         for student in students:
             print(students.name)
@@ -50,7 +51,7 @@ class StudentView(FeedbackStudentView):
             self.option -= 1
         self.option %= len(self.options)
         return False
-    
+
     def get_students(self):
         """
         Retorna todos os estudantes do banco e permite filtrar por nomes
@@ -95,7 +96,7 @@ class StudentView(FeedbackStudentView):
                 if len(anwser) > 0:
                     students = self.controller.search_by_name(anwser,5)
                 else:
-                    students = all
+                    students = all_students
             option %= len(students)
             end = False
         self.show_student(students[option])
@@ -109,6 +110,9 @@ class StudentView(FeedbackStudentView):
             return self.edit_student
         elif self.option == 3:
             return self.delete_student
+        elif self.option == 4:
+            EndComposer.create().start()
+
 
     def delete_student(self):
         end = False

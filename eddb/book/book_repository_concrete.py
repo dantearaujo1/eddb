@@ -100,9 +100,9 @@ class BookRepositoryConcrete(BookRepository):
         items = []
         if json_data:
             items = json_data["books"]
-            for book in items:
-                if book["id"] == ongoing_book["id"]:
-                    items.remove(book)
+            for b in items:
+                if b["id"] == ongoing_book["id"]:
+                    items.remove(b)
             json_data["books"] = items
             write_data(self.file,json_data)
             return True
