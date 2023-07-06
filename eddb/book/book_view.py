@@ -37,7 +37,6 @@ class BookView(FeedbackBookView):
                 print(f"{self.options[i]}")
 
     def get_input(self):
-        # Lidando com  CTRL_C Exit Key
         k = readkey()
         if k  == key.ENTER:
             return True
