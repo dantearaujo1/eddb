@@ -48,7 +48,7 @@
   ],
   "students": [
     {
-      "id": 509015,
+      "id": "509015",
       "name": "Dante",
       "surname": "Araújo",
       "email": "danteeng@hotmail.com"
@@ -88,7 +88,6 @@
       "name": "Lais",
       "surname": "Bota",
       "email": "lais@gmail.com"
-
     }
   ],
   "loans": [
