@@ -4,7 +4,7 @@ import sys
 
 from colorama import Back,Fore
 
-from eddb.util.util import clear_screen,move_cursor
+from eddb.util.util import clear_screen,move_cursor,get_terminal_size
 
 
 class EndView():
@@ -21,6 +21,7 @@ class EndView():
         counter = 0
         color = random.choice(self.colors)
         paint = True
+        terminal_height = get_terminal_size()[1]
         while self.end is not True:
             t = time.process_time()
             delta = t - last
@@ -28,10 +29,11 @@ class EndView():
             last = t
             if paint:
                 clear_screen()
+                move_cursor(1,terminal_height-3)
                 print(f"{color}Até mais!")
-                move_cursor(0,1)
+                move_cursor(1,terminal_height-2)
                 print(f"{color}Desenvolvido por:")
-                move_cursor(0,2)
+                move_cursor(1,terminal_height-1)
                 print(f"{color}Dante e Débora")
                 paint = False
             if counter > duration:
