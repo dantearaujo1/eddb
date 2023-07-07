@@ -33,6 +33,7 @@ class BookView(FeedbackBookView):
 
     def show_book(self,book):
         clear_screen()
+        move_cursor(0,get_terminal_size()[1]-3)
         print(f"Title: {book.title}")
         print(f"Author: {book.author}")
         print("Aperte Qualquer Tecla para Sair",end="")
@@ -73,7 +74,6 @@ class BookView(FeedbackBookView):
                 if self.init_option > 0:
                     self.init_option -= 1
                     self.end_option -= 1
-        # self.option %= len(self.options)
         return False
 
     def get_books(self):
@@ -82,7 +82,7 @@ class BookView(FeedbackBookView):
         """
         end = False
         anwser = ''
-        books = self.books
+        books = self.controller.get_all()
         search = False
         question = "Digite o nome ou o autor de um livro: "
 
@@ -254,17 +254,16 @@ class BookView(FeedbackBookView):
         result = []
         if re.match(r'^si?m?$',certeza.lower()):
             result = self.controller.delete_book(books[selected])
-        else:
-            result.append(False)
-            result.append([])
+        elif re.match(r'^n(a?ã?)o?$',certeza.lower()):
+            FailureFeedbackBookView("Operação Cancelada").show_books(result)
+            self.input_method = self.__back
+            return
         clear_screen()
         if result[0] is True:
             SuccessFeedbackBookView("Livro Deletado:").show_books(result[1])
-            time.sleep(3)
             self.input_method = self.__back
         else:
             FailureFeedbackBookView("Erro ao deletar o livro!").show_books(result[1])
-            time.sleep(3)
             self.input_method = self.__back
 
     def add_book(self):
@@ -314,11 +313,9 @@ class BookView(FeedbackBookView):
         clear_screen()
         if result[0] is True:
             SuccessFeedbackBookView("Parabéns você adicionou um livro!").show_books(result[1])
-            time.sleep(3)
             self.input_method = self.__back
         else:
             FailureFeedbackBookView("Não foi possível adicionar este livro").show_books(result[1])
-            time.sleep(3)
             self.input_method = self.__back
 
     def edit_book(self):
@@ -401,11 +398,9 @@ class BookView(FeedbackBookView):
         clear_screen()
         if result[0] is True:
             SuccessFeedbackBookView(f"Parabéns você editou o livro:").show_books(result[1])
-            time.sleep(3)
             self.input_method = self.__back
         else:
             FailureFeedbackBookView("Não foi possível editar este livro").show_books(result[1])
-            time.sleep(3)
             self.input_method = self.__back
 
 
@@ -421,6 +416,7 @@ class SuccessFeedbackBookView(FeedbackBookView):
         self.message = msg
 
     def show_books(self,books: Iterable[ Book ]):
+        move_cursor(0,get_terminal_size()[1])
         print(f"{Back.GREEN}{Fore.BLACK}{self.message }")
         if len(books) > 1:
             print("Antes:")
@@ -435,7 +431,8 @@ class SuccessFeedbackBookView(FeedbackBookView):
             print(f"ID: {books[0].id}")
             print(f"Título: {books[0].title}")
             print(f"Autor: {books[0].author}")
-        time.sleep(3)
+        print("Aperte qualquer tecla para voltar")
+        readkey()
 
 class FailureFeedbackBookView(FeedbackBookView):
 
@@ -443,4 +440,5 @@ class FailureFeedbackBookView(FeedbackBookView):
         self.message = msg
     def show_books(self,books: Iterable[ Book ]):
         print(f"{Back.RED}{Fore.WHITE}{self.message}")
-        time.sleep(3)
+        print("Aperte qualquer tecla para voltar")
+        readkey()
