@@ -77,13 +77,13 @@
       "email": "debisameque@gmail.com"
     },
     {
-      "id": "495051",
+      "id": 495051,
       "name": "Carol",
       "surname": "Leite",
       "email": "carolzinhah@hotmail.com"
     },
     {
-      "id": 508078,
+      "id": 509015,
       "name": "Lais",
       "surname": "Bota",
       "email": "lais@gmail.com"
@@ -133,14 +133,6 @@
     {
       "id": "6",
       "id_book": "a6fb7eaa-c5fa-4e9c-80a0-994dd092e671",
-      "id_student": 509015,
-      "loan_date": "",
-      "payday": "",
-      "status": "active"
-    },
-    {
-      "id": "7",
-      "id_book": "f3648608-1e07-4a1a-a892-fe24ecbc1556",
       "id_student": 509015,
       "loan_date": "",
       "payday": "",
