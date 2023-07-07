@@ -18,6 +18,34 @@ Submenu Livro Excluir: {c}
     - Adicionar opção de voltar para menu livro
     - Mudar a mensagem após o usuário cancelar excluir um livro pois está "Erro ao deletar o livro"
     - Quando eu excluo um livro, os empréstimos dele ainda continuam existindo no JSON
+    - Corrigir o apertar uma tecla duas vezes para subir ou descer para uma vez @book_view {cm:2023-07-04}
+    - Corrigir exceções das partes de input dos menus (backspace, sobrescrever...) @book_view
+    - Corrigir Menu de Livros não selecionando o correto após a alteração do
+    menu invertido
+
+Submenu Procurar: {c}
+    - Corrigir o cursor (Background branco dividido na mesma linha)
+    - Quando apaga mais do que o que escreveu no input ta dando erro #Bugs
+Submenu Cadastrar: OK
+Submenu Editar: OK
+Submenu Excluir: {c}
+    - A busca de livro pelo nome ta dando erro
+=======
+    - Corrigir o apertar uma tecla duas vezes para subir ou descer para uma vez @book_view {cm:2023-07-04}
+    - Corrigir exceções das partes de input dos menus (backspace, sobrescrever...) @book_view
+    - Corrigir Menu de Livros não selecionando o correto após a alteração do {cm:2023-07-07}
+    - Adicionar possibilidade de voltar do menu com alguma tecla
+
+Submenu Procurar: {c}
+    - Corrigir o cursor (Background branco dividido na mesma linha)
+    - Quando apaga mais do que o que escreveu no input ta dando erro #Bugs
+    - Resultado de get_books mostrando no inicio da tela ao invés do fim
+Submenu Cadastrar:
+    - Resultado de add_books mostrando no inicio da tela ao invés do fim
+    - Ao terminar de adicionar deve voltar para o menu principal da view
+Submenu Editar: OK
+Submenu Excluir: {c}
+    - A busca de livro pelo nome ta dando erro
 
 +EMPRÉSTIMOS #Dante
 Menu empréstimo
@@ -41,6 +69,11 @@ Submenu Voltar:
 - Pergunta em cima da bordar do menu em buscar empréstimo e fazer
 empréstimo
 - TextInput em cima da borda do menu
+-Quando entro no menu emprestimo e volto, e depois entro no meu estudante e vou em Sair, volta pro menu emprestimo e se vou em Voltar, volta pro menu estudante
+- Todos os ID dos loans são strings, deveriam ser inteiros
+-Quando entro no menu emprestimo e volto, e depois entro no meu estudante e vou em Sair, volta pro menu emprestimo e se vou em Voltar, volta pro menu estudante {cm:2023-07-07}
+- Pergunta em cima da bordar do menu em buscar empréstimo e fazer
+empréstimo
 
 +USUÁRIO #Debora
     - Quando o tamanho do terminal ta grande (cabendo todas as opções) o usuário consegue ir para além da última opção inferior

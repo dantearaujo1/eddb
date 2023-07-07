@@ -45,7 +45,6 @@ class BookView(FeedbackBookView):
     def get_input(self):
         total = len(self.options)
         k = readkey()
-        # self.window = get_terminal_size()[1] - 3
         if k  == key.ENTER:
             return self.create_submenu()
         if k  == key.SPACE:
@@ -127,6 +126,7 @@ class BookView(FeedbackBookView):
                         ini_item -= 1
                         end_item -= 1
                 selected += 1
+<<<<<<< Updated upstream
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
                 if fake_selection < min(window - 1,total-1):
                     fake_selection +=1
