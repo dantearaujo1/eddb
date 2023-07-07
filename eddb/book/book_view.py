@@ -80,8 +80,6 @@ class BookView(FeedbackBookView):
         """
         Retorna todos os livros do banco e permite filtrar por nomes
         """
-        # TODO: Melhorar pois estamos armazenando todos os livros em all_books
-        # mas estamos filtrando puxando do "banco de dados" os livros novamente
         end = False
         anwser = ''
         books = self.books
