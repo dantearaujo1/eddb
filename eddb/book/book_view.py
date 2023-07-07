@@ -7,22 +7,29 @@ from colorama import Back,Fore
 from eddb.book.book_interface.book_controller import BookController
 from eddb.book.book_model import Book
 from eddb.book.book_interface.feedback_book_view import FeedbackBookView
+from eddb.endview.end_composer import EndComposer
 from eddb.util.util import clear_screen,move_cursor,get_terminal_size
 from eddb.util.menus import draw_scrollable_menu
 
 class BookView(FeedbackBookView):
     def __init__(self, controller: BookController):
         self.controller = controller
-        self.options = ["Procurar","Cadastrar","Editar","Excluir","Sair"]
+        self.options = ["Procurar","Cadastrar","Editar","Excluir","Voltar","Sair"]
         self.option = 0
         self.end = False
         self.menu = [self.show]
         self.input_method = self.get_input
         self.books = self.controller.get_all()
 
+        self.window = get_terminal_size()[1] - 3
+        self.init_option = 0
+        self.end_option = self.window
+        self.fake_selection = 0
+
     def show_books(self, books):
         for book in books:
             print(book.title)
+
 
     def show_book(self,book):
         clear_screen()
@@ -33,21 +40,40 @@ class BookView(FeedbackBookView):
         self.start()
 
     def show(self):
-        for i in range(len(self.options)):
-            if i == self.option:
-                print(f"{Back.WHITE}{Fore.BLACK}{self.options[i]}")
-            else:
-                print(f"{self.options[i]}")
+        draw_scrollable_menu(self.options,self.fake_selection,self.init_option,reverse=True)
 
     def get_input(self):
         k = readkey()
         if k  == key.ENTER:
-            self.create_submenu()
+            return self.create_submenu()
+        if k  == key.SPACE:
+            clear_screen()
+            print(f"Window Size:{ self.window }")
+            print(f"Fake Option:{ self.fake_selection }")
+            print(f"Option:{ self.option }")
+            print(f"Ini Option:{ self.init_option }")
+            print(f"End Option:{ self.end_option }")
+            time.sleep(3)
         if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
-            self.option += 1
+            if self.option < len(self.options)-1:
+                self.option += 1
+            if self.fake_selection < self.end_option - self.init_option - 1:
+                self.fake_selection += 1
+            else:
+                if self.end_option < len(self.options):
+                    self.init_option += 1
+                    self.end_option += 1
+
         elif k in (key.CTRL_P,key.CTRL_K,key.UP):
-            self.option -= 1
-        self.option %= len(self.options)
+            if self.option > 0:
+                self.option -= 1
+            if self.fake_selection > 0:
+                self.fake_selection -= 1
+            else:
+                if self.init_option > 0:
+                    self.init_option -= 1
+                    self.end_option -= 1
+        # self.option %= len(self.options)
         return False
 
     def get_books(self):
@@ -77,15 +103,14 @@ class BookView(FeedbackBookView):
 
             draw_scrollable_menu(showed_items,fake_selection,ini_item)
             print(question + anwser,end='')
-            move_cursor( len(question) + pos_na_string ,get_terminal_size()[1])
+            move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
             search = False
             k = readkey()
             if k  == key.ENTER:
                 end = True
                 continue
             if k == key.LEFT:
-                if pos_na_string > 1:
-                    pos_na_string -= 1
+                pos_na_string -= 1
             elif k == key.RIGHT:
                 pos_na_string += 1
             elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
@@ -114,8 +139,12 @@ class BookView(FeedbackBookView):
             else:
                 if len(anwser) == 0:
                     anwser += k
+                elif pos_na_string == 0:
+                    anwser = k + anwser
                 else:
-                    anwser[pos_na_string] = k
+                    left = anwser[:pos_na_string]
+                    right = anwser[pos_na_string:]
+                    anwser = left + k + right
                 pos_na_string += 1
                 search = True
                 ini_item = 0
@@ -126,6 +155,8 @@ class BookView(FeedbackBookView):
                     books = self.controller.search_by_name(anwser,10)
                 else:
                     books = self.books
+            pos_na_string %= max(len(anwser)+1,1)
+            pos_na_string = max(pos_na_string,0)
             selected %= len(books)
             end = False
         self.show_book(books[selected])
@@ -143,10 +174,14 @@ class BookView(FeedbackBookView):
         if self.option == 3:
             self.menu.append(self.delete_book)
             self.option = 0
-        return self.__back
+        if self.option == 4:
+            return True
+        if self.option == 5:
+            EndComposer.create().start()
 
     def __back(self):
         pass
+
 
     def delete_book(self):
         end = False
@@ -204,6 +239,7 @@ class BookView(FeedbackBookView):
                 books = self.controller.search_by_name(anwser,100)
             end = False
         clear_screen()
+        move_cursor(0,window)
         certeza = input("Tem certeza que deseja excluir? ")
         result = []
         if re.match(r'^si?m?$',certeza.lower()):
@@ -352,7 +388,6 @@ class BookView(FeedbackBookView):
 
     def start(self):
         while self.end is not True:
-            clear_screen()
             self.menu[-1]()
             self.end = self.input_method()
 

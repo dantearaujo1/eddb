@@ -3,6 +3,8 @@
 +LIVRO #Dante
     - Corrigir o apertar uma tecla duas vezes para subir ou descer para uma vez @book_view {cm:2023-07-04}
     - Corrigir exceções das partes de input dos menus (backspace, sobrescrever...) @book_view
+    - Corrigir Menu de Livros não selecionando o correto após a alteração do
+    menu invertido
 
 Submenu Procurar: {c}
     - Corrigir o cursor (Background branco dividido na mesma linha)
@@ -18,7 +20,7 @@ Submenu Excluir: {c}
 +USUÁRIO #Debora
 - Corrigir o nome do menu 'Usuário' para 'Estudante' {cm:2023-07-04}
 Submenu Procurar:
-    - Os "Textos" das partes de inputs, eram para serem bloqueados #Bugs 
+    - Os "Textos" das partes de inputs, eram para serem bloqueados #Bugs
     - Quando apaga mais do que o que escreveu no input ta dando erro
     - Ajeitar titulo das infos do aluno na tela de mostrá-las {cm:2023-07-04}
 Submenu Cadastrar:

@@ -25,6 +25,11 @@ class LoanView(FeedbackLoanView):
         self.end = False
         self.last = None
 
+        self.window = get_terminal_size()[1] - 3
+        self.init_option = 0
+        self.end_option = self.window
+        self.fake_selection = 0
+
     def set_parent(self,view):
         self.last = view
 
@@ -36,11 +41,9 @@ class LoanView(FeedbackLoanView):
             self.menu.append(self.add_loan)
             self.option = 0
         elif self.option == 2:
-            self.last.end= False
-            self.last.start()
+            return True
         else:
             EndComposer().create().start()
-            self.end = True
 
     def get_loans(self):
         end = False
@@ -277,13 +280,7 @@ class LoanView(FeedbackLoanView):
         print(f"Status: {colors[0]}{colors[1]}{loan.status}")
 
     def show(self):
-        clear_screen()
-        for i,option in enumerate(self.options):
-            if i == self.option:
-                print(f"{Back.WHITE}{Fore.BLACK}{option}")
-            else:
-                print(f"{option}")
-        return False
+        draw_scrollable_menu(self.options,self.fake_selection,self.init_option,reverse=True)
 
     def __back(self,*args):
         self.menu.pop()
@@ -294,11 +291,26 @@ class LoanView(FeedbackLoanView):
     def get_input(self):
         k = readkey()
         if k  == key.ENTER:
-            self.create_submenu()
+            return self.create_submenu()
         if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
-            self.option += 1
+            if self.option < len(self.options)-1:
+                self.option += 1
+            if self.fake_selection < self.end_option - self.init_option - 1:
+                self.fake_selection += 1
+            else:
+                if self.end_option < len(self.options):
+                    self.init_option += 1
+                    self.end_option += 1
+
         elif k in (key.CTRL_P,key.CTRL_K,key.UP):
-            self.option -= 1
+            if self.option > 0:
+                self.option -= 1
+            if self.fake_selection > 0:
+                self.fake_selection -= 1
+            else:
+                if self.init_option > 0:
+                    self.init_option -= 1
+                    self.end_option -= 1
         self.option %= len(self.options)
         return False
 

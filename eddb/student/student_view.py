@@ -1,4 +1,4 @@
-import time,sys
+import time,sys,re
 from collections.abc import Iterable
 
 from readchar import readchar, readkey, key
@@ -9,18 +9,29 @@ from eddb.student.student_model import Student
 from eddb.student.student_interface.feedback_student_view import FeedbackStudentView
 from eddb.endview.end_composer import EndComposer
 from eddb.util.util import clear_screen,move_cursor,get_terminal_size
+from eddb.util.menus import draw_scrollable_menu
 
 class StudentView(FeedbackStudentView):
     def __init__(self, controller: StudentController):
         self.controller = controller
-        self.options = ["Procurar","Cadastrar","Editar","Excluir","Sair"]
+        self.options = ["Procurar","Cadastrar","Editar","Excluir","Voltar","Sair"]
         self.option = 0
         self.end = False
-        self.menu = None
+        self.menu = [self.show]
+        self.input_method = self.get_input
+        self.last = None
+
+        self.window = get_terminal_size()[1] - 3
+        self.init_option = 0
+        self.end_option = self.window
+        self.fake_selection = 0
+
+    def set_parent(self,view):
+        self.last = view
 
     def show_students(self, students):
         for student in students:
-            print(students.name)
+            print(student.name)
 
     def show_student(self, student):
         clear_screen()
@@ -28,27 +39,36 @@ class StudentView(FeedbackStudentView):
         print(f"Nome: {student.name}")
         print(f"Sobrenome: {student.surname}")
         print(f"Email: {student.email}")
-        #input(f"{Back.LIGHTBLACK_EX}{Fore.WHITE}Aperte qualquer tecla para voltar")
         time.sleep(5)
         self.end = False
         self.start()
 
-    def show_menu(self):
-        for i in range(len(self.options)):
-            if i == self.option:
-                print(f"{Back.WHITE}{Fore.BLACK}{self.options[i]}")
-            else:
-                print(f"{self.options[i]}")
+    def show(self):
+        draw_scrollable_menu(self.options,self.fake_selection,self.init_option,reverse=True)
 
     def get_input(self):
-        # Lidando com  CTRL_C Exit Key
         a = readkey()
         if a  == key.ENTER:
-            return True
-        elif a in (key.CTRL_N,key.CTRL_J,key.DOWN):
-            self.option += 1
+            return self.create_submenu()
+        if a in (key.CTRL_N,key.CTRL_J,key.DOWN):
+            if self.option < len(self.options)-1:
+                self.option += 1
+            if self.fake_selection < self.end_option - self.init_option - 1:
+                self.fake_selection += 1
+            else:
+                if self.end_option < len(self.options):
+                    self.init_option += 1
+                    self.end_option += 1
+
         elif a in (key.CTRL_P,key.CTRL_K,key.UP):
-            self.option -= 1
+            if self.option > 0:
+                self.option -= 1
+            if self.fake_selection > 0:
+                self.fake_selection -= 1
+            else:
+                if self.init_option > 0:
+                    self.init_option -= 1
+                    self.end_option -= 1
         self.option %= len(self.options)
         return False
 
@@ -60,32 +80,42 @@ class StudentView(FeedbackStudentView):
         anwser = ''
         all_students = self.controller.get_all()
         students = all_students
-        option = 0
         search = False
         question = "Digite o nome de um estudante: "
+
+        # Window variables ==================
+        selected = 0
+        terminal_size = get_terminal_size()
+        window = terminal_size[1] - 3
+        fake_selection = 0
+        ini_item = 0
+        end_item = window
+        # ===================================
         while end is not True:
-            clear_screen()
-            move_cursor(0,get_terminal_size()[1]-2-len(students))
-            print("=====================================")
-            for idx,student in enumerate(students):
-                move_cursor(0,get_terminal_size()[1]-2-idx)
-                if option == idx:
-                    print(f"{Back.WHITE}{Fore.BLACK}{student.name}")
-                else:
-                    print(f"{student.name}")
-            move_cursor(0,get_terminal_size()[1]-1)
-            print("=====================================")
-            move_cursor(0,get_terminal_size()[1]-1)
+            total = len(students)
+            draw_scrollable_menu(students,fake_selection,ini_item)
             print(question + anwser,end='')
             search = False
             k = readkey()
             if k  == key.ENTER:
                 end = True
                 continue
-            if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
-                option -= 1
+            elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
+                selected -= 1
+                if fake_selection > 0:
+                    fake_selection -=1
+                else:
+                    if end_item > window:
+                        ini_item -= 1
+                        end_item -= 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
-                option += 1
+                selected += 1
+                if fake_selection < window - 1:
+                    fake_selection +=1
+                else:
+                    if ini_item < total - window - 1:
+                        ini_item += 1
+                        end_item += 1
             elif k in (key.BACKSPACE):
                 anwser = anwser[0:-1]
                 search = True
@@ -97,39 +127,51 @@ class StudentView(FeedbackStudentView):
                     students = self.controller.search_by_name(anwser,5)
                 else:
                     students = all_students
-            option %= len(students)
+            selected %= len(students)
             end = False
-        self.show_student(students[option])
+        self.show_student(students[selected])
 
     def create_submenu(self):
         if self.option == 0:
-            return self.get_students
+            self.menu.append(self.get_students)
+            self.option = 0
+            # return self.get_students
         elif self.option == 1:
-            return self.add_student
+            self.menu.append(self.add_student)
+            self.option = 0
+            # return self.add_student
         elif self.option == 2:
-            return self.edit_student
+            self.menu.append(self.edit_student)
+            # return self.edit_student
+            self.option = 0
         elif self.option == 3:
-            return self.delete_student
+            self.menu.append(self.delete_student)
+            self.option = 0
+            # return self.delete_student
         elif self.option == 4:
+            return True
+        elif self.option == 5:
             EndComposer.create().start()
 
 
     def delete_student(self):
         end = False
         anwser = ''
-        students = []
-        option = 0
+        students = self.controller.get_all()
         search = False
         question = "Digite o nome ou matrícula do aluno: "
+
+        # Window variables ==================
+        selected = 0
+        terminal_size = get_terminal_size()
+        window = terminal_size[1] - 3
+        fake_selection = 0
+        ini_item = 0
+        end_item = window
+        # ===================================
         while end is not True:
-            clear_screen()
-            for i in range(len(students)-1,-1,-1):
-                student = students[i]
-                if option == i:
-                    print(f"{Back.WHITE}{Fore.BLACK}{student.name}")
-                else:
-                    print(f"{student.name}")
-            move_cursor(0,get_terminal_size()[1]-1)
+            total = len(students)
+            draw_scrollable_menu(students,fake_selection,ini_item)
             print(question + anwser,end='')
             search = False
             k = readkey()
@@ -137,20 +179,54 @@ class StudentView(FeedbackStudentView):
                 end = True
                 continue
             if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
-                option -= 1
+                selected -= 1
+                if fake_selection > 0:
+                    fake_selection -=1
+                else:
+                    if end_item > window:
+                        ini_item -= 1
+                        end_item -= 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
-                option += 1
+                selected += 1
+                if fake_selection < window - 1:
+                    fake_selection +=1
+                else:
+                    if ini_item < total - window - 1:
+                        ini_item += 1
+                        end_item += 1
+            if k in (key.CTRL_G):
+                self.menu.pop()
+                return
             elif k in (key.BACKSPACE):
                 anwser = anwser[0:-1]
                 search = True
+                end_item = window
+                ini_item = 0
+                fake_selection = 0
             else:
                 anwser += k
                 search = True
+                end_item = window
+                ini_item = 0
+                fake_selection = 0
             if search:
                 students = self.controller.search_by_name(anwser,100)
-            option %= len(students)
+            selected %= len(students)
             end = False
-        result = self.controller.delete_student(students[option])
+        clear_screen()
+        move_cursor(0,window+3)
+        certeza = input("Tem certeza que deseja excluir? ")
+        result = []
+        if re.match(r'^si?m?$',certeza.lower()):
+            result = self.controller.delete_student(students[selected])
+        elif re.match(r'^n(a?ã?)o?$',certeza.lower()):
+            FailureFeedbackStudentView("Voltando!").show_students(result)
+            time.sleep(3)
+            self.end = False
+            return
+        else:
+            result.append(False)
+            result.append([])
         clear_screen()
         if result[0] is True:
             SuccessFeedbackStudentView("Estudante deletado:").show_students(result[1])
@@ -187,7 +263,6 @@ class StudentView(FeedbackStudentView):
                 text_input = text_input[0:-1]
             else:
                 text_input += k
-            #option %= len(questions)
             end = False
         result = self.controller.add_student(anwser[0],anwser[1],anwser[2], anwser[3])
         clear_screen()
@@ -205,20 +280,21 @@ class StudentView(FeedbackStudentView):
     def edit_student(self):
         end = False
         anwser = ''
-        students = []
+        students = self.controller.get_all()
         questions = ["Nova matrícula","Novo nome","Novo sobrenome", "Novo email"]
-        option = 0
         search = False
         question = "Digite o nome ou matrícula do aluno: "
+
+        # Window variables ==================
+        selected = 0
+        terminal_size = get_terminal_size()
+        window = terminal_size[1] - 3
+        fake_selection = 0
+        ini_item = 0
+        end_item = window
         while end is not True:
-            clear_screen()
-            for i in range(len(students)-1,-1,-1):
-                student = students[i]
-                if option == i:
-                    print(f"{Back.WHITE}{Fore.BLACK}{student.name}")
-                else:
-                    print(f"{student.name}")
-            #move_cursor(0,get_terminal_size()[1]-2)
+            total = len(students)
+            draw_scrollable_menu(students,fake_selection,ini_item)
             print(question + anwser,end='')
             search = False
             k = readkey()
@@ -226,9 +302,21 @@ class StudentView(FeedbackStudentView):
                 end = True
                 continue
             if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
-                option -= 1
+                selected -= 1
+                if fake_selection > 0:
+                    fake_selection -=1
+                else:
+                    if end_item > window:
+                        ini_item -= 1
+                        end_item -= 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
-                option += 1
+                selected += 1
+                if fake_selection < window - 1:
+                    fake_selection +=1
+                else:
+                    if ini_item < total - window - 1:
+                        ini_item += 1
+                        end_item += 1
             elif k in (key.BACKSPACE):
                 if len(anwser) > 0:
                     anwser = anwser[0:-1]
@@ -238,11 +326,11 @@ class StudentView(FeedbackStudentView):
                 search = True
             if search:
                 students = self.controller.search_by_name(anwser,100)
-            option %= len(students)
+            selected %= len(students)
             end = False
-        to_edit = students[option]
+        to_edit = students[selected]
         old_id = to_edit.id
-        questions_anwsers = [ to_edit.id, to_edit.name, to_edit.surname, to_edit.email ]
+        questions_anwsers = [ str(to_edit.id), to_edit.name, to_edit.surname, to_edit.email ]
         question_option = 0
         while question_option < len(questions):
             clear_screen()
@@ -274,11 +362,8 @@ class StudentView(FeedbackStudentView):
     def start(self):
         while self.end != True:
             clear_screen()
-            self.show_menu()
-            self.end = self.get_input()
-        sub_menu = self.create_submenu()
-        if sub_menu:
-            sub_menu()
+            self.menu[-1]()
+            self.end = self.input_method()
 
 class SuccessFeedbackStudentView(FeedbackStudentView):
 
