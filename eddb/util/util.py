@@ -14,6 +14,9 @@ def clear_screen():
 def move_cursor(x,y):
     print(f"\033[{y};{x}H",end='', flush=True)
 
+def set_terminal_size(row,column):
+    print(f"\x1b[8;{row};{column}t",end="", flush=True)
+
 def get_terminal_size():
     return os.get_terminal_size()
 

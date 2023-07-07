@@ -1,5 +1,5 @@
 from colorama import init
-from eddb.util.util import clear_screen
+from eddb.util.util import clear_screen,set_terminal_size
 
 init(autoreset=True)
 def main():
@@ -11,6 +11,7 @@ def main():
     from eddb.endview.end_composer import EndComposer
 
     v = MainMenuComposer.create()
+    set_terminal_size(10,30)
     try:
         v.start()
     except KeyboardInterrupt:
