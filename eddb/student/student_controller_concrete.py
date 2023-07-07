@@ -23,7 +23,7 @@ class StudentControllerConcrete(StudentController):
             result = process.extract(query,students)
         result = list(map(lambda x: x[0],result))
         return result
-    
+
     def get_all(self):
         return self.repository.get_all()
 
@@ -32,7 +32,7 @@ class StudentControllerConcrete(StudentController):
         return self.repository.add_item(s),[s]
 
     def edit_student(self,old_id: str, new_id: str ,new_name: str,new_surname: str, new_email: str):
-        edited = Student(id=new_id,name=new_name,surname=new_surname, email=new_email)
+        edited = Student(id=int(new_id),name=new_name,surname=new_surname, email=new_email)
         return self.repository.update_item(edited, old_id),[edited]
 
     def delete_student(self,student : Student):
