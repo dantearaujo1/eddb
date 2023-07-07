@@ -1,11 +1,6 @@
 {
   "books": [
     {
-      "id": "f3648608-1e07-4a1a-a892-fe24ecbc1556",
-      "title": "Estruturas",
-      "author": "Debora"
-    },
-    {
       "id": "20b574d6-94e0-49e5-ba88-52cd14874312",
       "title": "Análise e Projeto de Sistemas - 3 edição",
       "author": "Ticianna"
@@ -44,15 +39,19 @@
       "id": "09bfad9d-4299-44d7-9cdd-2397d94e0be2",
       "title": "Como fazer uma monografia",
       "author": "Délcio Vieira Salomon"
+    },
+    {
+      "id": "2f3eebad-094e-4d20-a42a-c5855f01105a",
+      "title": "A Startup Enxuta",
+      "author": "Eric Ries"
+    },
+    {
+      "id": "f40cb963-ae1c-42d6-aa2f-7d294dcdccfe",
+      "title": "A menina que roubava livros",
+      "author": "Marie Clair"
     }
   ],
   "students": [
-    {
-      "id": "509015",
-      "name": "Dante",
-      "surname": "Araújo",
-      "email": "danteeng@hotmail.com"
-    },
     {
       "id": 509014,
       "name": "Débora",
@@ -78,7 +77,7 @@
       "email": "debisameque@gmail.com"
     },
     {
-      "id": 495051,
+      "id": "495051",
       "name": "Carol",
       "surname": "Leite",
       "email": "carolzinhah@hotmail.com"
@@ -125,14 +124,6 @@
     },
     {
       "id": "4",
-      "id_book": "ee7f7cad-fe3a-4217-a84f-b946532863db",
-      "id_student": 509015,
-      "loan_date": "",
-      "payday": "",
-      "status": "active"
-    },
-    {
-      "id": "5",
       "id_book": "ee7f7cad-fe3a-4217-a84f-b946532863db",
       "id_student": 509015,
       "loan_date": "",
