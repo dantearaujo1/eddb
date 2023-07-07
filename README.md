@@ -19,17 +19,21 @@ mas caso haja tempo, pode-se gerar uma GUI (Graphical User Interface).
 
 | Requisito | Arquivo | COD | Status |
 | -------- | ------- | --- | ------ |
-| Adicionar Livro | | REQ01 | Desenvolvimento |
-| Alterar Informações do Livro | | REQ02 | Desenvolvimento |
-| Remover Livro | | REQ03 | Desenvolvimento |
-| Adicionar Usuário | | REQ04 | Desenvolvimento |
-| Alterar Informações do Usuário | | REQ05 | Desenvolvimento |
-| Remover Usuário | | REQ06 | Desenvolvimento |
-| Realizar Empréstimo | | REQ07 | Desenvolvimento |
-| Realizar Devolução | | REQ08 | Análise |
-| Pesquisa Livro por Título | | REQ09 | Análise |
-| Pesquisa Livro por Author | | REQ10 | Análise |
-| Gerar Relatório do Usuário | | REQ11 | Análise |
+| Adicionar Livro | | REQ01 | Concluído |
+| Pesquisa Livro por Título | | REQ02 | Concluído |
+| Pesquisa Livro por Author | | REQ03 | Concluído |
+| Alterar Informações do Livro | | REQ04 | Concluído |
+| Remover Livro | | REQ05 | Concluído |
+| Adicionar Estudante | | REQ06 | Concluído |
+| Pesquisa Estudante por Matrícula | | REQ07 | Concluído |
+| Pesquisa Estudante por Nome | | REQ08 | Concluído |
+| Alterar Informações do Estudante | | REQ09 | Concluído |
+| Remover Estudante | | REQ10 | Concluído |
+| Buscar Empréstimo | | REQ11 | Concluído |
+| Fazer Empréstimo | | REQ12 | Desenvolvimento |
+| Realizar Devolução | | REQ13 | Desenvolvimento |
+| Voltar para Menu Principal | | REQ14 | Concluído |
+| Sair da Aplicação | | REQ15 | Concluído |
 
 ## Instruções de Uso
 
@@ -54,5 +58,13 @@ Em seguida pode rodar a aplicação com o commando:
 ```
 poetry run python eddb/main.py
 ```
+
+## Teclas que podem ser utilizadas
+ - UP (SETA PARA CIMA): para navegar para cima dentre as opções apresentadas
+ - DOWN (SETA PARA BAIXO): para navegar para baixo dentre as opções apresentadas
+ - RIGHT (SETA PARA DIREITA): para navegar para a direita entre as letras do que você escreveu como resposta
+ - LEFT (SETA PARA ESQUERDA): para navegar para a esquerda entre as letras do que você escreveu como resposta
+ - ENTER (ENTER): para selecionar a opção que deseja
+ - BACKSPACE (APAGAR): para apagar o que você escreveu como resposta
 
 
