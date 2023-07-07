@@ -24,16 +24,16 @@ class MainMenuView():
 
 
     def get_input(self):
+        total = len(self.options)
         k = readkey()
         if k  == key.ENTER:
             self.create_menu()
-            pass
-            # return True
         elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
-            self.option += 1
+            if self.option < total - 1:
+                self.option += 1
         elif k in (key.CTRL_P,key.CTRL_K,key.UP):
-            self.option -= 1
-        self.option %= len(self.options)
+            if self.option > 0:
+                self.option -= 1
         return False
 
     def create_menu(self):

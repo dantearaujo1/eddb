@@ -227,14 +227,14 @@ class LoanView(FeedbackLoanView):
         book = anwser_objects[1]
         if self.controller.book_status_is_active(book):
             clear_screen()
+            # BUG: SOmente após o time sleep pode apertar para sair
             print("O livro ja está alugado")
-            time.sleep(10)
+            time.sleep(3)
         else:
             paydate = datetime.now() + timedelta(days=30)
             loan = Loan(book_id=book.id,student_id=student.id,payday=paydate,status="active")
             self.show_loan(loan)
-            print("Aperte qualquer letra para voltar!")
-            readchar()
+            time.sleep(5)
             self.input_method = self.__back
 
 
@@ -285,6 +285,7 @@ class LoanView(FeedbackLoanView):
     def __back(self,*args):
         self.menu.pop()
         self.option = 0
+        self.fake_selection = 0
         self.input_method = self.get_input
         return False
 
