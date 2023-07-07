@@ -12,7 +12,7 @@ from eddb.util.util import clear_screen
 
 class MainMenuView():
     def __init__(self):
-        self.options = ["Menu Livro","Menu Empréstimos","Menu Usuário","Sair"]
+        self.options = ["Menu Livro","Menu Empréstimos","Menu Estudante","Sair"]
         self.option = 0
         self.end = False
 

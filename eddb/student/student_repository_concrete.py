@@ -33,7 +33,17 @@ class StudentRepositoryConcrete(StudentRepository):
             students = list(map(lambda s: self.__JSON_to_student(s),students))
             return students
         return []
-    
+
+    def get_by_id(self,ID):
+        json_data = self.__open()
+        if json_data:
+            students = json_data["students"]
+            result = []
+            for student in students:
+                if student["id"] == int(ID):
+                    result.append(self.__JSON_to_student(student))
+        return result
+
     def add_item(self,item):
         '''
         Add a student item into our JSON database
@@ -51,7 +61,7 @@ class StudentRepositoryConcrete(StudentRepository):
             write_data(self.file,json_data)
             return True
         return False
-    
+
     def update_item(self, edited, old_id):
         '''
         Update a student item into our JSON database
@@ -71,7 +81,7 @@ class StudentRepositoryConcrete(StudentRepository):
             write_data(self.file,json_data)
             return True
         return False
-    
+
     def delete_item(self,student):
         '''
         Delete student item from JSON

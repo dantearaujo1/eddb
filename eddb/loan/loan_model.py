@@ -1,6 +1,7 @@
 from datetime import datetime,timezone
 from dataclasses import dataclass, field
-from eddb.util.util import str_uuid4
+from eddb.util.util import str_uuid4,time_utc
+
 
 @dataclass
 class Loan:
@@ -13,7 +14,7 @@ class Loan:
     id: str = field(default_factory=str_uuid4)
     book_id: str = "Book"
     student_id: str = "Unknown"
-    loan_date: datetime = field(default_factory=datetime.now(timezone.utc))
+    loan_date: datetime = field(default_factory=datetime.now)
     payday: datetime = None
     status: str = "inactive"
 
