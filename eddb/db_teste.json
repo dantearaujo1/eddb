@@ -1,6 +1,11 @@
 {
   "books": [
     {
+      "id": "f3648608-1e07-4a1a-a892-fe24ecbc1556",
+      "title": "Estruturas",
+      "author": "Debora"
+    },
+    {
       "id": "20b574d6-94e0-49e5-ba88-52cd14874312",
       "title": "Análise e Projeto de Sistemas - 3 edição",
       "author": "Ticianna"
@@ -53,6 +58,12 @@
   ],
   "students": [
     {
+      "id": 509015,
+      "name": "Dante",
+      "surname": "Araújo",
+      "email": "danteeng@hotmail.com"
+    },
+    {
       "id": 509014,
       "name": "Débora",
       "surname": "Sameque",
@@ -97,6 +108,7 @@
       "loan_date": "",
       "payday": "",
       "status": "inactive"
+<<<<<<< HEAD
     },
     {
       "id": "1",
@@ -145,6 +157,8 @@
       "loan_date": "",
       "payday": "",
       "status": "active"
+=======
+>>>>>>> 4f9304fc41ad6c7f0496c1351b5a4034e95a7329
     }
   ]
 }

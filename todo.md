@@ -38,18 +38,25 @@ Submenu Voltar:
     - Quando o usuário passa da última opção inferior, e depois acessa a opcao "Voltar", as vezes a aplicação quebra
     - Depois de fazer um empréstimo, quando aperta na opção "Voltar" o usuário é direcionado para fazer um emprestimo de novo, e se fizer esse emprestimo, no final dele, a aplicacao quebra {cm:2023-07-07}
 
++EMPRÉSTIMOS #Dante
+- Todos os ID dos loans são strings, deveriam ser inteiros
+-Quando entro no menu emprestimo e volto, e depois entro no meu estudante e vou em Sair, volta pro menu emprestimo e se vou em Voltar, volta pro menu estudante {cm:2023-07-07}
+- Pergunta em cima da bordar do menu em buscar empréstimo e fazer
+empréstimo
+- TextInput em cima da borda do menu
 
 +USUÁRIO #Debora
     - Quando o tamanho do terminal ta grande (cabendo todas as opções) o usuário consegue ir para além da última opção inferior
 Submenu Procurar: {c}
     - Quando o usuário digita em cima da resposta já escrita, o texto vai sobreescrevendo e não "afastando" o que já tem
     - Adicionar opção de voltar para menu estudante
-    - Os "Textos" das partes de inputs, eram para serem bloqueados 
+    - Os "Textos" das partes de inputs, eram para serem bloqueados
     - Quando apaga mais do que o que escreveu no input ta dando erro
 Submenu Cadastrar: {c}
     - Quando o usuário digita em cima da resposta já escrita, o texto vai sobreescrevendo e não "afastando" o que já tem
     - Adicionar opção de voltar para menu estudante
     - Se o ID colocado como input já existir na base de dados, já deve proibir continuar o cadastro
+<<<<<<< HEAD
 Submenu Editar: {c}
     - Quando o usuário digita em cima da resposta já escrita, o texto vai sobreescrevendo e não "afastando" o que já tem
     - Quando o tamanho do terminal ta grande (cabendo todas as opções) o usuário consegue ir para além da última opção superior
@@ -58,3 +65,17 @@ Submenu Voltar:
 Submenu Excluir: 
     - Navgeação entre as opcoes de estudantes mostradas está louca
     - Quando excluo um estudante, os empréstimos dele continuam existindo no JSON
+=======
+Submenu Editar:
+    - Não está mostrando o primeiro resultado do student {cm:2023-07-04}
+    - Quando vai editar uma coisa escrita no input, ele sobreescreve a palavra que ja tem
+Submenu Excluir: OK
+
++MENUS #Dante
+Menu Principal:
+    - Ta sendo permitido dar loop nas escolhas
+- Conseguindo ir além da quantidade de opções, provavelmente em todos os
+menus no modo fullscreen, exceto no mainmenu que tem apenas 4 opções
+
++COMPONENTES #Dante
+>>>>>>> 4f9304fc41ad6c7f0496c1351b5a4034e95a7329
