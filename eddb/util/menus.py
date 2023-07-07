@@ -38,7 +38,7 @@ def draw_scrollable_menu(items,fake,ini_item,reverse=False,other_lines=1):
         else:
             print(f"{theme['scrollable_up_arrow_off']}v{Style.RESET_ALL}{(window_horizontal_size-4)*borders['down']}")
     else:
-        if end_item_position < total_items and (ini_item + menu_vertical_size) < total_items - 1:
+        if end_item_position < total_items and (ini_item + menu_vertical_size) < total_items:
             print(f"{theme['scrollable_up_arrow_on']}^{Style.RESET_ALL}{(window_horizontal_size-4)*borders['up']}")
         else:
             print(f"{theme['scrollable_up_arrow_off']}^{Style.RESET_ALL}{(window_horizontal_size-4)*borders['up']}")
