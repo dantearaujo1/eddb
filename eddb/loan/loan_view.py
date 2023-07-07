@@ -83,6 +83,7 @@ class LoanView(FeedbackLoanView):
                 continue
             if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
                 selected -= 1
+                selected = max(selected,0)
                 if fake_selection > 0:
                     fake_selection -=1
                 else:
@@ -91,10 +92,11 @@ class LoanView(FeedbackLoanView):
                         end_item -= 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
                 selected += 1
+                selected = min(total-1,selected)
                 if fake_selection < window - 1:
                     fake_selection +=1
                 else:
-                    if ini_item < total - window - 1:
+                    if ini_item < total - window:
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
@@ -186,6 +188,7 @@ class LoanView(FeedbackLoanView):
                     continue
             if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
                 selected -= 1
+                selected = max(selected,0)
                 if fake_selection > 0:
                     fake_selection -=1
                 else:
@@ -194,10 +197,11 @@ class LoanView(FeedbackLoanView):
                         end_item -= 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
                 selected += 1
+                selected = min(total-1,selected)
                 if fake_selection < window - 1:
                     fake_selection +=1
                 else:
-                    if ini_item < total - window - 1:
+                    if ini_item < total - window:
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
