@@ -73,7 +73,7 @@ class LoanView(FeedbackLoanView):
                     showing_items.append(str(student.id) + " " + student.name + " " + book.title)
 
             draw_scrollable_menu(showing_items,fake_selection,ini_item)
-            move_cursor(0,terminal_size[1]-1)
+            move_cursor(0,terminal_size[1])
             print(question + anwser,end='')
 
             search = False
@@ -83,6 +83,7 @@ class LoanView(FeedbackLoanView):
                 continue
             if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
                 selected -= 1
+                selected = max(selected,0)
                 if fake_selection > 0:
                     fake_selection -=1
                 else:
@@ -91,14 +92,16 @@ class LoanView(FeedbackLoanView):
                         end_item -= 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
                 selected += 1
-                if fake_selection < window - 1:
+                selected = min(total-1,selected)
+                if fake_selection < min(window - 1,total-1):
                     fake_selection +=1
                 else:
-                    if ini_item < total - window - 1:
+                    if ini_item < total - window:
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
                 anwser = anwser[0:-1]
+                search = True
                 ini_item = 0
                 end_item = window
                 fake_selection = 0
@@ -114,13 +117,7 @@ class LoanView(FeedbackLoanView):
                     items = self.controller.search_by_student_id(anwser,10)
                 else:
                     items = all_items
-            if len(items) > 0:
-                selected %= len(items)
-            else:
-                selected = 0
             end = False
-
-
         self.show_loan(items[selected])
         self.__select_option(["Editar","Excluir","Voltar"],[self.edit_loan,self.delete_loan,(lambda x: x)],items[selected])
         self.input_method = self.__back
@@ -169,7 +166,7 @@ class LoanView(FeedbackLoanView):
                 showing_items = list(map(lambda x: x.title,items))
 
             draw_scrollable_menu(showing_items,fake_selection,ini_item)
-            move_cursor(0,terminal_size[1]-1)
+            move_cursor(0,terminal_size[1])
             print(questions[menu_idx] + anwser[menu_idx],end='')
 
             search = False
@@ -186,6 +183,7 @@ class LoanView(FeedbackLoanView):
                     continue
             if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
                 selected -= 1
+                selected = max(selected,0)
                 if fake_selection > 0:
                     fake_selection -=1
                 else:
@@ -194,10 +192,11 @@ class LoanView(FeedbackLoanView):
                         end_item -= 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
                 selected += 1
-                if fake_selection < window - 1:
+                selected = min(total-1,selected)
+                if fake_selection < min(window - 1,total-1):
                     fake_selection +=1
                 else:
-                    if ini_item < total - window - 1:
+                    if ini_item < total - window:
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
@@ -217,37 +216,32 @@ class LoanView(FeedbackLoanView):
                     items = search_handler[menu_idx](anwser[menu_idx],10)
                 else:
                     items = all_items[menu_idx]
-            if len(items) > 0:
-                selected %= len(items)
-            else:
-                selected = 0
             end = False
         clear_screen()
         student = anwser_objects[0]
         book = anwser_objects[1]
         if self.controller.book_status_is_active(book):
             clear_screen()
-            # BUG: SOmente após o time sleep pode apertar para sair
-            print("O livro ja está alugado")
-            time.sleep(3)
+            print("Este livro ja está alugado...")
+            print("Aperte Qualquer Tecla Para Sair")
+            readkey()
         else:
             paydate = datetime.now() + timedelta(days=30)
             loan = Loan(book_id=book.id,student_id=student.id,payday=paydate,status="active")
             self.show_loan(loan)
-            time.sleep(5)
+            print("Aperte Qualquer Tecla Para Sair")
+            readkey()
             self.input_method = self.__back
 
 
     def pay_loan(self,loan):
         clear_screen()
         print("Pay Screen")
-        time.sleep(3)
 
     def edit_loan(self,loan):
         clear_screen()
         print("Edit Screen")
         self.show_loan(loan)
-        time.sleep(3)
 
     def delete_loan(self,loan):
         clear_screen()
@@ -264,6 +258,7 @@ class LoanView(FeedbackLoanView):
 
     def show_loan(self,loan):
         clear_screen()
+        move_cursor(0,get_terminal_size()[1])
         stu = self.controller.get_student_by_id(loan.student_id)[0]
         book = self.controller.get_book_by_id(loan.book_id)[0]
         print(f"Book: {book.title}")
@@ -278,6 +273,8 @@ class LoanView(FeedbackLoanView):
         elif loan.status == "overdue":
             colors = [Back.RED,Fore.WHITE]
         print(f"Status: {colors[0]}{colors[1]}{loan.status}")
+        # print("Aperte Qualquer Tecla para Sair!")
+        # readkey()
 
     def show(self):
         draw_scrollable_menu(self.options,self.fake_selection,self.init_option,reverse=True)
@@ -338,6 +335,8 @@ class DeleteFailureFeedbackLoanView(FeedbackLoanView):
     def show_feedback(self,loans: Iterable[Loan]):
         print(f"{Back.RED}{Fore.WHITE}{self.message}")
         print(f"{Back.RED}{Fore.WHITE}O Empréstimo não foi deletado, tente novamente!")
+        print("Aperte Qualquer Tecla para Sair",end="")
+        readkey()
 
 class AddFeedbackLoanView(FeedbackLoanView):
 
@@ -348,4 +347,5 @@ class AddFeedbackLoanView(FeedbackLoanView):
         clear_screen()
         print(f"{Back.GREEN}{Fore.BLACK}{self.message}")
         print(f"{Back.GREEN}{Fore.BLACK}Empréstimo Deletado!")
-        time.sleep(3)
+        print("Aperte Qualquer Tecla para Sair",end="")
+        readkey()

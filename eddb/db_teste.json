@@ -41,11 +41,6 @@
       "author": "Mary Del Priore"
     },
     {
-      "id": "09bfad9d-4299-44d7-9cdd-2397d94e0be2",
-      "title": "Como fazer uma monografia",
-      "author": "Délcio Vieira Salomon"
-    },
-    {
       "id": "2f3eebad-094e-4d20-a42a-c5855f01105a",
       "title": "A Startup Enxuta",
       "author": "Eric Ries"
@@ -54,6 +49,21 @@
       "id": "f40cb963-ae1c-42d6-aa2f-7d294dcdccfe",
       "title": "A menina que roubava livros",
       "author": "Marie Clair"
+    },
+    {
+      "id": "bb4b430c-433b-4101-b909-22e47080e6fd",
+      "title": "Fisiologia Oral",
+      "author": "Cláudia Herrera Tambeli"
+    },
+    {
+      "id": "8b3b5adf-5715-430f-9e25-6f766b769876",
+      "title": "Hello2",
+      "author": "dante"
+    },
+    {
+      "id": "9f1159d2-a549-4c4c-b41e-3eecf955467f",
+      "title": "Teste",
+      "author": "Dante"
     }
   ],
   "students": [
@@ -64,7 +74,7 @@
       "email": "danteeng@hotmail.com"
     },
     {
-      "id": 509014,
+      "id": 503020,
       "name": "Débora",
       "surname": "Sameque",
       "email": "debisameque@hotmail.com"
@@ -74,12 +84,6 @@
       "name": "Drielle",
       "surname": "Furtado",
       "email": "driL@hotmail.com"
-    },
-    {
-      "id": 1,
-      "name": "Mateus",
-      "surname": "Sales",
-      "email": ""
     },
     {
       "id": 511714,
@@ -98,16 +102,19 @@
       "name": "Lais",
       "surname": "Bota",
       "email": "lais@gmail.com"
+    },
+    {
+      "id": 423008,
+      "name": "José Pereira",
+      "surname": "Santos",
+      "email": "joseps@hotmail.com"
+    },
+    {
+      "id": 309011,
+      "name": "Roberta",
+      "surname": "Ferreira",
+      "email": "rbferra@hotmail.com"
     }
   ],
-  "loans": [
-    {
-      "id": "0",
-      "id_book": "09bfad9d-4299-44d7-9cdd-2397d94e0be2",
-      "id_student": 509015,
-      "loan_date": "",
-      "payday": "",
-      "status": "inactive"
-    }
-  ]
+  "loans": []
 }

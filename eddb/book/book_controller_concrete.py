@@ -3,11 +3,13 @@ from fuzzywuzzy import process
 from eddb.book.book_interface.feedback_book_view import FeedbackBookView
 from eddb.book.book_interface.book_controller import BookController
 from eddb.book.book_interface.book_repository import BookRepository
+from eddb.loan.loan_interface.loan_repository import LoanRepository
 from eddb.book.book_model import Book
 
 class BookControllerConcrete(BookController):
-    def __init__(self, repository: BookRepository):
+    def __init__(self, repository: BookRepository,loan_repository: LoanRepository):
         self.repository = repository
+        self.loan_repository = loan_repository
         self.view = None
 
     def set_view(self, view: FeedbackBookView):
@@ -35,5 +37,8 @@ class BookControllerConcrete(BookController):
         return self.repository.update_item(edited),[edited]
 
     def delete_book(self,book : Book):
-        return self.repository.delete_item(book),[book]
-
+        result = None
+        first = self.repository.delete_item(book)
+        if first is True:
+            result = self.loan_repository.delete_all_with_book_id(book.id)
+        return result,[book]

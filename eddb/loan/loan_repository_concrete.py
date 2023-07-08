@@ -128,3 +128,29 @@ class LoanRepositoryConcrete(LoanRepository):
             write_data(self.file,json_data)
             return True
         return False
+
+    def delete_all_with_book_id(self,ID):
+        json_data = self.__open()
+        items = []
+        if json_data:
+            items = json_data["loans"]
+            for loan in items:
+                if loan["id_book"] == ID:
+                    items.remove(loan)
+            json_data["loans"] = items
+            write_data(self.file,json_data)
+            return True
+        return False
+
+    def delete_all_with_student_id(self,ID):
+        json_data = self.__open()
+        items = []
+        if json_data:
+            items = json_data["loans"]
+            for loan in items:
+                if loan["id_student"] == ID:
+                    items.remove(loan)
+            json_data["loans"] = items
+            write_data(self.file,json_data)
+            return True
+        return False
