@@ -340,7 +340,8 @@ class BookView(FeedbackBookView):
     def edit_book(self):
         end = False
         anwser = ''
-        books = self.books
+        all_books = self.controller.get_all()
+        books = all_books
         search = False
         question = "Digite o nome de um livro: "
 
@@ -363,7 +364,7 @@ class BookView(FeedbackBookView):
             print(question + anwser,end='')
             move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
             search = False
-            window = terminal_size[1] - 3
+            
             k = readkey()
             if k  == key.ENTER:
                 end = True
@@ -416,14 +417,14 @@ class BookView(FeedbackBookView):
                 if len(anwser) > 0:
                     books = self.controller.search_by_name(anwser,5)
                 else:
-                    books = books
-            #     books = self.controller.search_by_name(anwser,100)
+                    books = all_books
             # selected %= len(books)
             end = False
         to_edit = books[selected]
         questions = ["título","autor"]
         questions_anwsers = [ to_edit.title, to_edit.author ]
         question_option = 0
+        
         while question_option < len(questions):
             clear_screen()
             move_cursor(0,get_terminal_size()[1])
@@ -432,7 +433,8 @@ class BookView(FeedbackBookView):
             if k  == key.ENTER:
                 question_option += 1
                 continue
-            if k in (key.BACKSPACE):
+
+            elif k in (key.BACKSPACE):
                 questions_anwsers[question_option] = questions_anwsers[question_option][0:-1]
             else:
                 questions_anwsers[question_option] = questions_anwsers[question_option] + k

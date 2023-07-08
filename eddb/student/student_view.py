@@ -304,7 +304,7 @@ class StudentView(FeedbackStudentView):
                 option += 1
                 anwser.append(text_input)
                 text_input = ''
-                
+                pos_na_string = 0
                 if option >= len(questions):
                     end = True
                     continue
@@ -338,7 +338,8 @@ class StudentView(FeedbackStudentView):
     def edit_student(self):
         end = False
         anwser = ''
-        students = self.controller.get_all()
+        all_students = self.controller.get_all()
+        students = all_students
         questions = ["Nova matrícula","Novo nome","Novo sobrenome", "Novo email"]
         search = False
         question = "Digite o nome ou matrícula do aluno: "
@@ -350,16 +351,30 @@ class StudentView(FeedbackStudentView):
         fake_selection = 0
         ini_item = 0
         end_item = window
+         # ===================================
+        pos_na_string = 0
         while end is not True:
-            total = len(students)
-            draw_scrollable_menu(students,fake_selection,ini_item)
+            showed_items = list(map(lambda x: x.name,students))
+            total = len(showed_items)
+            terminal_size = get_terminal_size()
+            window = terminal_size[1] - 3
+
+            draw_scrollable_menu(showed_items,fake_selection,ini_item)
             print(question + anwser,end='')
+            move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
             search = False
+
             k = readkey()
             if k  == key.ENTER:
                 end = True
                 continue
-            if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
+            if k == key.LEFT:
+                pos_na_string -= 1
+                pos_na_string = max(pos_na_string,0)
+            elif k == key.RIGHT:
+                pos_na_string += 1
+                pos_na_string = min(pos_na_string,len(anwser))
+            elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
                 selected -= 1
                 selected = max(selected,0)
                 if fake_selection > 0:
@@ -378,14 +393,30 @@ class StudentView(FeedbackStudentView):
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
-                if len(anwser) > 0:
-                    anwser = anwser[0:-1]
+                anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                pos_na_string = max(pos_na_string,1)
                 search = True
+                end_item = window
+                ini_item = 0
+                fake_selection = 0
+                pos_na_string -= 1
             else:
-                anwser += k
+                if len(anwser) == 0:
+                    anwser += k
+                elif pos_na_string == 0:
+                    anwser = k + anwser
+                else:
+                    anwser = anwser[:pos_na_string]+ k + anwser[pos_na_string:]
+                pos_na_string += 1
                 search = True
+                ini_item = 0
+                end_item = window
+                fake_selection = 0
             if search:
-                students = self.controller.search_by_name(anwser,100)
+                if len(anwser) > 0:
+                    students = self.controller.search_by_name(anwser,5)
+                else:
+                    students = all_students
             end = False
         to_edit = students[selected]
         old_id = to_edit.id

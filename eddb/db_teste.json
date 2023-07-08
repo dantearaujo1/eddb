@@ -68,7 +68,7 @@
     {
       "id": "aab16dd2-23d4-44f8-a845-703dd0dba3ca",
       "title": "Leao",
-      "author": "Barbie\u001b[A\u001b\u001b\u001b[\u001b[D\u001b[D\u001b[D\u001b[B\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[C\u001b[aasd"
+      "author": "Barbie\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C"
     },
     {
       "id": "799b89d6-157a-40dc-a018-dc6352b2c711",
@@ -129,6 +129,12 @@
       "name": "Roberta",
       "surname": "Ferreira",
       "email": "rbferra@hotmail.com"
+    },
+    {
+      "id": 908070,
+      "name": "Mirela",
+      "surname": "Batman",
+      "email": "batminha@gmail.com"
     }
   ],
   "loans": []
