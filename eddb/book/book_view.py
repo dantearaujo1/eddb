@@ -126,8 +126,8 @@ class BookView(FeedbackBookView):
                     if end_item > window:
                         ini_item -= 1
                         end_item -= 1
-                selected += 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
+                selected += 1
                 if fake_selection < min(window - 1,total-1):
                     fake_selection +=1
                 else:
@@ -136,6 +136,7 @@ class BookView(FeedbackBookView):
                         end_item += 1
             elif k in (key.BACKSPACE):
                 anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                pos_na_string = max(pos_na_string,1)
                 search = True
                 end_item = window
                 ini_item = 0
@@ -198,19 +199,29 @@ class BookView(FeedbackBookView):
         fake_selection = 0
         ini_item = 0
         end_item = window
+        # ===================================
+        pos_na_string = 0
         while end is not True:
             showed_items = list(map(lambda x: x.title,books))
             total = len(showed_items)
             terminal_size = get_terminal_size()
             window = terminal_size[1] - 3
+
             draw_scrollable_menu(showed_items,fake_selection,ini_item)
             print(question + anwser,end='')
+            move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
             search = False
             k = readkey()
             if k  == key.ENTER:
                 end = True
                 continue
-            if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
+            if k == key.LEFT:
+                pos_na_string -= 1
+                pos_na_string = max(pos_na_string,0)
+            elif k == key.RIGHT:
+                pos_na_string += 1
+                pos_na_string = min(pos_na_string,len(anwser))
+            elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
                 selected -= 1
                 if fake_selection > 0:
                     fake_selection -=1
@@ -227,16 +238,24 @@ class BookView(FeedbackBookView):
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
-                anwser = anwser[0:-1]
+                anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                pos_na_string = max(pos_na_string,1)
                 search = True
                 end_item = window
                 ini_item = 0
                 fake_selection = 0
+                pos_na_string -= 1
             else:
-                anwser += k
+                if len(anwser) == 0:
+                    anwser += k
+                elif pos_na_string == 0:
+                    anwser = k + anwser
+                else:
+                    anwser = anwser[:pos_na_string]+ k + anwser[pos_na_string:]
+                pos_na_string += 1
                 search = True
-                end_item = window
                 ini_item = 0
+                end_item = window
                 fake_selection = 0
             if search:
                 books = self.controller.search_by_name(anwser,100)
@@ -269,6 +288,9 @@ class BookView(FeedbackBookView):
         questions = ["título","autor"]
         option = 0
         question = f"Digite o {questions[option]} de um livro: "
+
+
+
         pos_na_string = 0
         while end is not True:
             question = f"Digite o {questions[option]} de um livro: "
@@ -293,6 +315,7 @@ class BookView(FeedbackBookView):
                 pos_na_string = min(pos_na_string,len(text_input))
             elif k in (key.BACKSPACE):
                 text_input = text_input[0:pos_na_string-1] + text_input[pos_na_string:]
+                pos_na_string = max(pos_na_string,1)
                 pos_na_string -= 1
             else:
                 if len(text_input) == 0:
