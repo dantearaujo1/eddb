@@ -41,11 +41,6 @@
       "author": "Mary Del Priore"
     },
     {
-      "id": "09bfad9d-4299-44d7-9cdd-2397d94e0be2",
-      "title": "Como fazer uma monografia",
-      "author": "Délcio Vieira Salomon"
-    },
-    {
       "id": "2f3eebad-094e-4d20-a42a-c5855f01105a",
       "title": "A Startup Enxuta",
       "author": "Eric Ries"
@@ -121,14 +116,5 @@
       "email": "rbferra@hotmail.com"
     }
   ],
-  "loans": [
-    {
-      "id": "0",
-      "id_book": "09bfad9d-4299-44d7-9cdd-2397d94e0be2",
-      "id_student": 509015,
-      "loan_date": "",
-      "payday": "",
-      "status": "inactive"
-    }
-  ]
+  "loans": []
 }

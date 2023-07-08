@@ -3,12 +3,14 @@ from fuzzywuzzy import process
 from eddb.student.student_interface.feedback_student_view import FeedbackStudentView
 from eddb.student.student_interface.student_controller import StudentController
 from eddb.student.student_interface.student_repository import StudentRepository
+from eddb.loan.loan_interface.loan_repository import LoanRepository
 from eddb.student.student_model import Student
 
 
 class StudentControllerConcrete(StudentController):
-    def __init__(self, repository: StudentRepository):
+    def __init__(self, repository: StudentRepository, loan_repo: LoanRepository):
         self.repository = repository
+        self.loan_repo = loan_repo
         self.view = None
 
     def set_view(self, view: FeedbackStudentView):
@@ -36,4 +38,8 @@ class StudentControllerConcrete(StudentController):
         return self.repository.update_item(edited, old_id),[edited]
 
     def delete_student(self,student : Student):
-        return self.repository.delete_item(student),[student]
+        result = None
+        first = self.repository.delete_item(student)
+        if first is True:
+            result = self.loan_repo.delete_all_with_student_id(student.id)
+        return result,[student]
