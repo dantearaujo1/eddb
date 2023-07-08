@@ -24,7 +24,7 @@ Submenu Livro Excluir: {c}
     - Corrigir Menu de Livros não selecionando o correto após a alteração do menu invertido {cm:2023-07-04}
     - Corrigir o apertar uma tecla duas vezes para subir ou descer para uma vez @book_view {cm:2023-07-04}
     - Corrigir Menu de Livros não selecionando o correto após a alteração do {cm:2023-07-07}
-    - Quando eu excluo um livro, os empréstimos dele ainda continuam existindo no JSON @loan_view (A)
+    - Quando eu excluo um livro, os empréstimos dele ainda continuam existindo no JSON @loan_view (A) {cm:2023-07-07}
     - Corrigir exceções das partes de input dos menus (backspace, sobrescrever...) @book_view
     - Adicionar possibilidade de voltar do menu com alguma tecla #feature
     - A busca de livro pelo nome ta dando erro {cm:2023-07-07}
@@ -39,16 +39,14 @@ Submenu Buscar Empréstimo: {c}
     - Quando acessa, a aplicação quebra {cm:2023-07-07}
 Submenu Fazer Empréstimo: {c}
     - Adicionar opção de voltar para menu empréstimo {cm:2023-07-07}
-    - Na fluxo de fazer empréstimo:
-        - Na parte de escolher o estudante, quando o tamanho do terminal ta grande (cabendo todas as opções), o usuário consegue ir para além da última opção superior {cm:2023-07-07}
-        - Os asteriscos inferiores estão posicionados no lugar errado em todas as partes do fluxo {cm:2023-07-07}
+    - Na parte de escolher o estudante, quando o tamanho do terminal ta grande (cabendo todas as opções), o usuário consegue ir para além da última opção superior {cm:2023-07-07}
+    - Os asteriscos inferiores estão posicionados no lugar errado em todas as partes do fluxo {cm:2023-07-07}
     - Tela de resposta que avisa se o livro está indisponível para fazer emprestimo não sai, e quebra a app se apertar uma tecla {cm:2023-07-07}
 Submenu Voltar:
     - Quando o usuário passa da última opção inferior, e depois acessa a opcao "Voltar", as vezes a aplicação quebra {cm:2023-07-07}
     - Depois de fazer um empréstimo, quando aperta na opção "Voltar" o usuário é direcionado para fazer um emprestimo de novo, e se fizer esse emprestimo, no final dele, a aplicacao quebra {cm:2023-07-07}
 
 +EMPRÉSTIMOS #Dante
-- Todos os ID dos loans são strings, deveriam ser inteiros #todo
 - Pergunta em cima da borda do menu em buscar empréstimo e fazer empréstimo {cm:2023-07-07}
 - TextInput em cima da borda do menu {cm:2023-07-07}
 - Quando entro no menu emprestimo e volto, e depois entro no meu estudante e vou em Sair, volta pro menu emprestimo e se vou em Voltar, volta pro menu estudante {cm:2023-07-07}
@@ -61,7 +59,7 @@ Submenu Procurar: {c}
     - Quando apaga mais do que o que escreveu no input ta dando erro
 Submenu Cadastrar: {c}
     - Adicionar opção de voltar para menu estudante {cm:2023-07-07}
-    - Se o ID colocado como input já existir na base de dados, já deve proibir continuar o cadastro
+    - Se o ID colocado como input já existir na base de dados, já deve proibir continuar o cadastro #feature
 Submenu Editar:
     - Não está mostrando o primeiro resultado do student {cm:2023-07-04}
     - Quando vai editar uma coisa escrita no input, ele sobreescreve a palavra que ja tem
