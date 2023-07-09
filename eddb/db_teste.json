@@ -3,7 +3,7 @@
     {
       "id": "f3648608-1e07-4a1a-a892-fe24ecbc1556",
       "title": "Estruturas",
-      "author": "Debora"
+      "author": "Deborinha"
     },
     {
       "id": "20b574d6-94e0-49e5-ba88-52cd14874312",
@@ -53,7 +53,7 @@
     {
       "id": "bb4b430c-433b-4101-b909-22e47080e6fd",
       "title": "Fisiologia Oral",
-      "author": "Cláudia Herrera Tambeli"
+      "author": "Albuquerque"
     },
     {
       "id": "8b3b5adf-5715-430f-9e25-6f766b769876",
@@ -67,8 +67,8 @@
     },
     {
       "id": "aab16dd2-23d4-44f8-a845-703dd0dba3ca",
-      "title": "Leao",
-      "author": "Barbie\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C"
+      "title": "Leãozinho",
+      "author": "Piriri"
     },
     {
       "id": "799b89d6-157a-40dc-a018-dc6352b2c711",
@@ -76,9 +76,14 @@
       "author": "Loic"
     },
     {
-      "id": "0ba75bc3-51f4-40a1-bdc4-0e29dd28486a",
-      "title": "Larva",
-      "author": "Olavo"
+      "id": "abdb84ea-4e8e-44b7-a16e-c8be5b9c7024",
+      "title": "Peãozinho",
+      "author": "Elias Noite"
+    },
+    {
+      "id": "e778e58a-87b0-4b47-85ff-763a34a18819",
+      "title": "Lacoste",
+      "author": "Luizim"
     }
   ],
   "students": [
@@ -131,11 +136,26 @@
       "email": "rbferra@hotmail.com"
     },
     {
-      "id": 908070,
-      "name": "Mirela",
+      "id": 908067,
+      "name": "Mireli",
       "surname": "Batman",
       "email": "batminha@gmail.com"
+    },
+    {
+      "id": 101011,
+      "name": "Karina",
+      "surname": "Leitoa",
+      "email": "leitoa@hotmail.com"
     }
   ],
-  "loans": []
+  "loans": [
+    {
+      "id": "f8249031-e0af-4211-a41f-19c70f4c780e",
+      "book_id": "20b574d6-94e0-49e5-ba88-52cd14874312",
+      "student_id": "511714",
+      "loan_date": "2023-07-08 21:35:15.850856",
+      "payday": "2023-08-07 21:35:15.850808",
+      "status": "active"
+    }
+  ]
 }

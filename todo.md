@@ -7,20 +7,20 @@
 - Conseguindo ir além da quantidade de opções, provavelmente em todos os menus no modo fullscreen, exceto no mainmenu que tem apenas 4 opções {cm:2023-07-07}
 
 +LIVRO 
-Menu livro {c}
+Menu livro {c} {cm:2023-07-08}
     - Quando o tamanho do terminal ta grande (cabendo todas as opções) o usuário consegue ir para além da última opção inferior {cm:2023-07-07}
     - Corrigir Menu de Livros não selecionando o correto após a alteração do menu invertido {cm:2023-07-07}
-Submenu Livro Procurar:
+Submenu Livro Procurar: {cm:2023-07-08} {c}
     - Adicionar opção de voltar para menu livro {cm:2023-07-07}
-    - Quando selecionados alguns livros da parte superior da lista  de livro aparece uma opção de livro diferente da selecionada #Bugs
-Submenu Livro Cadastrar:
+    - Quando selecionados alguns livros da parte superior da lista  de livro aparece uma opção de livro diferente da selecionada #Bugs {cm:2023-07-08}
+Submenu Livro Cadastrar: {c} {cm:2023-07-08}
     - Adicionar opção de voltar para menu livro {cm:2023-07-07}
     - Resultado de add_books mostrando no inicio da tela ao invés do fim {cm:2023-07-07}
     - Ao terminar de adicionar deve voltar para o menu principal da view {cm:2023-07-07}
     - Corrigir exceções das partes de input (backspace, sobrescrever, lef e right...) #Bugs {cm:2023-07-08}
-Submenu Livro Editar: {c}
+Submenu Livro Editar: {cm:2023-07-08} {c}
     - Adicionar opção de voltar para menu livro {cm:2023-07-07}
-    - Corrigir exceções das partes de input (backspace, sobrescrever, lef e right...) #Bugs
+    - Corrigir exceções das partes de input (backspace, sobrescrever, lef e right...) #Bugs {cm:2023-07-08}
 Submenu Livro Excluir: {c}
     - Adicionar opção de voltar para menu livro {cm:2023-07-07}
     - Mudar a mensagem após o usuário cancelar excluir um livro pois está "Erro ao deletar o livro" {cm:2023-07-07}
@@ -36,31 +36,33 @@ Submenu Livro Excluir: {c}
     - Quando apaga mais do que o que escreveu no input ta dando erro #Bugs {cm:2023-07-07}
     - Resultado de get_books mostrando no inicio da tela ao invés do fim {cm:2023-07-07}
 
-+EMPRÉSTIMOS #Dante
-Menu empréstimo
++EMPRÉSTIMOS 
+Menu empréstimo {cm:2023-07-08} {c}
     - Pergunta em cima da borda do menu em buscar empréstimo e fazer empréstimo {cm:2023-07-07}
     - TextInput em cima da borda do menu {cm:2023-07-07}
     - Quando entro no menu emprestimo e volto, e depois entro no meu estudante e vou em Sair, volta pro menu emprestimo e se vou em Voltar, volta pro menu estudante {cm:2023-07-07}
-    - Quando o tamanho do terminal ta grande (cabendo todas as opções) o usuário consegue ir para além da última opção inferior #Bugs
+    - Quando o tamanho do terminal ta grande (cabendo todas as opções) o usuário consegue ir para além da última opção inferior #Bugs {cm:2023-07-08}
 Submenu Buscar Empréstimo: {c}
     - Adicionar opção de voltar para menu empréstimo {cm:2023-07-07}
     - Quando acessa, a aplicação quebra {cm:2023-07-07}
     - Tratar exceções: #feature
         - quando não tiver nenhum empréstimo feito pelo aluno da matrícula que foi passada, deve aparecer tela com mensagem "Esse aluno não fez nenhum empréstimo de livro"
         - quando não tiver nenhum empréstimo de um livro específico feito pelo aluno da matrícula que foi passada, deve aparecer a tela com a mensagem "O aluno não fez empréstimo desse livro"
-Submenu Fazer Empréstimo: {c}
+    - Corrigir exceções das partes de input (backspace, sobrescrever, left, right...)
+Submenu Fazer Empréstimo:
     - Adicionar opção de voltar para menu empréstimo {cm:2023-07-07}
     - Na parte de escolher o estudante, quando o tamanho do terminal ta grande (cabendo todas as opções), o usuário consegue ir para além da última opção superior {cm:2023-07-07}
     - Os asteriscos inferiores estão posicionados no lugar errado em todas as partes do fluxo {cm:2023-07-07}
     - Tela de resposta que avisa se o livro está indisponível para fazer emprestimo não sai, e quebra a app se apertar uma tecla {cm:2023-07-07}
-    *- Não ta salvando o empréstimo na base de dados*
-Submenu Voltar: {c}
+    - *Não ta salvando o empréstimo na base de dados* {cm:2023-07-08}
+    - Corrigir exceções das partes de input (backspace, sobrescrever, left, right...)
+Submenu Voltar: {c} {cm:2023-07-08}
     - Quando o usuário passa da última opção inferior, e depois acessa a opcao "Voltar", as vezes a aplicação quebra {cm:2023-07-07}
     - Depois de fazer um empréstimo, quando aperta na opção "Voltar" o usuário é direcionado para fazer um emprestimo de novo, e se fizer esse emprestimo, no final dele, a aplicacao quebra {cm:2023-07-07}
-Submenu Devolução: #feature
+Submenu Devolução: #feature {c}
     - Fazer submenu
 
-+ESTUDANTES 
++ESTUDANTES {cm:2023-07-08} {c}
     - Quando o tamanho do terminal ta grande (cabendo todas as opções) o usuário consegue ir para além da última opção inferior {cm:2023-07-08} #Bugs
 Submenu Procurar: {cm:2023-07-08} {c}
     - Quando o usuário digita em cima da resposta já escrita, o texto vai sobreescrevendo e não "afastando" o que já tem #Bugs {cm:2023-07-08}
@@ -72,15 +74,15 @@ Submenu Procurar: {cm:2023-07-08} {c}
 Submenu Cadastrar: {c}
     - Quando o usuário digita em cima da resposta já escrita, o texto vai sobreescrevendo e não "afastando" o que já tem {cm:2023-07-08}
     - Se o ID colocado como input já existir na base de dados, já deve proibir continuar o cadastro #feature
-    - Corrigir exceções das partes de input (backspace, sobrescrever, lef e right...) #Bugs
-        - Quando apaga, a patir do meio, mais do que escreveu, buga #Bugs
+    - Corrigir exceções das partes de input (backspace, sobrescrever, lef e right...) #Bugs {cm:2023-07-08}
+        - Quando apaga, a patir do meio, mais do que escreveu, buga #Bugs {cm:2023-07-08}
     - Adicionar opção de voltar para menu estudante {cm:2023-07-07}
-Submenu Editar: {c}
+Submenu Editar: {cm:2023-07-08} {c}
     - Não está mostrando o primeiro resultado do student {cm:2023-07-04}
-    - Corrigir exceções das partes de input (backspace, sobrescrever, lef e right...) #Bugs
-Submenu Voltar: {c}
+    - Corrigir exceções das partes de input (backspace, sobrescrever, lef e right...) #Bugs {cm:2023-07-08}
+Submenu Voltar: {c} {cm:2023-07-08}
     - Quando o usuário passa da última opção inferior no menu estudante, e depois acessa a opcao "Voltar", a aplicação vai para a parte de cadastro de estudante {cm:2023-07-08}
-Submenu Excluir: 
+Submenu Excluir: {c}
     - Navgeação entre as opcoes de estudantes mostradas está louca {cm:2023-07-08}
     - Quando excluo um estudante, os empréstimos dele devem ser apagados da base de dados #feature
     - Adicionar opção de voltar para menu estudante {cm:2023-07-07}
