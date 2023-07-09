@@ -30,13 +30,12 @@ class BookView(FeedbackBookView):
         for book in books:
             print(book.title)
 
-
     def show_book(self,book):
         clear_screen()
         move_cursor(0,get_terminal_size()[1]-3)
         print(f"Title: {book.title}")
         print(f"Author: {book.author}")
-        print("Aperte Qualquer Tecla para Sair",end="")
+        print("Aperte qualquer tecla para voltar ao menu livro",end="")
         readkey()
 
     def show(self):
@@ -126,7 +125,7 @@ class BookView(FeedbackBookView):
                         ini_item -= 1
                         end_item -= 1
             elif k in (key.CTRL_P,key.CTRL_K,key.UP):
-                # selected += 1
+                selected += 1
                 selected = min(total-1,selected)
                 if fake_selection < min(window - 1,total-1):
                     fake_selection +=1
@@ -135,7 +134,8 @@ class BookView(FeedbackBookView):
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
-                anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                if pos_na_string != 0:
+                    anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
                 pos_na_string = max(pos_na_string,1)
                 search = True
                 end_item = window
@@ -187,7 +187,6 @@ class BookView(FeedbackBookView):
         self.option = 0
         self.fake_selection = 0
         return False
-
 
     def delete_book(self):
         end = False
@@ -244,7 +243,8 @@ class BookView(FeedbackBookView):
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
-                anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                if pos_na_string != 0:
+                    anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
                 pos_na_string = max(pos_na_string,1)
                 search = True
                 end_item = window
@@ -268,17 +268,22 @@ class BookView(FeedbackBookView):
             end = False
         clear_screen()
         move_cursor(0,get_terminal_size()[1])
-        certeza = input("Tem certeza que deseja excluir? ")
         result = []
-        if re.match(r'^si?m?$',certeza.lower()):
-            result = self.controller.delete_book(books[selected])
-        elif re.match(r'^n(a?ã?)o?$',certeza.lower()):
-            FailureFeedbackBookView("Operação Cancelada").show_books(result)
-            self.input_method = self.__back
-            return
+        while result:
+            certeza = input("Tem certeza que deseja excluir esse livro? ")
+            if re.match(r'^si?m?$',certeza.lower()):
+                result = self.controller.delete_book(books[selected])
+            elif re.match(r'^n(a?ã?)o?$',certeza.lower()):
+                FailureFeedbackBookView("Operação Cancelada").show_books(result)
+                self.input_method = self.__back
+                return
+            else:
+                FailureFeedbackBookView("Escreva Sim ou Não").show_books(result)
+                # self.input_method = self.__back
+                return
         clear_screen()
         if result[0] is True:
-            SuccessFeedbackBookView("Livro Deletado:").show_books(result[1])
+            SuccessFeedbackBookView("Livro deletado!").show_books(result[1])
             self.input_method = self.__back
         else:
             FailureFeedbackBookView("Erro ao deletar o livro!").show_books(result[1])
@@ -315,7 +320,8 @@ class BookView(FeedbackBookView):
                 pos_na_string += 1
                 pos_na_string = min(pos_na_string,len(text_input))
             elif k in (key.BACKSPACE):
-                text_input = text_input[0:pos_na_string-1] + text_input[pos_na_string:]
+                if pos_na_string != 0:
+                    text_input = text_input[0:pos_na_string-1] + text_input[pos_na_string:]
                 pos_na_string = max(pos_na_string,1)
                 pos_na_string -= 1
             else:
@@ -368,6 +374,8 @@ class BookView(FeedbackBookView):
             k = readkey()
             if k  == key.ENTER:
                 end = True
+                anwser = ''
+                pos_na_string = 0
                 continue
             if k == key.LEFT:
                 pos_na_string -= 1
@@ -394,7 +402,8 @@ class BookView(FeedbackBookView):
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
-                anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                if pos_na_string != 0:
+                    anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
                 pos_na_string = max(pos_na_string,1)
                 search = True
                 end_item = window
@@ -420,24 +429,62 @@ class BookView(FeedbackBookView):
                     books = all_books
             # selected %= len(books)
             end = False
+
+        anwser = ''
         to_edit = books[selected]
         questions = ["título","autor"]
         questions_anwsers = [ to_edit.title, to_edit.author ]
         question_option = 0
-        
+        anwser = questions_anwsers[question_option]
+        pos_na_string = len(anwser)
+
         while question_option < len(questions):
+            tamanho = len(questions[question_option])
+            
             clear_screen()
             move_cursor(0,get_terminal_size()[1])
-            print("Novo " + questions[question_option] + ": " + questions_anwsers[question_option],end='')
+            print("Novo " + questions[question_option] + ": " + anwser,end='')
+            move_cursor( tamanho + pos_na_string + 8 ,get_terminal_size()[1])
+
             k = readkey()
             if k  == key.ENTER:
+                questions_anwsers[question_option] = anwser
                 question_option += 1
+                if question_option < len(questions):
+                    anwser = questions_anwsers[question_option]
+                pos_na_string = len(anwser)
                 continue
-
+            if k == key.LEFT:
+                pos_na_string -= 1
+                pos_na_string = max(pos_na_string,0)
+            elif k == key.RIGHT:
+                pos_na_string += 1
+                pos_na_string = min(pos_na_string,len(anwser))
+            elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
+                pass
+            elif k in (key.CTRL_P,key.CTRL_K,key.UP):
+                pass
             elif k in (key.BACKSPACE):
-                questions_anwsers[question_option] = questions_anwsers[question_option][0:-1]
+                if pos_na_string != 0:
+                    anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                pos_na_string = max(pos_na_string,1)
+                search = True
+                end_item = window
+                ini_item = 0
+                fake_selection = 0
+                pos_na_string -= 1
             else:
-                questions_anwsers[question_option] = questions_anwsers[question_option] + k
+                if len(anwser) == 0:
+                    anwser += k
+                elif pos_na_string == 0:
+                    anwser = k + anwser
+                else:
+                    anwser = anwser[:pos_na_string]+ k + anwser[pos_na_string:]
+                pos_na_string += 1
+                search = True
+                ini_item = 0
+                end_item = window
+                fake_selection = 0
         result = self.controller.edit_book(to_edit.id,questions_anwsers[0],questions_anwsers[1])
         result[1].append(to_edit)
         clear_screen()
@@ -447,8 +494,6 @@ class BookView(FeedbackBookView):
         else:
             FailureFeedbackBookView("Não foi possível editar este livro").show_books(result[1])
             self.input_method = self.__back
-
-
 
     def start(self):
         while self.end is not True:
@@ -476,7 +521,7 @@ class SuccessFeedbackBookView(FeedbackBookView):
             print(f"ID: {books[0].id}")
             print(f"Título: {books[0].title}")
             print(f"Autor: {books[0].author}")
-        print("Aperte qualquer tecla para voltar")
+        print("Aperte qualquer tecla para voltar ao menu livros")
         readkey()
 
 class FailureFeedbackBookView(FeedbackBookView):
@@ -485,5 +530,5 @@ class FailureFeedbackBookView(FeedbackBookView):
         self.message = msg
     def show_books(self,books: Iterable[ Book ]):
         print(f"{Back.RED}{Fore.WHITE}{self.message}")
-        print("Aperte qualquer tecla para voltar")
+        print("Aperte qualquer tecla para voltar ao menu livros")
         readkey()

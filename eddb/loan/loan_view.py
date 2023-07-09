@@ -156,6 +156,8 @@ class LoanView(FeedbackLoanView):
         selected = 0
         terminal_size = get_terminal_size()
         search = False
+        # text_input = ''
+
         questions = ["Digite a matricula do aluno: ","Digite o livro para emprestar:"]
         handlers = [self.controller.get_students,self.controller.get_books]
         search_handler = [self.controller.search_student_by_id,self.controller.search_book_by_id]
@@ -170,8 +172,11 @@ class LoanView(FeedbackLoanView):
         ini_item = 0
         end_item = window
         # ===================================
+        pos_na_string = 0 
         while end is not True:
             total = len(items)
+            question = questions[menu_idx]
+            text_input = anwser[menu_idx]
 
             showing_items = []
             if menu_idx == 0:
@@ -179,9 +184,11 @@ class LoanView(FeedbackLoanView):
             if menu_idx == 1:
                 showing_items = list(map(lambda x: x.title,items))
 
+
             draw_scrollable_menu(showing_items,fake_selection,ini_item)
             move_cursor(0,terminal_size[1])
-            print(questions[menu_idx] + anwser[menu_idx],end='')
+            print(question + text_input,end='')
+            move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
 
             search = False
             k = readkey()
@@ -195,7 +202,13 @@ class LoanView(FeedbackLoanView):
                 if menu_idx > len(questions) - 1:
                     end = True
                     continue
-            if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
+            elif k == key.LEFT:
+                pos_na_string -= 1
+                pos_na_string = max(pos_na_string,0)
+            elif k == key.RIGHT:
+                pos_na_string += 1
+                pos_na_string = min(pos_na_string,len(text_input))
+            elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
                 selected -= 1
                 selected = max(selected,0)
                 if fake_selection > 0:
@@ -214,20 +227,31 @@ class LoanView(FeedbackLoanView):
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
-                anwser[menu_idx] = anwser[menu_idx][0:-1]
+                if pos_na_string != 0:
+                    text_input = text_input[0:pos_na_string-1] + text_input[pos_na_string:]
+                pos_na_string = max(pos_na_string,1)
+                pos_na_string -= 1
+                anwser[menu_idx] = text_input
                 ini_item = 0
                 end_item = window
                 fake_selection = 0
                 search = True
             else:
-                anwser[menu_idx] += k
+                if len(text_input) == 0:
+                    text_input += k
+                elif pos_na_string == 0:
+                    text_input = k + text_input
+                else:
+                    text_input = text_input[:pos_na_string]+ k + text_input[pos_na_string:]
+                anwser[menu_idx] = text_input
+                pos_na_string += 1
                 ini_item = 0
                 end_item = window
                 fake_selection = 0
                 search = True
             if search:
                 if len(anwser) > 0:
-                    items = search_handler[menu_idx](anwser[menu_idx],10)
+                    items = search_handler[menu_idx](text_input,10)
                 else:
                     items = all_items[menu_idx]
             end = False
@@ -242,6 +266,7 @@ class LoanView(FeedbackLoanView):
         else:
             paydate = datetime.now() + timedelta(days=30)
             loan = Loan(book_id=book.id,student_id=student.id,payday=paydate,status="active")
+            self.controller.add_loan(loan)
             self.show_loan(loan)
             print("Aperte qualquer tecla para voltar ao menu empréstimo")
             readkey()
@@ -301,13 +326,14 @@ class LoanView(FeedbackLoanView):
         return False
 
     def get_input(self):
+        total = len(self.options)
         k = readkey()
         if k  == key.ENTER:
             return self.create_submenu()
         if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
             if self.option < len(self.options)-1:
                 self.option += 1
-            if self.fake_selection < self.end_option - self.init_option - 1:
+            if self.fake_selection < min(self.end_option - self.init_option - 1,total-1):
                 self.fake_selection += 1
             else:
                 if self.end_option < len(self.options):
