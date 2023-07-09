@@ -20,7 +20,7 @@ class LoanRepositoryConcrete(LoanRepository):
         return vars(loan)()
 
     def __JSON_to_loan(self,json):
-        return Loan(json["id"],json["id_book"],json["id_student"],json["loan_date"],json["payday"],json["status"])
+        return Loan(json["id"],json["book_id"],json["student_id"],json["loan_date"],json["payday"],json["status"])
 
     def get_all(self):
         """
