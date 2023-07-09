@@ -128,3 +128,6 @@ class LoanControllerConcrete(LoanController):
             if loan.status == "active" or loan.status == "overdue":
                 return True
         return False
+    
+    def add_loan(self,item):
+        return self.repository.add_item(item),[item]

@@ -47,7 +47,7 @@ class StudentView(FeedbackStudentView):
         print(f"Nome: {student.name}")
         print(f"Sobrenome: {student.surname}")
         print(f"Email: {student.email}")
-        print("Aperte Qualquer Teclar para Sair")
+        print("Aperte qualquer tecla para voltar ao menu estudante")
         readkey()
 
     def show(self):
@@ -98,15 +98,27 @@ class StudentView(FeedbackStudentView):
         ini_item = 0
         end_item = window
         # ===================================
+        pos_na_string = 0
         while end is not True:
-            total = len(students)
-            draw_scrollable_menu(students,fake_selection,ini_item)
+            showed_items = list(map(lambda x: x.name,students))
+            total= len(showed_items)
+            terminal_size = get_terminal_size()
+            window = terminal_size[1] - 3
+        
+            draw_scrollable_menu(showed_items,fake_selection,ini_item)
             print(question + anwser,end='')
+            move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
             search = False
             k = readkey()
             if k  == key.ENTER:
                 end = True
                 continue
+            if k == key.LEFT:
+                pos_na_string -= 1
+                pos_na_string = max(pos_na_string,0)
+            elif k == key.RIGHT:
+                pos_na_string += 1
+                pos_na_string = min(pos_na_string,len(anwser))
             elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
                 selected -= 1
                 selected = max(selected,0)
@@ -126,11 +138,26 @@ class StudentView(FeedbackStudentView):
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
-                anwser = anwser[0:-1]
+                if pos_na_string != 0:
+                    anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                pos_na_string = max(pos_na_string,1)
                 search = True
+                end_item = window
+                ini_item = 0
+                fake_selection = 0
+                pos_na_string -= 1
             else:
-                anwser += k
+                if len(anwser) == 0:
+                    anwser += k
+                elif pos_na_string == 0:
+                    anwser = k + anwser
+                else:
+                    anwser = anwser[:pos_na_string]+ k + anwser[pos_na_string:]
+                pos_na_string += 1
                 search = True
+                ini_item = 0
+                end_item = window
+                fake_selection = 0
             if search:
                 if len(anwser) > 0:
                     students = self.controller.search_by_name(anwser,5)
@@ -158,7 +185,6 @@ class StudentView(FeedbackStudentView):
         elif self.option == 5:
             EndComposer.create().start()
 
-
     def delete_student(self):
         end = False
         anwser = ''
@@ -174,16 +200,28 @@ class StudentView(FeedbackStudentView):
         ini_item = 0
         end_item = window
         # ===================================
+        pos_na_string = 0
         while end is not True:
-            total = len(students)
-            draw_scrollable_menu(students,fake_selection,ini_item)
+            showed_items = list(map(lambda x: x.name,students))
+            total = len(showed_items)
+            terminal_size = get_terminal_size()
+            window = terminal_size[1] - 3
+
+            draw_scrollable_menu(showed_items,fake_selection,ini_item)
             print(question + anwser,end='')
+            move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
             search = False
             k = readkey()
             if k  == key.ENTER:
                 end = True
                 continue
-            if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
+            if k == key.LEFT:
+                pos_na_string -= 1
+                pos_na_string = max(pos_na_string,0)
+            elif k == key.RIGHT:
+                pos_na_string += 1
+                pos_na_string = min(pos_na_string,len(anwser))
+            elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
                 selected -= 1
                 selected = max(selected,0)
                 if fake_selection > 0:
@@ -205,20 +243,28 @@ class StudentView(FeedbackStudentView):
                 self.input_method = self.__back
                 return
             elif k in (key.BACKSPACE):
-                anwser = anwser[0:-1]
+                anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                pos_na_string = max(pos_na_string,1)
                 search = True
                 end_item = window
                 ini_item = 0
                 fake_selection = 0
+                pos_na_string -= 1
             else:
-                anwser += k
+                if len(anwser) == 0:
+                    anwser += k
+                elif pos_na_string == 0:
+                    anwser = k + anwser
+                else:
+                    anwser = anwser[:pos_na_string]+ k + anwser[pos_na_string:]
+                pos_na_string += 1
                 search = True
-                end_item = window
                 ini_item = 0
+                end_item = window
                 fake_selection = 0
             if search:
                 students = self.controller.search_by_name(anwser,100)
-            selected %= len(students)
+            #selected %= len(students)
             end = False
         clear_screen()
         move_cursor(0,window+3)
@@ -227,7 +273,7 @@ class StudentView(FeedbackStudentView):
         if re.match(r'^si?m?$',certeza.lower()):
             result = self.controller.delete_student(students[selected])
         elif re.match(r'^n(a?ã?)o?$',certeza.lower()):
-            FailureFeedbackStudentView("Voltando!").show_students(result)
+            FailureFeedbackStudentView("Estudante não deletado!").show_students(result)
             self.input_method = self.__back
             return
         else:
@@ -246,23 +292,45 @@ class StudentView(FeedbackStudentView):
         questions = ["a matrícula","o nome","o sobrenome", "o email"]
         option = 0
         question = f"Digite {questions[option]} do estudante: "
+        pos_na_string = 0
         while end is not True:
             question = f"Digite {questions[option]} do estudante: "
             clear_screen()
             move_cursor(0,get_terminal_size()[1])
             print(question + text_input,end='')
+            move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
             k = readkey()
             if k  == key.ENTER:
                 option += 1
                 anwser.append(text_input)
                 text_input = ''
+                pos_na_string = 0
                 if option >= len(questions):
                     end = True
                     continue
+            elif k == key.LEFT:
+                pos_na_string -= 1
+                pos_na_string = max(pos_na_string,0)
+            elif k == key.RIGHT:
+                pos_na_string += 1
+                pos_na_string = min(pos_na_string,len(text_input))
+            elif k == key.UP:
+                pass
+            elif k == key.DOWN:
+                pass
             elif k in (key.BACKSPACE):
-                text_input = text_input[0:-1]
+                if pos_na_string != 0:
+                    text_input = text_input[0:pos_na_string-1] + text_input[pos_na_string:]
+                pos_na_string = max(pos_na_string,1)
+                pos_na_string -= 1
             else:
-                text_input += k
+                if len(text_input) == 0:
+                    text_input += k
+                elif pos_na_string == 0:
+                    text_input = k + text_input
+                else:
+                    text_input = text_input[:pos_na_string]+ k + text_input[pos_na_string:]
+                pos_na_string += 1
             end = False
         result = self.controller.add_student(anwser[0],anwser[1],anwser[2], anwser[3])
         clear_screen()
@@ -275,7 +343,8 @@ class StudentView(FeedbackStudentView):
     def edit_student(self):
         end = False
         anwser = ''
-        students = self.controller.get_all()
+        all_students = self.controller.get_all()
+        students = all_students
         questions = ["Nova matrícula","Novo nome","Novo sobrenome", "Novo email"]
         search = False
         question = "Digite o nome ou matrícula do aluno: "
@@ -287,16 +356,30 @@ class StudentView(FeedbackStudentView):
         fake_selection = 0
         ini_item = 0
         end_item = window
+         # ===================================
+        pos_na_string = 0
         while end is not True:
-            total = len(students)
-            draw_scrollable_menu(students,fake_selection,ini_item)
+            showed_items = list(map(lambda x: x.name,students))
+            total = len(showed_items)
+            terminal_size = get_terminal_size()
+            window = terminal_size[1] - 3
+
+            draw_scrollable_menu(showed_items,fake_selection,ini_item)
             print(question + anwser,end='')
+            move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
             search = False
+
             k = readkey()
             if k  == key.ENTER:
                 end = True
                 continue
-            if k in (key.CTRL_N,key.CTRL_J,key.DOWN):
+            if k == key.LEFT:
+                pos_na_string -= 1
+                pos_na_string = max(pos_na_string,0)
+            elif k == key.RIGHT:
+                pos_na_string += 1
+                pos_na_string = min(pos_na_string,len(anwser))
+            elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
                 selected -= 1
                 selected = max(selected,0)
                 if fake_selection > 0:
@@ -315,33 +398,92 @@ class StudentView(FeedbackStudentView):
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
-                if len(anwser) > 0:
-                    anwser = anwser[0:-1]
+                if pos_na_string != 0:
+                    anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                pos_na_string = max(pos_na_string,1)
                 search = True
+                end_item = window
+                ini_item = 0
+                fake_selection = 0
+                pos_na_string -= 1
             else:
-                anwser += k
+                if len(anwser) == 0:
+                    anwser += k
+                elif pos_na_string == 0:
+                    anwser = k + anwser
+                else:
+                    anwser = anwser[:pos_na_string]+ k + anwser[pos_na_string:]
+                pos_na_string += 1
                 search = True
+                ini_item = 0
+                end_item = window
+                fake_selection = 0
             if search:
-                students = self.controller.search_by_name(anwser,100)
+                if len(anwser) > 0:
+                    students = self.controller.search_by_name(anwser,5)
+                else:
+                    students = all_students
             end = False
+
+        anwser = ''    
         to_edit = students[selected]
         old_id = to_edit.id
         questions_anwsers = [ str(to_edit.id), to_edit.name, to_edit.surname, to_edit.email ]
         question_option = 0
+        anwser = questions_anwsers[question_option]
+        pos_na_string = len(anwser)
+        
         while question_option < len(questions):
+            tamanho = len(questions[question_option])
+
             clear_screen()
-            move_cursor(0,get_terminal_size()[1]-1)
-            print(questions[question_option] + ": " + questions_anwsers[question_option],end='')
+            move_cursor(0,get_terminal_size()[1])
+            print(questions[question_option] + ": " + anwser,end='')
+            move_cursor( tamanho + pos_na_string + 3 ,get_terminal_size()[1])
+
             k = readkey()
             if k  == key.ENTER:
+                questions_anwsers[question_option] = anwser
                 question_option += 1
+                if question_option < len(questions):
+                    anwser = questions_anwsers[question_option]
+                pos_na_string = len(anwser)
                 continue
-            if k in (key.BACKSPACE):
-                questions_anwsers[question_option] = questions_anwsers[question_option][0:-1]
+            if k == key.LEFT:
+                pos_na_string -= 1
+                pos_na_string = max(pos_na_string,0)
+            elif k == key.RIGHT:
+                pos_na_string += 1
+                pos_na_string = min(pos_na_string,len(anwser))
+            elif k in (key.CTRL_N,key.CTRL_J,key.DOWN):
+                pass
+            elif k in (key.CTRL_P,key.CTRL_K,key.UP):
+                pass
+            elif k in (key.BACKSPACE):
+                if pos_na_string != 0:
+                        anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                pos_na_string = max(pos_na_string,1)
+                search = True
+                end_item = window
+                ini_item = 0
+                fake_selection = 0
+                pos_na_string -= 1    
+                
             else:
-                questions_anwsers[question_option] = questions_anwsers[question_option] + k
+                if len(anwser) == 0:
+                    anwser += k
+                elif pos_na_string == 0:
+                    anwser = k + anwser
+                else:
+                    anwser = anwser[:pos_na_string]+ k + anwser[pos_na_string:]
+                pos_na_string += 1
+                search = True
+                ini_item = 0
+                end_item = window
+                fake_selection = 0
+                
         result = self.controller.edit_student(old_id, questions_anwsers[0],questions_anwsers[1],questions_anwsers[2],questions_anwsers[3])
-        #result[1].append(to_edit)
+        result[1].append(to_edit)
         clear_screen()
         if result[0] is True:
             SuccessFeedbackStudentView(f"Parabéns você editou o estudante:").show_students(result[1])
