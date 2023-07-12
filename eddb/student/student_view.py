@@ -266,19 +266,27 @@ class StudentView(FeedbackStudentView):
                 students = self.controller.search_by_name(anwser,100)
             #selected %= len(students)
             end = False
+                
+        result = [False]
+        while result:
+            clear_screen()
+            move_cursor(0,window+3)
+            certeza = input("Tem certeza que deseja excluir? Escreva Sim ou Não: ")
+            if re.match(r'^si?m?$',certeza.lower()):
+                result = self.controller.delete_student(students[selected])
+            elif re.match(r'^n(a?ã?)o?$',certeza.lower()):
+                FailureFeedbackStudentView("Estudante não deletado!").show_students(result)
+                print("Aperte qualquer tecla para voltar ao menu estudante.")
+                readkey()
+                self.input_method = self.__back
+                return
+            else:
+                # result.append(False)
+                # result.append([])
+                FailureFeedbackStudentView("Escreva Sim ou Não").show_students(result)
+                print("Aperte enter para tentar novamente.")
+                readkey()
         clear_screen()
-        move_cursor(0,window+3)
-        certeza = input("Tem certeza que deseja excluir? ")
-        result = []
-        if re.match(r'^si?m?$',certeza.lower()):
-            result = self.controller.delete_student(students[selected])
-        elif re.match(r'^n(a?ã?)o?$',certeza.lower()):
-            FailureFeedbackStudentView("Estudante não deletado!").show_students(result)
-            self.input_method = self.__back
-            return
-        else:
-            result.append(False)
-            result.append([])
         if result[0] is True:
             SuccessFeedbackStudentView("Estudante deletado:").show_students(result[1])
         else:
@@ -533,5 +541,5 @@ class FailureFeedbackStudentView(FeedbackStudentView):
         clear_screen()
         move_cursor(0,get_terminal_size()[1])
         print(f"{Back.RED}{Fore.WHITE}{self.message}")
-        print("Aperte qualquer tecla para voltar")
-        readkey()
+        # print("Aperte qualquer tecla para voltar")
+        # readkey()
