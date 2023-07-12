@@ -13,17 +13,17 @@ class Loan:
 
     id: str = field(default_factory=str_uuid4)
     book_id: str = "Book"
-    student_id: str = "Unknown"
+    student_id: int = None
     loan_date: datetime = field(default_factory=datetime.now)
     payday: datetime = None
     status: str = "inactive"
 
     def __dict__(self):
         return {
-            "id":f"{self.id}",
-            "book_id":f"{self.book_id}",
-            "student_id":f"{self.student_id}",
+            "id":self.id,
+            "book_id":self.book_id,
+            "student_id":self.student_id,
             "loan_date":f"{self.loan_date}",
             "payday":f"{self.payday}",
-            "status":f"{self.status}",
+            "status":self.status,
         }
