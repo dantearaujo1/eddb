@@ -158,7 +158,7 @@ class LoanView(FeedbackLoanView):
         search = False
         # text_input = ''
 
-        questions = ["Digite a matricula do aluno: ","Digite o livro para emprestar:"]
+        questions = ["Digite a matricula ou nome do aluno(a): ","Digite o livro para emprestar:"]
         handlers = [self.controller.get_students,self.controller.get_books]
         search_handler = [self.controller.search_student_by_id,self.controller.search_book_by_id]
         all_items = [handlers[0](),handlers[1]()]
@@ -197,6 +197,7 @@ class LoanView(FeedbackLoanView):
                 if menu_idx == 0:
                     selected = 0
                     fake_selection = 0
+                    pos_na_string = 0 
                 menu_idx += 1
                 search = True
                 if menu_idx > len(questions) - 1:
@@ -263,9 +264,10 @@ class LoanView(FeedbackLoanView):
             print("Este livro já está alugado...")
             print("Aperte qualquer tecla para voltar ao menu empréstimo")
             readkey()
+            self.input_method = self.__back
         else:
             paydate = datetime.now() + timedelta(days=30)
-            loan = Loan(book_id=book.id,student_id=student.id,payday=paydate,status="active")
+            loan = Loan(book_id=book.id,student_id=int(student.id),payday=paydate,status="active")
             self.controller.add_loan(loan)
             self.show_loan(loan)
             print("Aperte qualquer tecla para voltar ao menu empréstimo")
@@ -300,10 +302,10 @@ class LoanView(FeedbackLoanView):
         move_cursor(0,get_terminal_size()[1])
         stu = self.controller.get_student_by_id(loan.student_id)[0]
         book = self.controller.get_book_by_id(loan.book_id)[0]
-        print(f"Book: {book.title}")
-        print(f"Student: {stu.name}")
-        print(f"Loan Day: {loan.loan_date}")
-        print(f"Payday: {loan.payday}")
+        print(f"Livro: {book.title}")
+        print(f"Estudante: {stu.name}")
+        print(f"Dia do Empréstimo: {loan.loan_date}")
+        print(f"Dia da Devolução: {loan.payday}")
         colors = []
         if loan.status == "active":
             colors = [theme["bloan_active"],theme["floan_active"]]

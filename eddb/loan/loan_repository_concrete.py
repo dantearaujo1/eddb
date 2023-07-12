@@ -81,7 +81,7 @@ class LoanRepositoryConcrete(LoanRepository):
         if json_data:
             items = json_data["loans"]
             for loan in items:
-                if loan["id_book"] == incoming_loan["id_book"] and loan["id_student"] == incoming_loan["id_student"]:
+                if loan["book_id"] == incoming_loan["book_id"] and loan["student_id"] == incoming_loan["student_id"]:
                     return False
                 if loan["id"] == incoming_loan["id"]:
                     return False
@@ -102,8 +102,8 @@ class LoanRepositoryConcrete(LoanRepository):
             items = json_data["loans"]
             for loan in items:
                 if loan["id"] == incoming_loan["id"]:
-                    loan["id_book"] = incoming_loan["id_book"]
-                    loan["id_student"] = incoming_loan["id_student"]
+                    loan["book_id"] = incoming_loan["book_id"]
+                    loan["student_id"] = incoming_loan["student_id"]
                     loan["loan_date"] = incoming_loan["loan_date"]
                     loan["payday"] = incoming_loan["payday"]
                     loan["status"] = incoming_loan["status"]
@@ -135,7 +135,7 @@ class LoanRepositoryConcrete(LoanRepository):
         if json_data:
             items = json_data["loans"]
             for loan in items:
-                if loan["id_book"] == ID:
+                if loan["book_id"] == ID:
                     items.remove(loan)
             json_data["loans"] = items
             write_data(self.file,json_data)
@@ -148,7 +148,7 @@ class LoanRepositoryConcrete(LoanRepository):
         if json_data:
             items = json_data["loans"]
             for loan in items:
-                if loan["id_student"] == ID:
+                if loan["student_id"] == ID:
                     items.remove(loan)
             json_data["loans"] = items
             write_data(self.file,json_data)
