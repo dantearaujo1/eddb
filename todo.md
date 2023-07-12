@@ -89,5 +89,29 @@ Submenu Excluir: {c}
     - Os "Textos" das partes de inputs, eram para serem bloqueados {cm:2023-07-08}
     - Quando apaga mais do que o que escreveu no input ta dando erro
 
-    
+- Books:
+-> Procurar: OK
+-> Cadastrar: OK
+-> Editar: OK
+-> Excluir:
+ -Bug: Não tá excluindo o livro (list index out of range)
+ -Tratar exceção: todas as teclas na confirmação do excluir (Debora)
+- Loans:
+-> Procurar:
+ -Tratar exceção: app quebra quando não tem nenhum empréstimo a ser procurado
+-->Editar dentro do procurar:
+ -Bug: não edita, vai pra tela do menu empréstimos
+-->Excluir dentro do procurar:
+ -Tratar exceção: todas as teclas na confirmação do excluir (Débora)
+->Devolução:
+ -Implementar
+-> Fazer Empréstimo:
+ -Bug: não dá pra fazer mais de 1 empréstimo (KeyError: id_book)
+ - Tratar exceção: todas as teclas em todas as partes (Debora)
+-Students:
+-> Procurar: OK
+-> Cadastrar: OK
+-> Editar: OK
+-> Excluir:
+ -Tratar exceção: teclas na confirmação do excluir (Debora)
 
