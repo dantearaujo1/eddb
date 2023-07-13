@@ -194,7 +194,7 @@ class LoanView(FeedbackLoanView):
         selected = 0
         terminal_size = get_terminal_size()
         search = False
-        # text_input = ''
+        text_input = ''
 
         questions = ["Digite a matricula ou nome do aluno(a): ","Digite o livro para emprestar: "]
         handlers = [self.controller.get_students,self.controller.get_books]
@@ -234,6 +234,7 @@ class LoanView(FeedbackLoanView):
                 if len(items) > 0:
                     anwser_objects.append(items[selected])
                     if menu_idx == 0:
+                        text_input = ''
                         selected = 0
                         fake_selection = 0
                         pos_na_string = 0
@@ -241,7 +242,6 @@ class LoanView(FeedbackLoanView):
                     search = True
                     if menu_idx > len(questions) - 1:
                         end = True
-                        continue
             elif k == key.LEFT:
                 pos_na_string -= 1
                 pos_na_string = max(pos_na_string,0)
