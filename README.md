@@ -91,11 +91,13 @@ Em seguida pode rodar a aplicação com o commando:
 poetry run python eddb/main.py
 
 ```
-### Usando o pip e requirements.txt (NAO FUNCIONA, USE O POETRY)
+### Usando o pip e requirements.txt (NAO FUNCIONA SE N EXPORTAR O PYTHONPATH, USE O POETRY)
 
 ```zsh
 # se vc tiver o pip instalado
 pip install -r requirements.txt
+# então no terminal vc pode setar seu PYTHONPATH enviroment variable
+export PYTHONPATH=$PYTHONPATH:'pwd'
 # para executar basta chamar após a instalação
 python eddb/main.py
 #caso seu terminal use python3
