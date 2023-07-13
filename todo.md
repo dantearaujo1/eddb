@@ -105,16 +105,18 @@ Submenu Excluir: {cm:2023-07-13} {c}
 
 -> Procurar:
  - Ta procurando apenas por matrícula do estudante (passar objeto inteiro 'id e nome?') 
- - A lista empréstimo que mostra de primeira só tem empréstimos ativos, mas quando digita a matrícula de algum estudante, aparece os inativos do estudante tb
+ - A lista empréstimo deve o nome dos estudantes e quando acessar o estudante, mostrar os emprestimos ativos e os inativos
 
 -> Emprestar:
  - Não ta aparecendo a lista de livros assim que abre a tela de escolher o livro que vai emprestar, só dps de digitar algo
 
 -> Devolver:
  - Emprestimos inativos não deviam aparecer (A) 
- - Depois que aperta 0 (pagar emprestimo) ta aparecendo o nome do livro
+ - Depois que aperta 0 (pagar emprestimo) nao ta descendo total (precisando da o clearscreen)
  - Apertar backspace na hora de procurar ta dando erro) (TypeError: LoanControllerConcrete.get_students() takes 1 positional argument but 3 were given)
+
  - Para estudantes que não possuem emprestimos, poderia aparecer a tela "O estudante selecionado não possui nenhum empréstimo realizado ou devolvido" #ft
+ - Na hnora de cadastrar estudante, se ja estiver cadastro um aluno com a matricula passada, mostrar a tela de "matricula ja cadastrada, tente outra" #ft
 
 
 
