@@ -18,7 +18,7 @@ theme = get_theme("debora")
 class LoanView(FeedbackLoanView):
     def __init__(self, controller: LoanController):
         self.controller = controller
-        self.options = ["Empréstimos","Emprestar","Devolver","Voltar","Sair"]
+        self.options = ["Procurar","Emprestar","Devolver","Voltar","Sair"]
         self.option = 0
         self.menu = [self.show]
         self.input_method = self.get_input
@@ -64,6 +64,7 @@ class LoanView(FeedbackLoanView):
         ini_item = 0
         end_item = window
         # ===================================
+        
         pos_na_string = 0
         while end is not True:
             total = len(items)
@@ -79,6 +80,8 @@ class LoanView(FeedbackLoanView):
             draw_scrollable_menu(showing_items,fake_selection,ini_item)
             move_cursor(0,terminal_size[1])
             print(question + anwser,end='')
+
+            move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
 
             search = False
             k = readkey()
@@ -111,7 +114,8 @@ class LoanView(FeedbackLoanView):
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
-                anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                if pos_na_string != 0:
+                    anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
                 pos_na_string = max(pos_na_string,1)
                 search = True
                 end_item = window
@@ -162,7 +166,7 @@ class LoanView(FeedbackLoanView):
         search = False
         # text_input = ''
 
-        questions = ["Digite a matricula ou nome do aluno(a): ","Digite o livro para emprestar:"]
+        questions = ["Digite a matricula ou nome do aluno(a): ","Digite o livro para emprestar: "]
         handlers = [self.controller.get_students,self.controller.get_books]
         search_handler = [self.controller.search_student_by_id,self.controller.search_book_by_id]
         all_items = [handlers[0](),handlers[1]()]
@@ -319,10 +323,13 @@ class LoanView(FeedbackLoanView):
             draw_scrollable_menu(showing_items,fake_selection,ini_item)
             move_cursor(0,terminal_size[1])
             print(questions[menu_idx] + anwser,end='')
+            move_cursor( len(questions[menu_idx]) + pos_na_string + 1,get_terminal_size()[1])
+
 
             search = False
             k = readkey()
             if k  == key.ENTER:
+                pos_na_string = 0
                 if menu_idx < len(questions) - 1:
                     menu_idx += 1
                     if len(items) > 0:
@@ -361,7 +368,8 @@ class LoanView(FeedbackLoanView):
                         ini_item += 1
                         end_item += 1
             elif k in (key.BACKSPACE):
-                anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
+                if pos_na_string != 0:
+                    anwser = anwser[0:pos_na_string-1] + anwser[pos_na_string:]
                 pos_na_string = max(pos_na_string,1)
                 search = True
                 end_item = window
