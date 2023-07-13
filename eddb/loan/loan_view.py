@@ -101,6 +101,11 @@ class LoanView(FeedbackLoanView):
                         anwser_objs.append(stu)
                         loans_from_student = self.controller.get_loans_by_student_id(stu.id)
                         books_loaned = [(self.controller.get_book_by_id(x.book_id)[0],i,x.status) for i,x in enumerate(loans_from_student)]
+                        if len(books_loaned) < 1:
+                            feedback = NoneFeedbackLoanView("Este estudante não possui nenhum empréstimo.")
+                            feedback.show_feedback([])
+                            self.input_method = self.__back
+                            return
                         items = books_loaned
                         anwser = ''
                         selected = 0
@@ -610,3 +615,5 @@ class NoneFeedbackLoanView(FeedbackLoanView):
         print(f"{Back.LIGHTBLACK_EX}{Fore.WHITE}{self.message}")
         print("Aperte qualquer tecla para voltar ao menu empréstimo",end="")
         readkey()
+
+
