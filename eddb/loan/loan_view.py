@@ -1,7 +1,7 @@
 import time, re,copy
 from datetime import datetime,timedelta
 from collections.abc import Iterable
-from colorama import Back,Fore
+from colorama import Back,Fore,Style
 from readchar import readkey,readchar,key
 
 from eddb.util.util import clear_screen,get_terminal_size, move_cursor
@@ -51,12 +51,17 @@ class LoanView(FeedbackLoanView):
     def get_loans(self):
         end = False
         anwser = ''
-        all_items = self.controller.get_all()
-        items = all_items
+        anwser_objs = []
+        books_loaned = []
+        loans_from_student = []
         search = False
-        question = "Digite a matricula do aluno: "
+        questions = [ "Pesquise por matrícula ou nome do aluno: ","Pesquise o livro emprestado: " ]
+        handlers = [self.controller.get_students, self.controller.get_books]
+        searches = [self.controller.search_student_by_id, self.controller.search_student_from_list]
+        items = handlers[0]()
 
         # Window variables ==================
+        menu_idx = 0
         selected = 0
         terminal_size = get_terminal_size()
         window = terminal_size[1] - 3
@@ -64,29 +69,44 @@ class LoanView(FeedbackLoanView):
         ini_item = 0
         end_item = window
         # ===================================
-        
         pos_na_string = 0
         while end is not True:
             total = len(items)
 
             showing_items = []
             for i in range(total):
-                if total > 0:
-                    item = items[i]
-                    student = self.controller.get_student_by_id(item.student_id)[0]
-                    book = self.controller.get_book_by_id(item.book_id)[0]
-                    showing_items.append(str(student.id) + " " + student.name + " " + book.title)
+                item = items[i]
+                if menu_idx < 1:
+                    showing_items.append(str(item.id) + " " + item.name)
+                else:
+                    status = item[2][0]
+                    bg = theme['fsilver'] if status == 'i' else theme['fred'] if status == 'o' else theme['fgreen']
+                    showing_items.append(item[0].title + f" {Style.RESET_ALL}[{bg}{status}{Style.RESET_ALL}]")
+
 
             draw_scrollable_menu(showing_items,fake_selection,ini_item)
             move_cursor(0,terminal_size[1])
-            print(question + anwser,end='')
+            print(questions[menu_idx] + anwser,end='')
+            move_cursor( len(questions[menu_idx]) + pos_na_string + 1,get_terminal_size()[1])
 
-            move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
 
             search = False
             k = readkey()
             if k  == key.ENTER:
-                if len(items)>0:
+                pos_na_string = 0
+                if menu_idx < len(questions) - 1:
+                    menu_idx += 1
+                    if len(items) > 0:
+                        stu = items[selected]
+                        anwser_objs.append(stu)
+                        loans_from_student = self.controller.get_loans_by_student_id(stu.id)
+                        books_loaned = [(self.controller.get_book_by_id(x.book_id)[0],i,x.status) for i,x in enumerate(loans_from_student)]
+                        items = books_loaned
+                        anwser = ''
+                        selected = 0
+                        fake_selection = 0
+                        continue
+                else:
                     end = True
                     continue
             if k == key.LEFT:
@@ -136,12 +156,22 @@ class LoanView(FeedbackLoanView):
                 fake_selection = 0
             if search:
                 if len(anwser) > 0:
-                    items = self.controller.search_by_student_id(anwser,10)
+                    if menu_idx == 0:
+                        items = searches[menu_idx](anwser,10)
+                    elif menu_idx == 1:
+                        items = searches[menu_idx](books_loaned,anwser,10)
                 else:
-                    items = all_items
+                    if menu_idx == 0:
+                        items = handlers[menu_idx]()
+                    elif menu_idx == 1:
+                        items = books_loaned
             end = False
-        self.show_loan(items[selected])
-        self.__select_option(["Excluir","Voltar"],[self.delete_loan,(lambda x: x)],items[selected])
+        if len(items) > 0:
+            result = loans_from_student[items[selected][1]]
+            self.show_loan(result)
+            self.__select_option(["Excluir","Voltar"],[self.delete_loan,(lambda x: x)],items[selected])
+        else:
+            NoneFeedbackLoanView("Nenhum dado selecionado!").show_feedback([])
         self.input_method = self.__back
 
     def __select_option(self,options,options_callback,*args):
@@ -334,6 +364,7 @@ class LoanView(FeedbackLoanView):
                         stu = items[selected]
                         anwser_objs.append(stu)
                         loans_from_student = self.controller.get_loans_by_student_id(stu.id)
+                        loans_from_student = list(filter(lambda x: x.status != "inactive",loans_from_student))
                         books_loaned = [(self.controller.get_book_by_id(x.book_id)[0],i) for i,x in enumerate(loans_from_student)]
                         items = books_loaned
                         anwser = ''
@@ -394,7 +425,7 @@ class LoanView(FeedbackLoanView):
                         items = searches[menu_idx](books_loaned,anwser,10)
                 else:
                     if menu_idx == 0:
-                        items = handlers[menu_idx](anwser,10)
+                        items = handlers[menu_idx]()
                     elif menu_idx == 1:
                         items = books_loaned
             end = False
@@ -415,10 +446,10 @@ class LoanView(FeedbackLoanView):
             "status": 'inactive',
         }
         result = self.controller.update_item(loan,data)
-        clear_screen()
         self.show_loan(result[1])
         print(f"{theme['bloan_active']}{theme['floan_active']} Empréstimo Pago")
         print("Aperte qualquer tecla para voltar ao menu empréstimo")
+        move_cursor(0,get_terminal_size()[1])
         readkey()
 
     def delay(self,loan):

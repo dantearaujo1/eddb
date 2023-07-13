@@ -16,6 +16,9 @@ themes = {
         "floan_inactive":Fore.WHITE,
         "bloan_overdue":Back.RED,
         "floan_overdue":Fore.WHITE,
+        "fgreen":Fore.GREEN,
+        "fsilver":Fore.LIGHTBLACK_EX,
+        "fred":Fore.RED,
     },
     "debora":{
         "scrollable_up_arrow_on":Back.CYAN,
@@ -32,6 +35,9 @@ themes = {
         "floan_inactive":Fore.WHITE,
         "bloan_overdue":Back.RED,
         "floan_overdue":Fore.WHITE,
+        "fgreen":Fore.GREEN,
+        "fsilver":Fore.LIGHTBLACK_EX,
+        "fred":Fore.RED,
     }
 }
 

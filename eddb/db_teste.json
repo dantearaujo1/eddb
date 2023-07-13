@@ -96,9 +96,9 @@
     },
     {
       "id": 511714,
-      "name": "Debora",
-      "surname": "Sameque",
-      "email": "debisameque@gmail.com"
+      "name": "Denise",
+      "surname": "Sabiá",
+      "email": "dsabia@gmail.com"
     },
     {
       "id": 495051,
@@ -159,14 +159,6 @@
       "loan_date": "2023-07-12 14:36:12.127362",
       "payday": "2023-08-11 14:36:12.127310",
       "status": "active"
-    },
-    {
-      "id": "16ef56d1-1d47-4431-9ea6-35d8c5939738",
-      "book_id": "2f3eebad-094e-4d20-a42a-c5855f01105a",
-      "student_id": 509015,
-      "loan_date": "2023-07-12 14:38:20.862524",
-      "payday": "2023-07-12 20:33:57.197041",
-      "status": "inactive"
     },
     {
       "id": "8b39c5ab-0ace-48fa-8a2b-56d5cdd45270",

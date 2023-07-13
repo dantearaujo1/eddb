@@ -104,16 +104,17 @@ Submenu Excluir: {cm:2023-07-13} {c}
 + Loans:
 
 -> Procurar:
- - Ta procurando apenas por matrícula do estudante (passar objeto inteiro 'id e nome?') 
- - A lista empréstimo deve o nome dos estudantes e quando acessar o estudante, mostrar os emprestimos ativos e os inativos
+ - Ta procurando apenas por matrícula do estudante (passar objeto inteiro 'id e nome?') {cm:2023-07-13}
+ - A lista empréstimo deve o nome dos estudantes e quando acessar o estudante, mostrar os emprestimos ativos e os inativos {cm:2023-07-13}
 
 -> Emprestar:
- - Não ta aparecendo a lista de livros assim que abre a tela de escolher o livro que vai emprestar, só dps de digitar algo
+ - Não ta aparecendo a lista de livros assim que abre a tela de escolher o livro que vai emprestar, só dps de digitar algo [ NO MEU ISSO N ACONTECE DE JEITO NENHUM ]
+ - Emprestar devia mostrar um indicador do livro ta emprestado ou não igual as outras telas
 
 -> Devolver:
- - Emprestimos inativos não deviam aparecer (A) 
- - Depois que aperta 0 (pagar emprestimo) nao ta descendo total (precisando da o clearscreen)
- - Apertar backspace na hora de procurar ta dando erro) (TypeError: LoanControllerConcrete.get_students() takes 1 positional argument but 3 were given)
+ - Emprestimos inativos não deviam aparecer (A) {cm:2023-07-13}
+ - Depois que aperta 0 (pagar emprestimo) nao ta descendo total (precisando da o clearscreen) { TEORIACAMENTE RESOLVI }
+ - Apertar backspace na hora de procurar ta dando erro) (TypeError: LoanControllerConcrete.get_students() takes 1 positional argument but 3 were given) {cm:2023-07-13}
 
  - Para estudantes que não possuem emprestimos, poderia aparecer a tela "O estudante selecionado não possui nenhum empréstimo realizado ou devolvido" #ft
  - Na hnora de cadastrar estudante, se ja estiver cadastro um aluno com a matricula passada, mostrar a tela de "matricula ja cadastrada, tente outra" #ft
