@@ -174,7 +174,7 @@ class LoanView(FeedbackLoanView):
         if len(items) > 0:
             result = loans_from_student[items[selected][1]]
             self.show_loan(result)
-            self.__select_option(["Excluir","Voltar"],[self.delete_loan,(lambda x: x)],items[selected])
+            self.__select_option(["Excluir","Voltar"],[self.delete_loan,(lambda x: x)],result)
         else:
             NoneFeedbackLoanView("Nenhum dado selecionado!").show_feedback([])
         self.input_method = self.__back
