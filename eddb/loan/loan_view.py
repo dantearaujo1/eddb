@@ -274,7 +274,6 @@ class LoanView(FeedbackLoanView):
             readkey()
             self.input_method = self.__back
 
-
     def pay_loan(self,loan):
         clear_screen()
         print("Pay Screen")
@@ -285,14 +284,32 @@ class LoanView(FeedbackLoanView):
         self.show_loan(loan)
 
     def delete_loan(self,loan):
-        clear_screen()
-        s = input("Tem certeza que deseja excluir esse empréstimo? ")
-        if re.match(r'^si?m?$',s.lower()):
-            if self.controller.delete_item(loan)[0]:
-                DeleteSuccessFeedbackLoanView("O empréstimo foi excluído").show_feedback([loan])
-                return
-            DeleteFailureFeedbackLoanView("O empréstimo não foi excluído").show_feedback([loan])
-
+        ficar = True
+        while ficar:
+            clear_screen()
+            move_cursor(0,get_terminal_size()[1])
+            s = input("Tem certeza que deseja excluir esse empréstimo? Escreva sim ou não: ")
+            if re.match(r'^si?m?$',s.lower()):
+                if self.controller.delete_item(loan)[0]:
+                    DeleteSuccessFeedbackLoanView("O empréstimo foi excluído").show_feedback([loan])
+                    print("Aperte qualquer tecla para voltar ao menu empréstimo",end="")
+                    readkey()
+                    self.input_method = self.__back
+                    return
+                DeleteFailureFeedbackLoanView("O empréstimo não pôde ser excluído.").show_feedback([loan])
+                print("Aperte qualquer tecla para voltar ao menu empréstimo",end="")
+                readkey()
+                ficar = False
+            elif re.match(r'^n(a?ã?)o?$',s.lower()):
+                DeleteFailureFeedbackLoanView("Operação cancelada.").show_feedback([loan])
+                print("Aperte qualquer tecla para voltar ao menu empréstimo",end="")
+                readkey()
+                ficar = False
+            else:
+                DeleteFailureFeedbackLoanView("Escreva Sim ou Não. Aperte enter para tentar novamente").show_feedback([loan])
+                readkey()
+        self.input_method = self.__back
+       
     def show_feedback(self, loans):
         for loan in loans:
             print(loan["name"])
@@ -367,7 +384,9 @@ class DeleteSuccessFeedbackLoanView(FeedbackLoanView):
 
     def show_feedback(self,loans: Iterable[Loan]):
         print(f"{Back.GREEN}{Fore.WHITE}{self.message}")
-        print(f"{Back.GREEN}{Fore.WHITE}Empréstimo Deletado!")
+        # print(f"{Back.GREEN}{Fore.WHITE}Empréstimo Deletado!")
+        # print("Aperte qualquer tecla para voltar ao menu empréstimo",end="")
+        # readkey()
 
 class DeleteFailureFeedbackLoanView(FeedbackLoanView):
 
@@ -376,9 +395,9 @@ class DeleteFailureFeedbackLoanView(FeedbackLoanView):
 
     def show_feedback(self,loans: Iterable[Loan]):
         print(f"{Back.RED}{Fore.WHITE}{self.message}")
-        print(f"{Back.RED}{Fore.WHITE}O Empréstimo não foi deletado, tente novamente!")
-        print("Aperte qualquer tecla para voltar ao menu empréstimo",end="")
-        readkey()
+        # print(f"{Back.RED}{Fore.WHITE}O Empréstimo não foi deletado, tente novamente!")
+        # print("Aperte qualquer tecla para voltar ao menu empréstimo",end="")
+        # readkey()
 
 class AddFeedbackLoanView(FeedbackLoanView):
 
