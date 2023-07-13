@@ -272,19 +272,19 @@ class BookView(FeedbackBookView):
         while result:
             clear_screen()
             move_cursor(0,get_terminal_size()[1])
-            certeza = input("Tem certeza que deseja excluir esse livro? Escreva Sim ou Não:")
+            certeza = input("Tem certeza que deseja excluir esse livro? Escreva Sim ou Não: ")
             if re.match(r'^si?m?$',certeza.lower()):
                 result = self.controller.delete_book(books[selected])
                 break
             elif re.match(r'^n(a?ã?)o?$',certeza.lower()):
                 FailureFeedbackBookView("Operação Cancelada").show_books(result)
-                print("Aperte qualquer tecla para voltar ao menu livros")
+                print("Aperte qualquer tecla para voltar ao menu livros.")
                 readkey()
                 self.input_method = self.__back
                 return
             else:
                 FailureFeedbackBookView("Escreva Sim ou Não").show_books(result)
-                print("Aperte enter para tentar novamente")
+                print("Aperte enter para tentar novamente.")
                 readkey()
                 #self.input_method = self.__back
                 #return

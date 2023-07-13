@@ -332,14 +332,27 @@ class StudentView(FeedbackStudentView):
                     text_input = text_input[0:pos_na_string-1] + text_input[pos_na_string:]
                 pos_na_string = max(pos_na_string,1)
                 pos_na_string -= 1
-            else:
-                if len(text_input) == 0:
-                    text_input += k
-                elif pos_na_string == 0:
-                    text_input = k + text_input
+            else:       
+                if option == 0:
+                    if re.match(r'[0-9]',k):
+                        if len(text_input) == 0:
+                            text_input += k
+                        elif pos_na_string == 0:
+                            text_input = k + text_input
+                        else:
+                            text_input = text_input[:pos_na_string]+ k + text_input[pos_na_string:]
+                        pos_na_string += 1
+                    else:
+                        move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
                 else:
-                    text_input = text_input[:pos_na_string]+ k + text_input[pos_na_string:]
-                pos_na_string += 1
+                    if len(text_input) == 0:
+                        text_input += k
+                    elif pos_na_string == 0:
+                        text_input = k + text_input
+                    else:
+                        text_input = text_input[:pos_na_string]+ k + text_input[pos_na_string:]
+                    pos_na_string += 1
+                
             end = False
         result = self.controller.add_student(anwser[0],anwser[1],anwser[2], anwser[3])
         clear_screen()
