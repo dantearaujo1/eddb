@@ -220,7 +220,8 @@ class LoanView(FeedbackLoanView):
             if menu_idx == 0:
                 showing_items = list(map(lambda x: x.name,items))
             if menu_idx == 1:
-                showing_items = list(map(lambda x: x.title,items))
+                loans_with_book = [ (x,'i' if not self.controller.book_status_is_active(x) else 'a') for x in items  ]
+                showing_items = list(map(lambda x: x[0].title + f" {Style.RESET_ALL}[{theme['fsilver'] if x[1] == 'a' else theme['fgreen'] }{x[1]}{Style.RESET_ALL}]",loans_with_book))
 
 
             draw_scrollable_menu(showing_items,fake_selection,ini_item)
@@ -242,6 +243,7 @@ class LoanView(FeedbackLoanView):
                     search = True
                     if menu_idx > len(questions) - 1:
                         end = True
+                        continue
             elif k == key.LEFT:
                 pos_na_string -= 1
                 pos_na_string = max(pos_na_string,0)
@@ -368,6 +370,9 @@ class LoanView(FeedbackLoanView):
                         books_loaned = [(self.controller.get_book_by_id(x.book_id)[0],i) for i,x in enumerate(loans_from_student)]
                         items = books_loaned
                         anwser = ''
+                        selected = 0
+                        fake_selection = 0
+                        pos_na_string = 0
                         continue
                 else:
                     end = True

@@ -197,7 +197,31 @@
       "book_id": "f3648608-1e07-4a1a-a892-fe24ecbc1556",
       "student_id": 503020,
       "loan_date": "2023-07-13 15:53:14.130083",
-      "payday": "2023-08-12 15:53:14.130014",
+      "payday": "2023-07-13 17:03:03.701783",
+      "status": "inactive"
+    },
+    {
+      "id": "a9a394aa-de95-4c25-a2f1-58f98a23ae60",
+      "book_id": "90a625d2-498d-471a-b525-8a2a340c65b9",
+      "student_id": 503020,
+      "loan_date": "2023-07-13 17:00:43.813724",
+      "payday": "2023-07-13 17:02:50.512750",
+      "status": "inactive"
+    },
+    {
+      "id": "05906d69-bdbe-4158-81ab-8e72abb895fe",
+      "book_id": "a6fb7eaa-c5fa-4e9c-80a0-994dd092e671",
+      "student_id": 423008,
+      "loan_date": "2023-07-13 17:02:00.959013",
+      "payday": "2023-07-13 17:03:24.629620",
+      "status": "inactive"
+    },
+    {
+      "id": "b551957e-eb03-4e04-88f6-42153ead580f",
+      "book_id": "284c999d-856b-4e07-a8c1-46aadd136bd3",
+      "student_id": 514568,
+      "loan_date": "2023-07-13 17:02:09.806885",
+      "payday": "2023-08-12 17:02:09.806799",
       "status": "active"
     }
   ]
