@@ -108,22 +108,22 @@ Submenu Excluir: {cm:2023-07-13} {c}
  - A lista empréstimo deve o nome dos estudantes e quando acessar o estudante, mostrar os emprestimos ativos e os inativos {cm:2023-07-13}
 
 -> Emprestar:
- - Não ta aparecendo a lista de livros assim que abre a tela de escolher o livro que vai emprestar, só dps de digitar algo [ ACONTECE SIMMMM ]
- - Emprestar devia mostrar um indicador do livro ta emprestado ou não igual as outras telas
+ - Não ta aparecendo a lista de livros assim que abre a tela de escolher o livro que vai emprestar, só dps de digitar algo [ ACONTECE SIMMMM ] {cm:2023-07-13}
+ - Emprestar devia mostrar um indicador do livro ta emprestado ou não igual as outras telas {cm:2023-07-13}
 
 -> Devolver:
  - Emprestimos inativos não deviam aparecer (A) {cm:2023-07-13}
- - Depois que aperta 0 (pagar emprestimo) nao ta descendo total (precisando da o clearscreen) { TEORIACAMENTE RESOLVI } OK
+ - Depois que aperta 0 (pagar emprestimo) nao ta descendo total (precisando da o clearscreen) { TEORIACAMENTE RESOLVI } OK {cm:2023-07-13}
  - Apertar backspace na hora de procurar ta dando erro) (TypeError: LoanControllerConcrete.get_students() takes 1 positional argument but 3 were given) {cm:2023-07-13}
 
  - Para estudantes que não possuem emprestimos, poderia aparecer a tela "O estudante selecionado não possui nenhum empréstimo realizado ou devolvido" #ft
- - Na hnora de cadastrar estudante, se ja estiver cadastro um aluno com a matricula passada, mostrar a tela de "matricula ja cadastrada, tente outra" #ft OK
+ - Na hnora de cadastrar estudante, se ja estiver cadastro um aluno com a matricula passada, mostrar a tela de "matricula ja cadastrada, tente outra" #ft OK {cm:2023-07-13}
 
 
 
 
-- ajeitei as keys do procurar emprestimos
-- ajeitei pequenos detalhes dos inputs do menu emprestimo
+- ajeitei as keys do procurar emprestimos {cm:2023-07-13}
+- ajeitei pequenos detalhes dos inputs do menu emprestimo {cm:2023-07-13}
 
 ## DANTE
 
