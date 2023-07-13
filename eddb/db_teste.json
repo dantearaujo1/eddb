@@ -135,6 +135,12 @@
       "name": "Karina",
       "surname": "Leitoa",
       "email": "leitoa@hotmail.com"
+    },
+    {
+      "id": 511718,
+      "name": "Lais",
+      "surname": "lalal",
+      "email": "oeieo"
     }
   ],
   "loans": [
@@ -159,8 +165,8 @@
       "book_id": "bb4b430c-433b-4101-b909-22e47080e6fd",
       "student_id": 511714,
       "loan_date": "2023-07-12 14:42:36.351327",
-      "payday": "2023-08-11 14:42:36.351278",
-      "status": "active"
+      "payday": "2023-07-13 15:41:50.276024",
+      "status": "inactive"
     },
     {
       "id": "63f253f6-b02e-461d-b2c8-929a988fbe0c",
@@ -183,8 +189,8 @@
       "book_id": "f3648608-1e07-4a1a-a892-fe24ecbc1556",
       "student_id": 511714,
       "loan_date": "2023-07-12 21:48:09.344247",
-      "payday": "2023-08-11 21:48:09.344200",
-      "status": "active"
+      "payday": "2023-07-13 15:43:28.368294",
+      "status": "inactive"
     }
   ]
 }
