@@ -104,7 +104,7 @@ class StudentView(FeedbackStudentView):
             total= len(showed_items)
             terminal_size = get_terminal_size()
             window = terminal_size[1] - 3
-        
+
             draw_scrollable_menu(showed_items,fake_selection,ini_item)
             print(question + anwser,end='')
             move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
@@ -266,7 +266,7 @@ class StudentView(FeedbackStudentView):
                 students = self.controller.search_by_name(anwser,100)
             #selected %= len(students)
             end = False
-                
+
         result = [False]
         while result:
             clear_screen()
@@ -274,6 +274,7 @@ class StudentView(FeedbackStudentView):
             certeza = input("Tem certeza que deseja excluir? Escreva Sim ou Não: ")
             if re.match(r'^si?m?$',certeza.lower()):
                 result = self.controller.delete_student(students[selected])
+                break
             elif re.match(r'^n(a?ã?)o?$',certeza.lower()):
                 FailureFeedbackStudentView("Estudante não deletado!").show_students(result)
                 print("Aperte qualquer tecla para voltar ao menu estudante.")
@@ -433,14 +434,14 @@ class StudentView(FeedbackStudentView):
                     students = all_students
             end = False
 
-        anwser = ''    
+        anwser = ''
         to_edit = students[selected]
         old_id = to_edit.id
         questions_anwsers = [ str(to_edit.id), to_edit.name, to_edit.surname, to_edit.email ]
         question_option = 0
         anwser = questions_anwsers[question_option]
         pos_na_string = len(anwser)
-        
+
         while question_option < len(questions):
             tamanho = len(questions[question_option])
 
@@ -475,8 +476,8 @@ class StudentView(FeedbackStudentView):
                 end_item = window
                 ini_item = 0
                 fake_selection = 0
-                pos_na_string -= 1    
-                
+                pos_na_string -= 1
+
             else:
                 if len(anwser) == 0:
                     anwser += k
@@ -489,7 +490,7 @@ class StudentView(FeedbackStudentView):
                 ini_item = 0
                 end_item = window
                 fake_selection = 0
-                
+
         result = self.controller.edit_student(old_id, questions_anwsers[0],questions_anwsers[1],questions_anwsers[2],questions_anwsers[3])
         result[1].append(to_edit)
         clear_screen()

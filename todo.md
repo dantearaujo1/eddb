@@ -6,7 +6,7 @@
 - Ta sendo permitido dar loop nas escolhas {cm:2023-07-07}
 - Conseguindo ir além da quantidade de opções, provavelmente em todos os menus no modo fullscreen, exceto no mainmenu que tem apenas 4 opções {cm:2023-07-07}
 
-+LIVRO 
++LIVRO
 Menu livro {c} {cm:2023-07-08}
     - Quando o tamanho do terminal ta grande (cabendo todas as opções) o usuário consegue ir para além da última opção inferior {cm:2023-07-07}
     - Corrigir Menu de Livros não selecionando o correto após a alteração do menu invertido {cm:2023-07-07}
@@ -36,7 +36,7 @@ Submenu Livro Excluir: {c}
     - Quando apaga mais do que o que escreveu no input ta dando erro #Bugs {cm:2023-07-07}
     - Resultado de get_books mostrando no inicio da tela ao invés do fim {cm:2023-07-07}
 
-+EMPRÉSTIMOS 
++EMPRÉSTIMOS
 Menu empréstimo {cm:2023-07-08} {c}
     - Pergunta em cima da borda do menu em buscar empréstimo e fazer empréstimo {cm:2023-07-07}
     - TextInput em cima da borda do menu {cm:2023-07-07}
@@ -70,9 +70,7 @@ Submenu Procurar: {cm:2023-07-08} {c}
     - Os "Textos" das partes de inputs, eram para serem bloqueados {cm:2023-07-08}
     - Quando apaga mais do que o que escreveu no input ta dando erro {cm:2023-07-08}
     - Ajeitar "Aperte Qualquer Teclar para Sair" para "Aperte qualquer tecla para voltar" {cm:2023-07-08}
-    - Corrigir exceções das partes de input dos menus (backspace, sobrescrever...) {cm:2023-07-08}
-Submenu Cadastrar: {c}
-    - Quando o usuário digita em cima da resposta já escrita, o texto vai sobreescrevendo e não "afastando" o que já tem {cm:2023-07-08}
+    - Corrigir exceções das partes de input dos menus (backspace, sobrescrever...) {cm:2023-07-08} Submenu Cadastrar: {c} - Quando o usuário digita em cima da resposta já escrita, o texto vai sobreescrevendo e não "afastando" o que já tem {cm:2023-07-08}
     - Se o ID colocado como input já existir na base de dados, já deve proibir continuar o cadastro #feature
     - Corrigir exceções das partes de input (backspace, sobrescrever, lef e right...) #Bugs {cm:2023-07-08}
         - Quando apaga, a patir do meio, mais do que escreveu, buga #Bugs {cm:2023-07-08}
@@ -93,16 +91,21 @@ Submenu Excluir: {c}
 -> Procurar: OK
 -> Cadastrar: OK
 -> Editar: OK
--> Excluir:OK
+-> Excluir:OK -> Excluir n saiu
+
 - Loans:
 -> Procurar:
  -Tratar exceção: app quebra quando não tem nenhum empréstimo a ser procurado OK
+ -Ta procurando apenas por matrícula (passar objeto inteiro)
 -->Editar dentro do procurar:
  -Bug: não edita, vai pra tela do menu empréstimos
 -->Excluir dentro do procurar:
  -Tratar exceção: todas as teclas na confirmação do excluir (Débora)
+->Emprestar:
+ - Quebra ao escolher vazio
 ->Devolução:
- -Implementar
+ -Apertar backspace na hora de procurar ta dando erro
+ -Inativos não deviam aparecer (A)
 -> Fazer Empréstimo:
  -Bug: não dá pra fazer mais de 1 empréstimo (KeyError: id_book)
  - Tratar exceção: todas as teclas em todas as partes (Debora)

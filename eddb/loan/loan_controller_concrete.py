@@ -1,5 +1,6 @@
 import time
-from eddb.util.util import clear_screen
+from datetime import timedelta
+from eddb.util.util import clear_screen,time_utc
 from fuzzywuzzy import process
 from eddb.loan.loan_interface.loan_controller import LoanController
 from eddb.loan.loan_interface.loan_repository import LoanRepository
@@ -22,10 +23,6 @@ class LoanControllerConcrete(LoanController):
     def search_by_name(self, name, limit=5):
         return self.get_all()
 
-    def search_by_book_name(self,name,limit=5):
-        pass
-    def search_by_student_name(self,name,limit=5):
-        pass
     def search_by_student_id(self,ID,limit=5):
         loans = self.repository.get_all()
         students_ids = list(map(lambda l: str(l.student_id),loans))
@@ -57,6 +54,18 @@ class LoanControllerConcrete(LoanController):
         result = list(map(lambda x: x[0],result))
         return result
 
+    def search_student_from_list(self,lista,query,limit=5):
+        students = lista
+        query = query
+        result = []
+        if limit:
+            result = process.extract(query,students,limit=limit)
+        else:
+            result = process.extract(query,students)
+        result = list(map(lambda x: x[0],filter(lambda x: x[1] >= 60,result)))
+        return result
+
+
     def search_book_by_id(self,ID,limit=5):
         books = self.book_repository.get_all()
         query = ID
@@ -65,7 +74,7 @@ class LoanControllerConcrete(LoanController):
             result = process.extract(query,books,limit=limit)
         else:
             result = process.extract(query,books)
-        result = list(map(lambda x: x[0],result))
+        result = list(map(lambda x: x[0],filter(lambda x: x[1] >= 60,result)))
         return result
 
     def search_student_by_id(self,ID,limit=5):
@@ -76,7 +85,8 @@ class LoanControllerConcrete(LoanController):
             result = process.extract(query,students,limit=limit)
         else:
             result = process.extract(query,students)
-        result = list(map(lambda x: x[0],result))
+        # result = list(map(lambda x: x[0],result))
+        result = list(map(lambda x: x[0],filter(lambda x: x[1] >= 60,result)))
         return result
 
     def get_all(self):
@@ -91,6 +101,7 @@ class LoanControllerConcrete(LoanController):
             return book
         else:
             return []
+
     def get_students(self):
         return self.student_repository.get_all()
     def get_books(self):
@@ -103,13 +114,14 @@ class LoanControllerConcrete(LoanController):
         else:
             return []
 
+
     def update_item(self,item,data):
-        item.id_book = data["id_book"]
-        item.id_student = data["id_book"]
+        item.book_id = data["book_id"]
+        item.student_id = data["student_id"]
         item.loan_date = data["loan_date"]
         item.payday = data["payday"]
         item.status = data["status"]
-        self.repository.update_item(item)
+        return self.repository.update_item(item),item
 
     def delete_item(self,item):
         return self.repository.delete_item(item),[item]
@@ -122,12 +134,30 @@ class LoanControllerConcrete(LoanController):
                 result.append(loan)
         return result
 
+    def get_loans_by_student_id(self,ID):
+        loans = self.repository.get_all()
+        result = []
+        for loan in loans:
+            if loan.student_id == ID:
+                result.append(loan)
+        return result
+
     def book_status_is_active(self,book):
         loans = self.get_loan_by_book_id(book.id)
         for loan in loans:
             if loan.status == "active" or loan.status == "overdue":
                 return True
         return False
-    
+
     def add_loan(self,item):
         return self.repository.add_item(item),[item]
+
+    def set_inactive(self,loan):
+        loan.status = "inactive"
+        loan.payday = time_utc()
+
+    def set_active(self,loan,new=False):
+        loan.status = "active"
+        if new:
+            loan.payday = time_utc()
+            loan.loan_date = time_utc() + timedelta(days=30)

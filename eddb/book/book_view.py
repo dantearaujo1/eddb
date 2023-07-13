@@ -266,7 +266,6 @@ class BookView(FeedbackBookView):
             if search:
                 books = self.controller.search_by_name(anwser,100)
             end = False
-        
         result = [False]
         while result:
             clear_screen()
@@ -274,6 +273,7 @@ class BookView(FeedbackBookView):
             certeza = input("Tem certeza que deseja excluir esse livro? Escreva Sim ou Não:")
             if re.match(r'^si?m?$',certeza.lower()):
                 result = self.controller.delete_book(books[selected])
+                break
             elif re.match(r'^n(a?ã?)o?$',certeza.lower()):
                 FailureFeedbackBookView("Operação Cancelada").show_books(result)
                 print("Aperte qualquer tecla para voltar ao menu livros")
@@ -375,7 +375,6 @@ class BookView(FeedbackBookView):
             print(question + anwser,end='')
             move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
             search = False
-            
             k = readkey()
             if k  == key.ENTER:
                 end = True
@@ -445,7 +444,7 @@ class BookView(FeedbackBookView):
 
         while question_option < len(questions):
             tamanho = len(questions[question_option])
-            
+
             clear_screen()
             move_cursor(0,get_terminal_size()[1])
             print("Novo " + questions[question_option] + ": " + anwser,end='')

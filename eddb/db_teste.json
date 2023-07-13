@@ -56,16 +56,6 @@
       "author": "Albuquerque"
     },
     {
-      "id": "8b3b5adf-5715-430f-9e25-6f766b769876",
-      "title": "Hello2",
-      "author": "dante"
-    },
-    {
-      "id": "9f1159d2-a549-4c4c-b41e-3eecf955467f",
-      "title": "Teste",
-      "author": "Dante"
-    },
-    {
       "id": "aab16dd2-23d4-44f8-a845-703dd0dba3ca",
       "title": "Leãozinho",
       "author": "Piriri"
@@ -84,15 +74,14 @@
       "id": "e778e58a-87b0-4b47-85ff-763a34a18819",
       "title": "Lacoste",
       "author": "Luizim"
+    },
+    {
+      "id": "284c999d-856b-4e07-a8c1-46aadd136bd3",
+      "title": "Python Cookbook",
+      "author": "Beazley & Jones"
     }
   ],
   "students": [
-    {
-      "id": 509015,
-      "name": "Dante",
-      "surname": "Araújo",
-      "email": "danteeng@hotmail.com"
-    },
     {
       "id": 503020,
       "name": "Débora",
@@ -116,12 +105,6 @@
       "name": "Carol",
       "surname": "Leite",
       "email": "carolzinhah@hotmail.com"
-    },
-    {
-      "id": 509015,
-      "name": "Lais",
-      "surname": "Bota",
-      "email": "lais@gmail.com"
     },
     {
       "id": 423008,
@@ -150,6 +133,22 @@
   ],
   "loans": [
     {
+      "id": "f8249031-e0af-4211-a41f-19c70f4c780e",
+      "book_id": "20b574d6-94e0-49e5-ba88-52cd14874312",
+      "student_id": 511714,
+      "loan_date": "2023-07-08 21:35:15.850856",
+      "payday": "2023-07-12 20:35:12.503276",
+      "status": "inactive"
+    },
+    {
+      "id": "6a927011-3f40-4a8c-b4f8-2615a50868ab",
+      "book_id": "ee7f7cad-fe3a-4217-a84f-b946532863db",
+      "student_id": 503020,
+      "loan_date": "2023-07-12 14:36:12.127362",
+      "payday": "2023-08-11 14:36:12.127310",
+      "status": "active"
+    },
+    {
       "id": "8b39c5ab-0ace-48fa-8a2b-56d5cdd45270",
       "book_id": "bb4b430c-433b-4101-b909-22e47080e6fd",
       "student_id": 511714,
@@ -174,11 +173,19 @@
       "status": "active"
     },
     {
-      "id": "b80eeda0-acbd-4d60-b5a5-d8285ad59236",
+      "id": "6f19e290-ae06-489d-bc54-bcbaae3ff00a",
+      "book_id": "20b574d6-94e0-49e5-ba88-52cd14874312",
+      "student_id": 503020,
+      "loan_date": "2023-07-12 21:47:13.423728",
+      "payday": "2023-08-11 21:47:13.423602",
+      "status": "active"
+    },
+    {
+      "id": "f6c79226-9591-417b-8af6-3731ede36857",
       "book_id": "f3648608-1e07-4a1a-a892-fe24ecbc1556",
-      "student_id": 509015,
-      "loan_date": "2023-07-12 16:33:26.404407",
-      "payday": "2023-08-11 16:33:26.404357",
+      "student_id": 511714,
+      "loan_date": "2023-07-12 21:48:09.344247",
+      "payday": "2023-08-11 21:48:09.344200",
       "status": "active"
     }
   ]
