@@ -44,7 +44,7 @@ class StudentControllerConcrete(StudentController):
             result = self.loan_repo.delete_all_with_student_id(student.id)
         return result,[student]
     
-    def verify_idexist(self, id):
+    def verify_id_exist(self, id):
         list_students = self.repository.get_by_id(id)
         if list_students:
             return True

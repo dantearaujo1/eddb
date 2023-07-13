@@ -311,12 +311,20 @@ class StudentView(FeedbackStudentView):
             k = readkey()
             if k  == key.ENTER:
                 if option == 0:
-                    verify = self.controller.verify_idexist(text_input)
+                    verify = self.controller.verify_id_exist(text_input)
                     if verify:
                         clear_screen()
+                        move_cursor(0,get_terminal_size()[1])
                         print('Matricula já cadastrada, tente outra. Aperte qualquer tecla para voltar')
                         readkey()
                         continue
+                    option += 1
+                    anwser.append(text_input)
+                    text_input = ''
+                    pos_na_string = 0
+                    if option >= len(questions):
+                        end = True
+                        continue  
                 else:
                     option += 1
                     anwser.append(text_input)
