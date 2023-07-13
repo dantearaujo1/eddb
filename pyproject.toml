@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.7,<3.13"
 colorama = "^0.4.6"
 readchar = "^4.0.5"
 fuzzywuzzy = {extras = ["speedup"], version = "^0.18.0"}
@@ -17,6 +17,7 @@ fuzzywuzzy = {extras = ["speedup"], version = "^0.18.0"}
 taskipy = "^1.11.0"
 pytest = "^7.3.2"
 black = "^23.3.0"
+pyinstaller = "^5.13.0"
 
 [tool.pylint.format]
 max-line-length = "81"
