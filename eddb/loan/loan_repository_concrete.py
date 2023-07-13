@@ -81,8 +81,10 @@ class LoanRepositoryConcrete(LoanRepository):
         if json_data:
             items = json_data["loans"]
             for loan in items:
-                if loan["book_id"] == incoming_loan["book_id"] and loan["student_id"] == incoming_loan["student_id"]:
-                    return False
+                # Verificar se o livro está alugado -> Status Ativo
+                if loan["book_id"] == incoming_loan["book_id"]:
+                    if loan["status"] == 'active' or loan["status"] == 'overdue':
+                        return False
                 if loan["id"] == incoming_loan["id"]:
                     return False
             items.append(incoming_loan)
