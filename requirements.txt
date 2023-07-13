@@ -1,0 +1,7 @@
+colorama==0.4.6 ; python_version >= "3.7" and python_version < "3.13"
+fuzzywuzzy[speedup]==0.18.0 ; python_version >= "3.7" and python_version < "3.13"
+levenshtein==0.21.1 ; python_version >= "3.7" and python_version < "3.13"
+python-levenshtein==0.21.1 ; python_version >= "3.7" and python_version < "3.13"
+rapidfuzz==3.1.1 ; python_version >= "3.7" and python_version < "3.13"
+readchar==4.0.5 ; python_version >= "3.7" and python_version < "3.13"
+setuptools==68.0.0 ; python_version >= "3.7" and python_version < "3.13"

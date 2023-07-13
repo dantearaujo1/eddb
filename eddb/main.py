@@ -12,7 +12,6 @@ def main():
     from eddb.mainmenu.main_menu_composer import MainMenuComposer
     from eddb.endview.end_composer import EndComposer
 
-    system('mode con: cols=200 lines=49')
     v = MainMenuComposer.create()
     set_terminal_size(10,30)
     try:
