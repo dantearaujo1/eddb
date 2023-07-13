@@ -93,12 +93,10 @@ Submenu Excluir: {c}
 -> Procurar: OK
 -> Cadastrar: OK
 -> Editar: OK
--> Excluir:
- -Bug: Não tá excluindo o livro (list index out of range)
- -Tratar exceção: todas as teclas na confirmação do excluir (Debora)
+-> Excluir:OK
 - Loans:
 -> Procurar:
- -Tratar exceção: app quebra quando não tem nenhum empréstimo a ser procurado
+ -Tratar exceção: app quebra quando não tem nenhum empréstimo a ser procurado OK
 -->Editar dentro do procurar:
  -Bug: não edita, vai pra tela do menu empréstimos
 -->Excluir dentro do procurar:
