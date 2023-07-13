@@ -67,19 +67,7 @@ cd eddb
 
 ```
 
-### Usando o pip e requirements.txt
-
-```zsh
-# se vc tiver o pip instalado
-pip install -r requirements.txt
-# para executar basta chamar após a instalação
-python eddb/main.py
-#caso seu terminal use python3
-python3 eddb/main.py
-```
-
-
-### Usando o poetry
+## Usando o poetry
 
 Entre no diretório raiz
 
@@ -101,42 +89,16 @@ Em seguida pode rodar a aplicação com o commando:
 
 ```
 poetry run python eddb/main.py
+
 ```
-
-### Baixando as dependências manualmente
-
-A seguir a lista de bibliotecas de terceiros utilizadas no projeto:
-
-```toml
-[dependencias.de.execucao]
-python = ">=3.7,<3.13"
-colorama = "^0.4.6"
-readchar = "^4.0.5"
-fuzzywuzzy = {extras = ["speedup"], version = "^0.18.0"}
-
-
-[dependencias.de.desenvolvimento]
-taskipy = "^1.11.0"
-pytest = "^7.3.2"
-black = "^23.3.0"
-pyinstaller = "^5.13.0"
-```
-Pode baixá-los utilizando a ferramenta pip:
+### Usando o pip e requirements.txt (NAO FUNCIONA, USE O POETRY)
 
 ```zsh
-pip install colorama==0.4.6
-pip install readchar==4.0.5
-pip install fuzzywuzzy[speedup]==0.18.0
-```
-
-Você pode criar um venv para instalar essas dependências em um ambiente separado
-do seu geral e executar através do comando:
-
-```zsh
+# se vc tiver o pip instalado
+pip install -r requirements.txt
+# para executar basta chamar após a instalação
 python eddb/main.py
-# em alguns casos
+#caso seu terminal use python3
 python3 eddb/main.py
-
 ```
-
 
