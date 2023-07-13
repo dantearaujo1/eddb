@@ -83,8 +83,9 @@ class LoanView(FeedbackLoanView):
             search = False
             k = readkey()
             if k  == key.ENTER:
-                end = True
-                continue
+                if len(items)>0:
+                    end = True
+                    continue
             if k == key.LEFT:
                 pos_na_string -= 1
                 pos_na_string = max(pos_na_string,0)
@@ -196,16 +197,17 @@ class LoanView(FeedbackLoanView):
             search = False
             k = readkey()
             if k  == key.ENTER:
-                anwser_objects.append(items[selected])
-                if menu_idx == 0:
-                    selected = 0
-                    fake_selection = 0
-                    pos_na_string = 0
-                menu_idx += 1
-                search = True
-                if menu_idx > len(questions) - 1:
-                    end = True
-                    continue
+                if len(items) > 0:
+                    anwser_objects.append(items[selected])
+                    if menu_idx == 0:
+                        selected = 0
+                        fake_selection = 0
+                        pos_na_string = 0
+                    menu_idx += 1
+                    search = True
+                    if menu_idx > len(questions) - 1:
+                        end = True
+                        continue
             elif k == key.LEFT:
                 pos_na_string -= 1
                 pos_na_string = max(pos_na_string,0)
@@ -254,7 +256,7 @@ class LoanView(FeedbackLoanView):
                 fake_selection = 0
                 search = True
             if search:
-                if len(anwser) > 0:
+                if len(text_input) > 0:
                     items = search_handler[menu_idx](text_input,10)
                 else:
                     items = all_items[menu_idx]
@@ -399,39 +401,36 @@ class LoanView(FeedbackLoanView):
         self.input_method = self.__back
 
     def pay(self,loan):
+        date = datetime.now()
         data = {
             "book_id": loan.book_id,
             "student_id": loan.student_id,
             "loan_date": loan.loan_date,
-            "payday": datetime.now(),
+            "payday": date,
             "status": 'inactive',
         }
         result = self.controller.update_item(loan,data)
         clear_screen()
         self.show_loan(result[1])
-        print(f"{theme['bloan_active']}{theme['floan_active']} Empréstimo Pago")
+        print(f"{theme['bloan_active']}{theme['floan_active']} Empréstimo Pago no dia {date.strftime('%d%m%Y')}")
         print("Aperte qualquer tecla para voltar ao menu empréstimo")
         readkey()
 
     def delay(self,loan):
+        date = loan.payday + timedelta(days=15)
         data = {
             "book_id": loan.book_id,
             "student_id": loan.student_id,
             "loan_date": loan.loan_date,
-            "payday": loan.payday + timedelta(days=15),
+            "payday": date,
             "status": 'active',
         }
         result = self.controller.update_item(loan,data)
         clear_screen()
         self.show_loan(result[1])
-        print(f"{theme['bloan_active']}{theme['floan_active']} Empréstimo Postergado")
+        print(f"{theme['bloan_active']}{theme['floan_active']} Empréstimo Postergado para {date.strftime('%d%m%Y')}")
         print("Aperte qualquer tecla para voltar ao menu empréstimo")
         readkey()
-
-    def edit_loan(self,loan):
-        clear_screen()
-        print("Edit Screen")
-        self.show_loan(loan)
 
     def delete_loan(self,loan):
         ficar = True
