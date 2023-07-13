@@ -143,7 +143,6 @@ class LoanControllerConcrete(LoanController):
                     result.append(loan)
                 elif not is_active:
                     result.append(loan)
-
         return result
 
     def book_status_is_active(self,book):
