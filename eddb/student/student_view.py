@@ -310,13 +310,21 @@ class StudentView(FeedbackStudentView):
             move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
             k = readkey()
             if k  == key.ENTER:
-                option += 1
-                anwser.append(text_input)
-                text_input = ''
-                pos_na_string = 0
-                if option >= len(questions):
-                    end = True
-                    continue
+                if option == 0:
+                    verify = self.controller.verify_idexist(text_input)
+                    if verify:
+                        clear_screen()
+                        print('Matricula já cadastrada, tente outra. Aperte qualquer tecla para voltar')
+                        readkey()
+                        continue
+                else:
+                    option += 1
+                    anwser.append(text_input)
+                    text_input = ''
+                    pos_na_string = 0
+                    if option >= len(questions):
+                        end = True
+                        continue
             elif k == key.LEFT:
                 pos_na_string -= 1
                 pos_na_string = max(pos_na_string,0)
