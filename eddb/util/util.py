@@ -1,4 +1,5 @@
 from datetime import datetime,timezone
+import time
 import uuid
 import os
 import json
@@ -20,14 +21,28 @@ def set_terminal_size(row,column):
 def get_terminal_size():
     return os.get_terminal_size()
 
-def open_json(file):
-    with open(file, 'r') as f:
-        dados = json.load(f)
-        return dados
+def open_json(filename):
+    create_if_not_exist(filename)
+    with open(filename, 'r') as f:
+        try:
+            dados = json.load(f)
+            return dados
+        except json.decoder.JSONDecodeError:
+            return generate_database_structure()
 
-def load_data(file):
-    with open_json(file) as data:
-        print(data)
+def generate_database_structure():
+    return {
+        "books":[],
+        "students":[],
+        "loans":[],
+    }
+
+def create_if_not_exist(filename):
+    if not os.path.isfile(filename):
+        with open(filename, 'x'):
+            print(f"Created file: {filename}")
+            return True
+    return False
 
 def write_data(file,data):
     with open(file, 'w') as f:

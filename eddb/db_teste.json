@@ -125,6 +125,12 @@
       "email": "batminha@gmail.com"
     },
     {
+      "id": 509015,
+      "name": "Dante",
+      "surname": "Araujo",
+      "email": "danteeng@hotmail.com"
+    },
+    {
       "id": 101011,
       "name": "Karina",
       "surname": "Leitoa",
@@ -149,6 +155,14 @@
       "status": "active"
     },
     {
+      "id": "16ef56d1-1d47-4431-9ea6-35d8c5939738",
+      "book_id": "2f3eebad-094e-4d20-a42a-c5855f01105a",
+      "student_id": 509015,
+      "loan_date": "2023-07-12 14:38:20.862524",
+      "payday": "2023-07-12 20:33:57.197041",
+      "status": "inactive"
+    },
+    {
       "id": "8b39c5ab-0ace-48fa-8a2b-56d5cdd45270",
       "book_id": "bb4b430c-433b-4101-b909-22e47080e6fd",
       "student_id": 511714,
@@ -162,14 +176,6 @@
       "student_id": 514568,
       "loan_date": "2023-07-12 14:45:21.451194",
       "payday": "2023-08-11 14:45:21.451143",
-      "status": "active"
-    },
-    {
-      "id": "633affb4-1b57-4561-9554-9b312f6b535c",
-      "book_id": "abdb84ea-4e8e-44b7-a16e-c8be5b9c7024",
-      "student_id": 423008,
-      "loan_date": "2023-07-12 14:56:52.836305",
-      "payday": "2023-08-11 14:56:52.836244",
       "status": "active"
     },
     {

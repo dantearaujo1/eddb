@@ -292,8 +292,6 @@ class LoanView(FeedbackLoanView):
         loans_from_student = []
         search = False
         questions = [ "Pesquise por matrícula ou nome do aluno: ","Pesquise o livro para devolver: " ]
-
-
         handlers = [self.controller.get_students, self.controller.get_books]
         searches = [self.controller.search_student_by_id, self.controller.search_student_from_list]
         items = handlers[0]()
@@ -409,34 +407,32 @@ class LoanView(FeedbackLoanView):
         self.input_method = self.__back
 
     def pay(self,loan):
-        date = datetime.now()
         data = {
             "book_id": loan.book_id,
             "student_id": loan.student_id,
             "loan_date": loan.loan_date,
-            "payday": date,
+            "payday": datetime.now(),
             "status": 'inactive',
         }
         result = self.controller.update_item(loan,data)
         clear_screen()
         self.show_loan(result[1])
-        print(f"{theme['bloan_active']}{theme['floan_active']} Empréstimo Pago no dia {date.strftime('%d%m%Y')}")
+        print(f"{theme['bloan_active']}{theme['floan_active']} Empréstimo Pago")
         print("Aperte qualquer tecla para voltar ao menu empréstimo")
         readkey()
 
     def delay(self,loan):
-        date = loan.payday + timedelta(days=15)
         data = {
             "book_id": loan.book_id,
             "student_id": loan.student_id,
             "loan_date": loan.loan_date,
-            "payday": date,
+            "payday": loan.payday + timedelta(days=15),
             "status": 'active',
         }
         result = self.controller.update_item(loan,data)
         clear_screen()
         self.show_loan(result[1])
-        print(f"{theme['bloan_active']}{theme['floan_active']} Empréstimo Postergado para {date.strftime('%d%m%Y')}")
+        print(f"{theme['bloan_active']}{theme['floan_active']} Empréstimo Postergado")
         print("Aperte qualquer tecla para voltar ao menu empréstimo")
         readkey()
 

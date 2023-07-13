@@ -121,3 +121,10 @@ Submenu Excluir: {cm:2023-07-13} {c}
 
 - ajeitei as keys do procurar emprestimos
 - ajeitei pequenos detalhes dos inputs do menu emprestimo
+
+## DANTE
+
+- Ajeitei apertar enter quando n tem nada selecionado no book_view [TODOS OS
+SUBMENUS]
+- Ajeitei n ter nenhum dado digitado no cadastrar da book_view
+- Ajeitei o caso de n existir arquivo de bando de dados {OK}

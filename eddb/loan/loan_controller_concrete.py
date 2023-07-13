@@ -134,12 +134,15 @@ class LoanControllerConcrete(LoanController):
                 result.append(loan)
         return result
 
-    def get_loans_by_student_id(self,ID):
+    def get_loans_by_student_id(self,ID,is_active=False):
         loans = self.repository.get_all()
         result = []
         for loan in loans:
             if loan.student_id == ID:
-                result.append(loan)
+                if is_active and loan.status != 'inactive':
+                    result.append(loan)
+                elif not is_active:
+                    result.append(loan)
         return result
 
     def book_status_is_active(self,book):
