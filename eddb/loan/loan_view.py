@@ -18,7 +18,7 @@ theme = get_theme("debora")
 class LoanView(FeedbackLoanView):
     def __init__(self, controller: LoanController):
         self.controller = controller
-        self.options = ["Empréstimos","Emprestar","Devolver","Voltar","Sair"]
+        self.options = ["Procurar","Emprestar","Devolver","Voltar","Sair"]
         self.option = 0
         self.menu = [self.show]
         self.input_method = self.get_input
@@ -328,10 +328,12 @@ class LoanView(FeedbackLoanView):
                     if len(items) > 0:
                         stu = items[selected]
                         anwser_objs.append(stu)
-                        loans_from_student = self.controller.get_loans_by_student_id(stu.id)
+                        loans_from_student = self.controller.get_loans_by_student_id(stu.id,True)
                         books_loaned = [(self.controller.get_book_by_id(x.book_id)[0],i) for i,x in enumerate(loans_from_student)]
                         items = books_loaned
                         anwser = ''
+                        selected = 0
+                        fake_selection = 0
                         continue
                 else:
                     end = True

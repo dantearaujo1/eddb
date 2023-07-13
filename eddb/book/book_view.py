@@ -107,8 +107,9 @@ class BookView(FeedbackBookView):
             k = readkey()
             window = terminal_size[1] - 3
             if k  == key.ENTER:
-                end = True
-                continue
+                if total >0:
+                    end = True
+                    continue
             if k == key.LEFT:
                 pos_na_string -= 1
                 pos_na_string = max(pos_na_string,0)
@@ -216,8 +217,9 @@ class BookView(FeedbackBookView):
             search = False
             k = readkey()
             if k  == key.ENTER:
-                end = True
-                continue
+                if total >0:
+                    end = True
+                    continue
             if k == key.LEFT:
                 pos_na_string -= 1
                 pos_na_string = max(pos_na_string,0)
@@ -311,13 +313,14 @@ class BookView(FeedbackBookView):
             move_cursor( len(question) + pos_na_string + 1,get_terminal_size()[1])
             k = readkey()
             if k  == key.ENTER:
-                option += 1
-                anwser.append(text_input)
-                text_input = ''
-                pos_na_string = 0
-                if option >= len(questions):
-                    end = True
-                    continue
+                if len(text_input) > 0:
+                    option += 1
+                    anwser.append(text_input)
+                    text_input = ''
+                    pos_na_string = 0
+                    if option >= len(questions):
+                        end = True
+                        continue
             elif k == key.LEFT:
                 pos_na_string -= 1
                 pos_na_string = max(pos_na_string,0)
@@ -377,10 +380,11 @@ class BookView(FeedbackBookView):
             search = False
             k = readkey()
             if k  == key.ENTER:
-                end = True
-                anwser = ''
-                pos_na_string = 0
-                continue
+                if total >0:
+                    end = True
+                    anwser = ''
+                    pos_na_string = 0
+                    continue
             if k == key.LEFT:
                 pos_na_string -= 1
                 pos_na_string = max(pos_na_string,0)

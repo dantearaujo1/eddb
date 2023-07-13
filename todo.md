@@ -116,3 +116,10 @@ Submenu Excluir: {c}
 -> Excluir:
  -Tratar exceção: teclas na confirmação do excluir (Debora)
 
+
+## DANTE
+
+- Ajeitei apertar enter quando n tem nada selecionado no book_view [TODOS OS
+SUBMENUS]
+- Ajeitei n ter nenhum dado digitado no cadastrar da book_view
+- Ajeitei o caso de n existir arquivo de bando de dados {OK}
