@@ -38,44 +38,6 @@ mas caso haja tempo, pode-se gerar uma GUI (Graphical User Interface).
 | Voltar para Menu Principal | | REQ14 | Concluído |
 | Sair da Aplicação | | REQ15 | Concluído |
 
-## Executando o projeto
-
-<center><b>PS: Utilizar no terminal, pois o console da sua IDE talvez não interprete os ANSI
-ESCAPE CODE amplamente utilizada na aplicação tornando ela inutilizável!</b></center>
-
----
-Eu criei um arquivo pra ser executado como um executável na sua plataforma.
-
-Ele está localizado na pasta dist:
-
-Dependendo do seu OS:
-
-**Windows**
-
-Basta clicar no executável **__gerenciador.exe__**
-
-**MacOs**
-
-```zsh
-git clone https://github.com/dantearaujo1/eddb.git
-cd eddb
-dist/gerenciador
-
-# se seu arquivo não tiver permissão correta use o comando abaixo
-sudo chmod +x dist/gerenciador
-```
-
-**Linux**
-
-```bash
-git clone https://github.com/dantearaujo1/eddb.git
-cd eddb
-dist/gerenciador
-
-# se seu arquivo não tiver permissão correta use o comando abaixo
-sudo chmod +x dist/gerenciador
-```
-
 ## Teclas que podem ser utilizadas
  - **UP** (SETA PARA CIMA) - **CTRL**-**K** - **CTRL**-**P**: para navegar para cima dentre as opções apresentadas
  - **DOWN** (SETA PARA BAIXO) - **CTRL**-**J** - **CTRL**-**N**: para navegar para baixo dentre as opções apresentadas
@@ -84,12 +46,38 @@ sudo chmod +x dist/gerenciador
  - **ENTER** (ENTER): para selecionar a opção que deseja
  - **BACKSPACE** (APAGAR): para apagar o que você escreveu como resposta
 
+## Executando o projeto
+
+<center><b>PS: Utilizar no terminal, pois o console da sua IDE talvez não interprete os ANSI
+ESCAPE CODE amplamente utilizada na aplicação tornando ela inutilizável!</b></center>
+
+---
 
 ## Instruções de Configuração do Projeto para Ambiente de Desenvolvimento
 
 Caso deseje rodar o projeto no seu ambiente de desenvolvimento, você pode
 utilizar o poetry ou baixar as dependências do projeto listadas abaixo e
 rodar o arquivo main.py
+
+### ANTES DE TUDO CLONE O PROJETO
+
+```zsh
+git clone https://github.com/dantearaujo1/eddb.git
+cd eddb
+
+```
+
+### Usando o pip e requirements.txt
+
+```zsh
+# se vc tiver o pip instalado
+pip install -r requirements.txt
+# para executar basta chamar após a instalação
+python eddb/main.py
+#caso seu terminal use python3
+python3 eddb/main.py
+```
+
 
 ### Usando o poetry
 
@@ -150,4 +138,5 @@ python eddb/main.py
 python3 eddb/main.py
 
 ```
+
 
