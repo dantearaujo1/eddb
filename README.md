@@ -92,7 +92,7 @@ poetry run python eddb/main.py
 
 ```
 ### Usando o pip e requirements.txt (NAO FUNCIONA SE N EXPORTAR O PYTHONPATH, USE O POETRY)
-
+- Link de tutorial em vídeo: https://drive.google.com/file/d/1FC6jm-X1Jae-gsnn2LCJfyVAUB8vXNRw/view?usp=sharing
 ```zsh
 # se vc tiver o pip instalado
 pip install -r requirements.txt
